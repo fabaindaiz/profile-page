@@ -1,0 +1,47 @@
+[
+    {
+        "name": "MiniCompiler",
+        "stack": {
+            "name": "Ocaml",
+            "iconClasses": "fa-brands fa-github"
+        },
+        "description": "Ocaml Compiler for a Mini Functional Programming Language.",
+        "sourceUrl": "https://github.com/fabaindaiz/MiniCompiler",
+        "previewUrl": "https://github.com/fabaindaiz/MiniCompiler",
+        "featured": true
+    },
+    {
+        "name": "Engine",
+        "stack": {
+            "name": "C++",
+            "iconClasses": "fa-brands fa-github"
+        },
+        "description": "C++ Videogame Engine.",
+        "sourceUrl": "https://github.com/fabaindaiz/Engine",
+        "previewUrl": "https://github.com/fabaindaiz/Engine",
+        "featured": true
+    },
+    
+    {
+        "name": "Spellsolver",
+        "stack": {
+            "name": "Python",
+            "iconClasses": "fa-brands fa-github"
+        },
+        "description": "Word Finder for Discord Spellcast.",
+        "sourceUrl": "https://github.com/fabaindaiz/Spellsolver",
+        "previewUrl": "https://github.com/fabaindaiz/Spellsolver",
+        "featured": true
+    },
+    {
+        "name": "corewars-compiler",
+        "stack": {
+            "name": "ocaml",
+            "iconClasses": "fab fa-node-js"
+        },
+        "description": "Ocaml compiler for corewars redcode.",
+        "sourceUrl": "https://github.com/fabaindaiz/corewars-compiler",
+        "previewUrl": "https://github.com/fabaindaiz/corewars-compiler",
+        "featured": true
+    }
+]

@@ -1,0 +1,14 @@
+{
+    "firstName": "Fabian",
+    "lastName": "Diaz",
+    "intro":
+    [
+        "paragraph 1",
+        "paragraph 2"
+    ],
+    "about": 
+    [
+        "I am a Computing Engineering student with a passion for Software Engineering focused on developing efficient and high-quality solutions. My experience includes working with both modern technologies and current industry standards, as well as with traditional and robust programming languages. I continuously seek to expand my knowledge in different areas of computing to integrate these aspects into a project and generate even better solutions.",
+        "I am seeking opportunities to develop my skills and expand my experience in a challenging and collaborative work environment."
+    ]
+}

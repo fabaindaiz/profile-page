@@ -1,5 +1,10 @@
 # ProfilePage
 
+## Build
+
+npm run build
+npm run scully:serve
+
 ## References
 
 #### First steps

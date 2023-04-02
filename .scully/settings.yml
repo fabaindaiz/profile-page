@@ -1,0 +1,11 @@
+identifier: l5f9y3r88eq44560
+appPort: 1864
+staticPort: 1668
+reloadPort: 2667
+hostName: localhost
+projectName: profile-page
+homeFolder: C:\Users\fabia\Desktop\profile-page
+distFolder: dist/profile-page
+outDir: C:\Users\fabia\Desktop\profile-page\dist\static
+handle404: ''
+allowErrorCollect: false
