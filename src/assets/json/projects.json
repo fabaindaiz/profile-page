@@ -7,7 +7,6 @@
         },
         "description": "Ocaml Compiler for a Mini Functional Programming Language.",
         "sourceUrl": "https://github.com/fabaindaiz/MiniCompiler",
-        "previewUrl": "https://github.com/fabaindaiz/MiniCompiler",
         "featured": true
     },
     {
@@ -18,7 +17,6 @@
         },
         "description": "C++ Videogame Engine.",
         "sourceUrl": "https://github.com/fabaindaiz/Engine",
-        "previewUrl": "https://github.com/fabaindaiz/Engine",
         "featured": true
     },
     
@@ -26,22 +24,80 @@
         "name": "Spellsolver",
         "stack": {
             "name": "Python",
-            "iconClasses": "fa-brands fa-github"
+            "iconClasses": "fa-brands fa-python"
         },
         "description": "Word Finder for Discord Spellcast.",
         "sourceUrl": "https://github.com/fabaindaiz/Spellsolver",
-        "previewUrl": "https://github.com/fabaindaiz/Spellsolver",
         "featured": true
     },
     {
         "name": "corewars-compiler",
         "stack": {
-            "name": "ocaml",
-            "iconClasses": "fab fa-node-js"
+            "name": "Ocaml",
+            "iconClasses": "fa-brands fa-github"
         },
         "description": "Ocaml compiler for corewars redcode.",
         "sourceUrl": "https://github.com/fabaindaiz/corewars-compiler",
-        "previewUrl": "https://github.com/fabaindaiz/corewars-compiler",
+        "featured": false
+    },
+    {
+        "name": "coder-templates",
+        "stack": {
+            "name": "Terraform",
+            "iconClasses": "fa-brands fa-github"
+        },
+        "description": "Templates for Coder Remote Development.",
+        "sourceUrl": "https://github.com/fabaindaiz/coder-templates",
         "featured": true
+    },
+    {
+        "name": "JCoreWars",
+        "stack": {
+            "name": "Java",
+            "iconClasses": "fa-brands fa-java"
+        },
+        "description": "Java MARS Interpreter for Core Wars ICWS 94.",
+        "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
+        "featured": false
+    },
+    {
+        "name": "Modulator",
+        "stack": {
+            "name": "Java",
+            "iconClasses": "fa-brands fa-java"
+        },
+        "description": "Minecraft Plugin to load .jar Modules.",
+        "sourceUrl": "https://github.com/fabaindaiz/Modulator",
+        "featured": false
+    },
+    {
+        "name": "profile-page",
+        "stack": {
+            "name": "Angular",
+            "iconClasses": "fa-brands fa-angular"
+        },
+        "description": "Ocaml compiler for corewars redcode.",
+        "sourceUrl": "https://github.com/fabaindaiz/profile-page",
+        "featured": false
+    },
+    {
+        "name": "water-simulation",
+        "stack": {
+            "name": "Python",
+            "iconClasses": "fa-brands fa-python"
+        },
+        "description": "",
+        "sourceUrl": "https://github.com/fabaindaiz/water-simulation",
+        "featured": false
+    },
+    {
+        "name": "Tareas-CC",
+        "stack": {
+            "name": "Python",
+            "iconClasses": "fa-brands fa-python"
+        },
+        "description": "",
+        "sourceUrl": "https://github.com/fabaindaiz/Tareas-CC",
+        "featured": false
     }
 ]

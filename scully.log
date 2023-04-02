@@ -75,3 +75,4 @@ Folder "./scully" doesn't seem to contain custom plugins Deprecation Notice:
 
 
 
+handleUnknownRoute: "/blog/2023-04-02-blog/index.html", 404:""
