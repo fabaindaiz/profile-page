@@ -19,6 +19,17 @@
         "sourceUrl": "https://github.com/fabaindaiz/Engine",
         "featured": true
     },
+    {
+        "name": "Uchilecraft",
+        "stack": {
+            "name": "Proyecto",
+            "iconClasses": "fa-brands fa-github"
+        },
+        "imageUrl": "assets/img/uchilecraft.png",
+        "description": "",
+        "previewUrl": "https://www.uchilecraft.cl",
+        "featured": false
+    },
     
     {
         "name": "Spellsolver",
@@ -56,6 +67,7 @@
             "name": "Java",
             "iconClasses": "fa-brands fa-java"
         },
+        "imageUrl": "assets/img/corewars.png",
         "description": "Java MARS Interpreter for Core Wars ICWS 94.",
         "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
         "featured": false
@@ -66,6 +78,7 @@
             "name": "Java",
             "iconClasses": "fa-brands fa-java"
         },
+        "imageUrl": "assets/img/modulator.png",
         "description": "Minecraft Plugin to load .jar Modules.",
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
         "featured": false
@@ -86,18 +99,9 @@
             "name": "Python",
             "iconClasses": "fa-brands fa-python"
         },
+        "imageUrl": "assets/img/water1.png",
         "description": "",
         "sourceUrl": "https://github.com/fabaindaiz/water-simulation",
-        "featured": false
-    },
-    {
-        "name": "Tareas-CC",
-        "stack": {
-            "name": "Python",
-            "iconClasses": "fa-brands fa-python"
-        },
-        "description": "",
-        "sourceUrl": "https://github.com/fabaindaiz/Tareas-CC",
         "featured": false
     }
 ]

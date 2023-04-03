@@ -4,8 +4,11 @@
     <div class="d-flex vw-90"
         [ngClass]="{'justify-content-center flex-wrap': !options.displayInColumn, 'flex-column  align-items-center': options.displayInColumn}"
         *ngIf="projects$ | async as projects">
-        <div *ngFor="let project of projects" class="card project-card m-3"
+        <div *ngFor="let project of projects" class="card project-card m-3 overlay"
             [ngClass]="{'m-3': !options.displayInColumn, 'mb-3': options.displayInColumn}">
+            <div *ngIf="project.imageUrl" class="overlay-card">
+                <img class="card-img responsive-im overlay-img" src="{{project.imageUrl}}">
+              </div>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title fw-bold text-left project-title" [title]="project.name">
                     {{project.name}}
