@@ -1,0 +1,101 @@
+[
+    {
+        "name": "docker",
+        "iconClasses": "devicon-docker-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#0db7ed",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "python",
+        "iconClasses": "devicon-python-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#4584b6",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "c++",
+        "iconClasses": "devicon-cplusplus-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#03599C",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "java",
+        "iconClasses": "devicon-java-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#ea2d2e",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "ocaml",
+        "iconClasses": "devicon-ocaml-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#f29100",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "sql",
+        "iconClasses": "devicon-mysql-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "black",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "typescript",
+        "iconClasses": "devicon-typescript-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#007acc",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "html",
+        "iconClasses": "devicon-html5-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#f16529",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "vscode",
+        "iconClasses": "devicon-vscode-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#0877b9",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "git",
+        "iconClasses": "devicon-git-plain",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#f34f29",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "debian",
+        "iconClasses": "devicon-debian-plain colored",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "#a80030",
+            "icon": "white"
+        }
+    }
+]

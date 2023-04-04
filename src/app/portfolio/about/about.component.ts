@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BioService } from '../../core/services/bio.service';
+import { AboutService } from '../../core/services/about.service';
 
 @Component({
   selector: 'app-about',
@@ -7,12 +7,13 @@ import { BioService } from '../../core/services/bio.service';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent {
-  bio$ = this.bioService.getBio();
+  about$ = this.aboutService.getAbout();
+  stacks$ = this.aboutService.getStack();
 
   respOptions = [
     { viewClasses: 'd-none d-md-flex', headingClass: 'display-3', useSmallerHeadings: false },
     { viewClasses: 'd-flex d-md-none', headingClass: '', useSmallerHeadings: true }
   ];
 
-  constructor(private bioService: BioService) { }
+  constructor(private aboutService: AboutService) { }
 }

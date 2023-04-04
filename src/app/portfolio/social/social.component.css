@@ -2,18 +2,18 @@
     width: 20vw;
 }
 
-.stack-link {
+.social-link {
   text-decoration: none;
 }
 
-.stack-icon:hover {
-  transform: scale(1.6);
+.social-icon:hover {
+  transform: scale(1.8);
 }
 
-.stack-icon {
+.social-icon {
     padding: 20px;
     margin: 10px;
-    font-size: 30px;
+    font-size: 50px;
     border-radius: 50%;
     display: inline-block;
     transition: transform .2s;

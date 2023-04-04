@@ -1,10 +1,25 @@
-<div class="d-flex justify-content-center vw-90 mx-auto" *ngIf="bio$ | async as bio">
-    <div *ngFor="let options of respOptions" [ngClass]="options.viewClasses"
-        class="flex-column align-items-center text-center w-75">
-        <h1 [ngClass]="options.headingClass" class="mb-5"><span class="fw-bold">About</span> Me</h1>
-        <div *ngFor="let par of bio.about">
-            <h4 *ngIf="!options.useSmallerHeadings" class="mb-4">{{par}}</h4>
-            <h5 *ngIf="options.useSmallerHeadings" class="mb-4">{{par}}</h5>
+<div *ngFor="let options of respOptions" [ngClass]="options.viewClasses"
+    class="flex-column align-items-center text-center vw-90 mx-auto">
+    <div class="d-flex justify-content-center vw-90 mx-auto" *ngIf="about$ | async as about">
+        <div *ngFor="let options of respOptions" [ngClass]="options.viewClasses"
+            class="flex-column align-items-center text-center w-75">
+            <h1 [ngClass]="options.headingClass" class="mb-5"><span class="fw-bold">About</span> Me</h1>
+            <div *ngFor="let par of about.about">
+                <h4 *ngIf="!options.useSmallerHeadings" class="mb-4">{{par}}</h4>
+                <h5 *ngIf="options.useSmallerHeadings" class="mb-4">{{par}}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex vw-90 justify-content-center flex-wrap" *ngIf="stacks$ | async as stacks">
+        <div *ngFor="let stack of stacks" class="stack-icon m-3"
+            [ngStyle]="{ 'background-color': stack.color.background }">
+            <a href="{{stack.sourceUrl}}" target="_blank" class="stack-link">
+                <i class="{{stack.iconClasses}}" [ngStyle]="{ 'color': stack.color.icon }"></i>
+            </a>
         </div>
     </div>
 </div>
+
+<!-- <div class="d-none d-md-block mt-5"></div>
+<app-stack id="stack" class="mb-3"></app-stack> -->

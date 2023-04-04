@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BioService } from '../services/bio.service';
 import { HeaderService } from '../services/header.service';
+import { AboutService } from '../services/about.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +8,8 @@ import { HeaderService } from '../services/header.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  bio$ = this.bioService.getBio();
   isHome$ = this.headerService.isHome();
+  about$ = this.aboutService.getAbout();
 
   menuItems = [
     { title: 'About Me', homePath: '/', fragment: 'about', pagePath: '/about' },
@@ -17,5 +17,5 @@ export class HeaderComponent {
     { title: 'My Blog', homePath: '/blog', fragment: '', pagePath: '/blog' }
   ];
 
-  constructor(private bioService: BioService, private headerService: HeaderService) { }
+  constructor(private aboutService: AboutService, private headerService: HeaderService) { }
 }

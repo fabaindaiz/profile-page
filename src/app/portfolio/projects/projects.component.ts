@@ -15,8 +15,8 @@ export class ProjectsComponent {
   );
 
   respOptions = [
-    { viewClasses: 'd-none d-md-flex', displayInColumn: false, useSmallerHeadings: false, titleClasses: 'display-3' },
-    { viewClasses: 'd-flex d-md-none', displayInColumn: true, useSmallerHeadings: true, titleClasses: '' }
+    { viewClasses: 'd-none d-md-flex', headingClass: 'display-3', useSmallerHeadings: false, displayInColumn: false },
+    { viewClasses: 'd-flex d-md-none', headingClass: '', useSmallerHeadings: true, displayInColumn: true }
   ];
 
   constructor(private projectsService: ProjectsService, private headerService: HeaderService) { }

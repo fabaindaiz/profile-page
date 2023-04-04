@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Github",
+        "iconClasses": "devicon-github-original",
+        "sourceUrl": "https://github.com/fabaindaiz",
+        "color": {
+            "background": "black",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "Linkedin",
+        "iconClasses": "devicon-linkedin-plain",
+        "sourceUrl": "https://www.linkedin.com/in/fabaindaiz/",
+        "color": {
+            "background": "#0e76a8",
+            "icon": "white"
+        }
+    }
+]

@@ -2,8 +2,8 @@
     {
         "name": "MiniCompiler",
         "stack": {
-            "name": "Ocaml",
-            "iconClasses": "fa-brands fa-github"
+            "name": "ocaml",
+            "iconClasses": "devicon-ocaml-plain"
         },
         "description": "Ocaml Compiler for a Mini Functional Programming Language.",
         "sourceUrl": "https://github.com/fabaindaiz/MiniCompiler",
@@ -12,96 +12,126 @@
     {
         "name": "Engine",
         "stack": {
-            "name": "C++",
-            "iconClasses": "fa-brands fa-github"
+            "name": "c++",
+            "iconClasses": "devicon-cplusplus-plain"
         },
-        "description": "C++ Videogame Engine.",
+        "description": "C++ Videogame Engine for 2D RPG games.",
         "sourceUrl": "https://github.com/fabaindaiz/Engine",
+        "featured": true
+    },
+    {
+        "name": "Personal Server",
+        "stack": {
+            "name": "project",
+            "iconClasses": "devicon-github-original"
+        },
+        "description": "Personal server implemented with kubernetes, consul, traefik and grafana",
+        "previewUrl": "https://fadiaz.cl",
         "featured": true
     },
     {
         "name": "Uchilecraft",
         "stack": {
-            "name": "Proyecto",
-            "iconClasses": "fa-brands fa-github"
+            "name": "project",
+            "iconClasses": "devicon-github-original"
         },
+        "description": "Minecraft server of the organization Esports Uchile",
         "imageUrl": "assets/img/uchilecraft.png",
-        "description": "",
         "previewUrl": "https://www.uchilecraft.cl",
         "featured": false
     },
-    
     {
         "name": "Spellsolver",
         "stack": {
-            "name": "Python",
-            "iconClasses": "fa-brands fa-python"
+            "name": "python",
+            "iconClasses": "devicon-python-plain"
         },
-        "description": "Word Finder for Discord Spellcast.",
+        "description": "Word Finder for Discord Spellcast activity.",
         "sourceUrl": "https://github.com/fabaindaiz/Spellsolver",
         "featured": true
     },
     {
         "name": "corewars-compiler",
         "stack": {
-            "name": "Ocaml",
-            "iconClasses": "fa-brands fa-github"
+            "name": "ocaml",
+            "iconClasses": "devicon-ocaml-plain"
         },
-        "description": "Ocaml compiler for corewars redcode.",
+        "description": "Ocaml compiler and optimizer for corewars redcode.",
         "sourceUrl": "https://github.com/fabaindaiz/corewars-compiler",
         "featured": false
     },
     {
         "name": "coder-templates",
         "stack": {
-            "name": "Terraform",
-            "iconClasses": "fa-brands fa-github"
+            "name": "terraform",
+            "iconClasses": "devicon-terraform-plain"
         },
         "description": "Templates for Coder Remote Development.",
         "sourceUrl": "https://github.com/fabaindaiz/coder-templates",
-        "featured": true
+        "featured": false
     },
     {
         "name": "JCoreWars",
         "stack": {
-            "name": "Java",
-            "iconClasses": "fa-brands fa-java"
+            "name": "java",
+            "iconClasses": "devicon-java-plain"
         },
-        "imageUrl": "assets/img/corewars.png",
         "description": "Java MARS Interpreter for Core Wars ICWS 94.",
+        "imageUrl": "assets/img/corewars.png",
         "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
         "featured": false
     },
     {
         "name": "Modulator",
         "stack": {
-            "name": "Java",
-            "iconClasses": "fa-brands fa-java"
+            "name": "java",
+            "iconClasses": "devicon-java-plain"
         },
-        "imageUrl": "assets/img/modulator.png",
         "description": "Minecraft Plugin to load .jar Modules.",
+        "imageUrl": "assets/img/modulator.png",
+        "sourceUrl": "https://github.com/fabaindaiz/Modulator",
+        "featured": false
+    },
+    {
+        "name": "Cross life: Apocalipse",
+        "stack": {
+            "name": "godot",
+            "iconClasses": "devicon-godot-plain"
+        },
+        "description": "RPG videogame made with Godot engine.",
+        "imageUrl": "assets/img/game1.png",
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
         "featured": false
     },
     {
         "name": "profile-page",
         "stack": {
-            "name": "Angular",
-            "iconClasses": "fa-brands fa-angular"
+            "name": "angular",
+            "iconClasses": "devicon-angularjs-plain"
         },
-        "description": "Ocaml compiler for corewars redcode.",
+        "description": "Personal portfolio made with Angular and Scully",
         "sourceUrl": "https://github.com/fabaindaiz/profile-page",
         "featured": false
     },
     {
         "name": "water-simulation",
         "stack": {
-            "name": "Python",
-            "iconClasses": "fa-brands fa-python"
+            "name": "python",
+            "iconClasses": "devicon-python-plain"
         },
+        "description": "Basic water simulation made with Python OpenGL",
         "imageUrl": "assets/img/water1.png",
-        "description": "",
         "sourceUrl": "https://github.com/fabaindaiz/water-simulation",
+        "featured": false
+    },
+    {
+        "name": "Tareas-CC",
+        "stack": {
+            "name": "python",
+            "iconClasses": "devicon-python-plain"
+        },
+        "description": "",
+        "sourceUrl": "https://github.com/fabaindaiz/Tareas-CC",
         "featured": false
     }
 ]

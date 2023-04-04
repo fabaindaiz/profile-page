@@ -1,0 +1,9 @@
+<div class="d-flex min-vh-10 w-100 justify-content-center pb-3 pt-3 pe-4 ps-4 mt-5">
+    <div class="d-flex justify-content-start" *ngIf="about$ | async as about" routerLink="/">
+        <h2 class="fw-bold">{{about.firstName}}</h2>
+        <h2 class="fw-light">{{about.lastName}}</h2>
+    </div>
+    <div class="d-none d-md-flex flex-grow-1 justify-content-end align-items-start">
+        Licenced under GPL-3.0
+    </div>
+</div>
