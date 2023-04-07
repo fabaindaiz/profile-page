@@ -13,7 +13,7 @@ export class HeaderComponent {
 
   menuItems = [
     { title: 'About Me', homePath: '/', fragment: 'about', pagePath: '/about' },
-    { title: 'My Projects', homePath: '/', fragment: 'projects', pagePath: '/projects' },
+    { title: 'My Projects', homePath: '/', fragment: 'project', pagePath: '/project' },
     { title: 'My Blog', homePath: '/blog', fragment: '', pagePath: '/blog' }
   ];
 
