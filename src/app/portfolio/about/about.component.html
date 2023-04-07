@@ -14,7 +14,7 @@
     <div class="d-flex vw-90 justify-content-center flex-wrap" *ngIf="stacks$ | async as stacks">
         <div *ngFor="let stack of stacks" class="stack-icon m-3"
             [ngStyle]="{ 'background-color': stack.color.background }">
-            <a href="{{stack.sourceUrl}}" target="_blank" class="stack-link">
+            <a href="" target="_blank" class="stack-link">
                 <i class="{{stack.iconClasses}}" [ngStyle]="{ 'color': stack.color.icon }"></i>
             </a>
         </div>

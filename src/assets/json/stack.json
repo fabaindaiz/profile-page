@@ -1,98 +1,98 @@
 [
     {
-        "name": "docker",
+        "name": "Docker",
+        "filter": "docker",
         "iconClasses": "devicon-docker-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#0db7ed",
             "icon": "white"
         }
     },
     {
-        "name": "python",
+        "name": "Python",
+        "filter": "python",
         "iconClasses": "devicon-python-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#4584b6",
             "icon": "white"
         }
     },
     {
-        "name": "c++",
+        "name": "C++",
+        "filter": "cplusplus",
         "iconClasses": "devicon-cplusplus-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#03599C",
             "icon": "white"
         }
     },
     {
-        "name": "java",
+        "name": "Java",
+        "filter": "java",
         "iconClasses": "devicon-java-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#ea2d2e",
             "icon": "white"
         }
     },
     {
-        "name": "ocaml",
+        "name": "Ocaml",
+        "filter": "ocaml",
         "iconClasses": "devicon-ocaml-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#f29100",
             "icon": "white"
         }
     },
     {
-        "name": "sql",
+        "name": "Sql",
+        "filter": "sql",
         "iconClasses": "devicon-mysql-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "black",
             "icon": "white"
         }
     },
     {
-        "name": "typescript",
+        "name": "Typescript",
+        "filter": "typescript",
         "iconClasses": "devicon-typescript-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#007acc",
             "icon": "white"
         }
     },
     {
-        "name": "html",
+        "name": "Html",
+        "filter": "html",
         "iconClasses": "devicon-html5-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#f16529",
             "icon": "white"
         }
     },
     {
-        "name": "vscode",
+        "name": "Vscode",
+        "filter": "vscode",
         "iconClasses": "devicon-vscode-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#0877b9",
             "icon": "white"
         }
     },
     {
-        "name": "git",
+        "name": "Git",
+        "filter": "git",
         "iconClasses": "devicon-git-plain",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#f34f29",
             "icon": "white"
         }
     },
     {
-        "name": "debian",
+        "name": "Debian",
+        "filter": "debian",
         "iconClasses": "devicon-debian-plain colored",
-        "sourceUrl": "https://github.com/fabaindaiz",
         "color": {
             "background": "#a80030",
             "icon": "white"

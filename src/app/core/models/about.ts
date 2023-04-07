@@ -7,7 +7,7 @@ export interface About {
 
 export interface Stack {
     name: string;
+    filter: string;
     iconClasses: string;
-    sourceUrl: string;
     color: { background: string, icon: string };
 }

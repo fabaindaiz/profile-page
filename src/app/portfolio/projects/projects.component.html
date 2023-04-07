@@ -13,10 +13,12 @@
                 <h5 class="card-title fw-bold text-left project-title" [title]="project.name">
                     {{project.name}}
                 </h5>
-                <h6 class="card-subtitle mb-2 fw-lighter text-left">
-                    <i [ngClass]="project.stack.iconClasses"></i>
-                    {{project.stack.name}}
-                </h6>
+                <div class="d-flex card-subtitle mb-2 justify-content-center">
+                    <h6 *ngFor="let stack of project.stack" class="fw-lighter text-left me-3">
+                        <i [ngClass]="stack.iconClasses"></i>
+                        {{stack.name}}
+                    </h6>
+                </div>
                 <p class="card-text text-left">
                     {{project.description}}
                 </p>
