@@ -1,11 +1,22 @@
 <div *ngFor="let options of respOptions" [ngClass]="options.viewClasses"
     class="flex-column align-items-center text-center vw-90 mx-auto">
     <h1 [ngClass]="options.headingClass" class="mb-5"><span class="fw-bold">My</span> Projects</h1>
+
+    <div *ngIf="!(isHome$ | async)">
+        <div class="d-flex vw-90 justify-content-center flex-wrap mb-3" *ngIf=" stacks$ | async as stacks">
+            <div *ngFor="let stack of stacks" class="stack-icon m-3"
+                [ngStyle]="{ 'background-color': stack.color.background }" [ngClass]="{ 'selected': stack.filter===filter }"
+                (mouseenter) ="mouseEnter(stack.filter)" (mouseleave) ="mouseLeave(stack.filter)">
+                <i class="{{stack.iconClasses}}" [ngStyle]="{ 'color': stack.color.icon }"></i>
+            </div>
+        </div>
+    </div>
+
     <div class="d-flex vw-90"
         [ngClass]="{'justify-content-center flex-wrap': !options.displayInColumn, 'flex-column  align-items-center': options.displayInColumn}"
         *ngIf="projects$ | async as projects">
-        <div *ngFor="let project of projects" class="card project-card m-3 overlay"
-            [ngClass]="{'m-3': !options.displayInColumn, 'mb-3': options.displayInColumn}">
+        <div *ngFor="let project of projects" class="card project-card m-3 overlay" [style.--color]=project.color
+            [ngClass]="{ 'm-3': !options.displayInColumn, 'mb-3': options.displayInColumn, 'filtered': project.filter.includes(filter) }">
             <div *ngIf="project.imageUrl" class="overlay-card">
                 <img class="card-img responsive-im overlay-img" src="{{project.imageUrl}}">
             </div>

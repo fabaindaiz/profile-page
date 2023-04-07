@@ -6,6 +6,7 @@ export interface Project {
     imageUrl?: string;
     sourceUrl: string;
     previewUrl: string;
+    color: string;
     featured?: boolean;
 }
 

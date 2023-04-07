@@ -72,24 +72,6 @@
         }
     },
     {
-        "name": "Vscode",
-        "filter": "vscode",
-        "iconClasses": "devicon-vscode-plain",
-        "color": {
-            "background": "#0877b9",
-            "icon": "white"
-        }
-    },
-    {
-        "name": "Git",
-        "filter": "git",
-        "iconClasses": "devicon-git-plain",
-        "color": {
-            "background": "#f34f29",
-            "icon": "white"
-        }
-    },
-    {
         "name": "Debian",
         "filter": "debian",
         "iconClasses": "devicon-debian-plain colored",
