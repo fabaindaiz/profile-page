@@ -24,11 +24,7 @@ export class ProjectComponent {
 
   constructor(private projectService: ProjectService, private stackService: StackService, private headerService: HeaderService) { }
 
-  mouseEnter(filter : string){
+  mouseEnter(filter : string) {
     this.filter = filter
-  }
-
-  mouseLeave(filter : string){
-    //this.filter = ""
   }
 }

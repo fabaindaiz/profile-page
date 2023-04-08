@@ -1,40 +1,131 @@
 [
     {
         "name": "MiniCompiler",
-        "filter": [ "ocaml" ],
+        "filter": {
+            "list": [ "ocaml" ],
+            "color": "#ffc247b4"
+        },
         "stack": [
             { "name": "Ocaml", "iconClasses": "devicon-ocaml-plain" }
         ],
         "description": "Ocaml Compiler for a Mini Functional Programming Language.",
         "sourceUrl": "https://github.com/fabaindaiz/MiniCompiler",
-        "color": "#f7c5c5",
         "featured": true
     },
     {
         "name": "Engine",
-        "filter": [ "cplusplus" ],
+        "filter": {
+            "list": [ "cplusplus" ],
+            "color": "#c6def1"
+        },
         "stack": [
             { "name": "C++", "iconClasses": "devicon-cplusplus-plain" }
         ],
         "description": "C++ Videogame Engine for 2D RPG games.",
         "sourceUrl": "https://github.com/fabaindaiz/Engine",
-        "color": "#c6def1",
         "featured": true
     },
     {
         "name": "Personal Server",
-        "filter": [ "docker", "debian" ],
+        "filter": {
+            "list": [ "docker", "debian" ],
+            "color": "#c6def1"
+        },
         "stack": [
             { "name": "project", "iconClasses": "devicon-github-original" }
         ],
         "description": "Personal server implemented with kubernetes, consul, traefik and grafana",
         "previewUrl": "https://fadiaz.cl",
-        "color": "#c6def1",
+
         "featured": true
     },
     {
+        "name": "profile-page",
+        "filter": {
+            "list": [ "html", "typescript" ],
+            "color": "#c7e5c2"
+        },
+        "stack": [
+            { "name": "Angular", "iconClasses": "devicon-angularjs-plain" }
+        ],
+        "description": "Personal portfolio made with Angular and Scully",
+        "sourceUrl": "https://github.com/fabaindaiz/profile-page",
+        "featured": false
+    },
+    {
+        "name": "Spellsolver",
+        "filter": {
+            "list": [ "python" ],
+            "color": "#fff59d"
+        },
+        "stack": [
+            { "name": "Python", "iconClasses": "devicon-python-plain" }
+        ],
+        "description": "Word Finder for Discord Spellcast activity.",
+        "sourceUrl": "https://github.com/fabaindaiz/Spellsolver",
+        "featured": true
+    },
+    {
+        "name": "corewars-compiler",
+        "filter": {
+            "list": [ "ocaml" ],
+            "color": "#ffc247b4"
+        },
+        "stack": [
+            { "name": "Ocaml", "iconClasses": "devicon-ocaml-plain" }
+        ],
+        "description": "Ocaml compiler and optimizer for corewars redcode.",
+        "sourceUrl": "https://github.com/fabaindaiz/corewars-compiler",
+        "featured": false
+    },
+    {
+        "name": "coder-templates",
+        "filter": {
+            "list": [ "terraform", "docker" ],
+            "color": "#d2b2e1"
+        },
+        "stack": [
+            { "name": "Terraform", "iconClasses": "devicon-terraform-plain" }
+        ],
+        "description": "Templates for Coder Remote Development.",
+        "sourceUrl": "https://github.com/fabaindaiz/coder-templates",
+
+        "featured": false
+    },
+    {
+        "name": "JCoreWars",
+        "filter": {
+            "list": [ "java" ],
+            "color": "#f7c5c5"
+        },
+        "stack": [
+            { "name": "Java", "iconClasses": "devicon-java-plain" }
+        ],
+        "description": "Java MARS Interpreter for Core Wars ICWS 94.",
+        "imageUrl": "assets/img/corewars.png",
+        "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
+        "featured": false
+    },
+    {
+        "name": "Modulator",
+        "filter": {
+            "list": [ "java" ],
+            "color": "#f7c5c5"
+        },
+        "stack": [
+            { "name": "Java", "iconClasses": "devicon-java-plain" }
+        ],
+        "description": "Minecraft Plugin to load .jar Modules.",
+        "imageUrl": "assets/img/modulator.png",
+        "sourceUrl": "https://github.com/fabaindaiz/Modulator",
+        "featured": false
+    },
+    {
         "name": "Uchilecraft",
-        "filter": [ "docker", "debian" ],
+        "filter": {
+            "list": [ "docker", "debian" ],
+            "color": "#c6def1"
+        },
         "stack": [
             { "name": "project", "iconClasses": "devicon-github-original" }
         ],
@@ -45,106 +136,31 @@
         "featured": false
     },
     {
-        "name": "Spellsolver",
-        "filter": [ "python" ],
-        "stack": [
-            { "name": "Python", "iconClasses": "devicon-python-plain" }
-        ],
-        "description": "Word Finder for Discord Spellcast activity.",
-        "sourceUrl": "https://github.com/fabaindaiz/Spellsolver",
-        "color": "#fff59d",
-        "featured": true
-    },
-    {
-        "name": "corewars-compiler",
-        "filter": [ "ocaml" ],
-        "stack": [
-            { "name": "Ocaml", "iconClasses": "devicon-ocaml-plain" }
-        ],
-        "description": "Ocaml compiler and optimizer for corewars redcode.",
-        "sourceUrl": "https://github.com/fabaindaiz/corewars-compiler",
-        "color": "#f7c5c5",
-        "featured": false
-    },
-    {
-        "name": "coder-templates",
-        "filter": [ "terraform", "docker" ],
-        "stack": [
-            { "name": "Terraform", "iconClasses": "devicon-terraform-plain" }
-        ],
-        "description": "Templates for Coder Remote Development.",
-        "sourceUrl": "https://github.com/fabaindaiz/coder-templates",
-        "color": "#d2b2e1",
-        "featured": false
-    },
-    {
-        "name": "JCoreWars",
-        "filter": [ "java" ],
-        "stack": [
-            { "name": "Java", "iconClasses": "devicon-java-plain" }
-        ],
-        "description": "Java MARS Interpreter for Core Wars ICWS 94.",
-        "imageUrl": "assets/img/corewars.png",
-        "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
-        "color": "#f7c5c5",
-        "featured": false
-    },
-    {
-        "name": "Modulator",
-        "filter": [ "java" ],
-        "stack": [
-            { "name": "Java", "iconClasses": "devicon-java-plain" }
-        ],
-        "description": "Minecraft Plugin to load .jar Modules.",
-        "imageUrl": "assets/img/modulator.png",
-        "sourceUrl": "https://github.com/fabaindaiz/Modulator",
-        "color": "#f7c5c5",
-        "featured": false
-    },
-    {
         "name": "Cross life: Apocalipse",
-        "filter": [ "godot" ],
+        "filter": {
+            "list": [ "godot" ],
+            "color": "#c6def1"
+        },
         "stack": [
             { "name": "Godot", "iconClasses": "devicon-godot-plain" }
         ],
         "description": "RPG videogame made with Godot engine.",
         "imageUrl": "assets/img/game1.png",
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
-        "color": "#c6def1",
-        "featured": false
-    },
-    {
-        "name": "profile-page",
-        "filter": [ "typescript", "html" ],
-        "stack": [
-            { "name": "Angular", "iconClasses": "devicon-angularjs-plain" }
-        ],
-        "description": "Personal portfolio made with Angular and Scully",
-        "sourceUrl": "https://github.com/fabaindaiz/profile-page",
-        "color": "#c6def1",
         "featured": false
     },
     {
         "name": "water-simulation",
-        "filter": [ "python" ],
+        "filter": {
+            "list": [ "python" ],
+            "color": "#fff59d"
+        },
         "stack": [
             { "name": "Python", "iconClasses": "devicon-python-plain" }
         ],
         "description": "Basic water simulation made with Python OpenGL",
         "imageUrl": "assets/img/water1.png",
         "sourceUrl": "https://github.com/fabaindaiz/water-simulation",
-        "color": "#fff59d",
-        "featured": false
-    },
-    {
-        "name": "Tareas-CC",
-        "filter": [ "python" ],
-        "stack": [
-            { "name": "Python", "iconClasses": "devicon-python-plain" }
-        ],
-        "description": "",
-        "sourceUrl": "https://github.com/fabaindaiz/Tareas-CC",
-        "color": "#fff59d",
         "featured": false
     }
 ]

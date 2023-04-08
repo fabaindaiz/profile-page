@@ -18,20 +18,20 @@
         }
     },
     {
-        "name": "C++",
-        "filter": "cplusplus",
-        "iconClasses": "devicon-cplusplus-plain",
-        "color": {
-            "background": "#03599C",
-            "icon": "white"
-        }
-    },
-    {
         "name": "Java",
         "filter": "java",
         "iconClasses": "devicon-java-plain",
         "color": {
             "background": "#ea2d2e",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "C++",
+        "filter": "cplusplus",
+        "iconClasses": "devicon-cplusplus-plain",
+        "color": {
+            "background": "#03599C",
             "icon": "white"
         }
     },
@@ -45,11 +45,11 @@
         }
     },
     {
-        "name": "Sql",
-        "filter": "sql",
-        "iconClasses": "devicon-mysql-plain",
+        "name": "Html",
+        "filter": "html",
+        "iconClasses": "devicon-html5-plain",
         "color": {
-            "background": "black",
+            "background": "#f16529",
             "icon": "white"
         }
     },
@@ -63,11 +63,20 @@
         }
     },
     {
-        "name": "Html",
-        "filter": "html",
-        "iconClasses": "devicon-html5-plain",
+        "name": "Sql",
+        "filter": "sql",
+        "iconClasses": "devicon-mysql-plain",
         "color": {
-            "background": "#f16529",
+            "background": "black",
+            "icon": "white"
+        }
+    },
+    {
+        "name": "Mongo",
+        "filter": "mongo",
+        "iconClasses": "devicon-mongodb-plain",
+        "color": {
+            "background": "#4faa41",
             "icon": "white"
         }
     },
