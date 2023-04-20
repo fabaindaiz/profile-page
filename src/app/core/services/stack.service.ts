@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { About } from '../models/about';
+import { Stack } from '../models/stack';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AboutService {
+export class StackService {
 
   constructor(private http: HttpClient) { }
 
-  getAbout() {
-    return this.http.get<About>('assets/json/about.json');
+  getStack() {
+    return this.http.get<Stack[]>('assets/json/stack.json');
   }
 }

@@ -3,8 +3,9 @@
 }
 
 .project-card {
-    width: 290px;
-    height: 250px;
+    width: 300px;
+    height: 230px;
+    transition: background-color .5s ease;
 }
 
 .project-title {
@@ -33,4 +34,24 @@
     width: 100%;
     height: 0%;
     transition: .5s ease;
+}
+
+/* filter */
+.filtered {
+    --color: #ffffcc;
+    background-color: var(--color);
+}
+
+.selected {
+    transform: scale(1.6);
+}
+
+.stack-icon {
+    padding: 20px;
+    margin: 10px;
+    font-size: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: transform .2s;
+    line-height: 1;
 }

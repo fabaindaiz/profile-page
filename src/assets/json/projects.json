@@ -1,81 +1,106 @@
 [
     {
         "name": "MiniCompiler",
-        "stack": {
-            "name": "ocaml",
-            "iconClasses": "devicon-ocaml-plain"
+        "filter": {
+            "list": [ "ocaml" ],
+            "color": "#ffc247b4"
         },
+        "stack": [
+            { "name": "Ocaml", "iconClasses": "devicon-ocaml-plain" }
+        ],
         "description": "Ocaml Compiler for a Mini Functional Programming Language.",
         "sourceUrl": "https://github.com/fabaindaiz/MiniCompiler",
         "featured": true
     },
     {
         "name": "Engine",
-        "stack": {
-            "name": "c++",
-            "iconClasses": "devicon-cplusplus-plain"
+        "filter": {
+            "list": [ "cplusplus" ],
+            "color": "#c6def1"
         },
+        "stack": [
+            { "name": "C++", "iconClasses": "devicon-cplusplus-plain" }
+        ],
         "description": "C++ Videogame Engine for 2D RPG games.",
         "sourceUrl": "https://github.com/fabaindaiz/Engine",
         "featured": true
     },
     {
         "name": "Personal Server",
-        "stack": {
-            "name": "project",
-            "iconClasses": "devicon-github-original"
+        "filter": {
+            "list": [ "docker", "debian" ],
+            "color": "#c6def1"
         },
+        "stack": [
+            { "name": "project", "iconClasses": "devicon-github-original" }
+        ],
         "description": "Personal server implemented with kubernetes, consul, traefik and grafana",
         "previewUrl": "https://fadiaz.cl",
+
         "featured": true
     },
     {
-        "name": "Uchilecraft",
-        "stack": {
-            "name": "project",
-            "iconClasses": "devicon-github-original"
+        "name": "profile-page",
+        "filter": {
+            "list": [ "html", "typescript" ],
+            "color": "#c7e5c2"
         },
-        "description": "Minecraft server of the organization Esports Uchile",
-        "imageUrl": "assets/img/uchilecraft.png",
-        "previewUrl": "https://www.uchilecraft.cl",
+        "stack": [
+            { "name": "Angular", "iconClasses": "devicon-angularjs-plain" }
+        ],
+        "description": "Personal portfolio made with Angular and Scully",
+        "sourceUrl": "https://github.com/fabaindaiz/profile-page",
         "featured": false
     },
     {
         "name": "Spellsolver",
-        "stack": {
-            "name": "python",
-            "iconClasses": "devicon-python-plain"
+        "filter": {
+            "list": [ "python" ],
+            "color": "#fff59d"
         },
+        "stack": [
+            { "name": "Python", "iconClasses": "devicon-python-plain" }
+        ],
         "description": "Word Finder for Discord Spellcast activity.",
         "sourceUrl": "https://github.com/fabaindaiz/Spellsolver",
         "featured": true
     },
     {
         "name": "corewars-compiler",
-        "stack": {
-            "name": "ocaml",
-            "iconClasses": "devicon-ocaml-plain"
+        "filter": {
+            "list": [ "ocaml" ],
+            "color": "#ffc247b4"
         },
+        "stack": [
+            { "name": "Ocaml", "iconClasses": "devicon-ocaml-plain" }
+        ],
         "description": "Ocaml compiler and optimizer for corewars redcode.",
         "sourceUrl": "https://github.com/fabaindaiz/corewars-compiler",
         "featured": false
     },
     {
         "name": "coder-templates",
-        "stack": {
-            "name": "terraform",
-            "iconClasses": "devicon-terraform-plain"
+        "filter": {
+            "list": [ "terraform", "docker" ],
+            "color": "#d2b2e1"
         },
+        "stack": [
+            { "name": "Terraform", "iconClasses": "devicon-terraform-plain" }
+        ],
         "description": "Templates for Coder Remote Development.",
         "sourceUrl": "https://github.com/fabaindaiz/coder-templates",
+
         "featured": false
     },
     {
         "name": "JCoreWars",
-        "stack": {
-            "name": "java",
-            "iconClasses": "devicon-java-plain"
+        "filter": {
+            "list": [ "java" ],
+            "color": "#f7c5c5"
         },
+        "stack": [
+            { "name": "Java", "iconClasses": "devicon-java-plain" }
+        ],
         "description": "Java MARS Interpreter for Core Wars ICWS 94.",
         "imageUrl": "assets/img/corewars.png",
         "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
@@ -83,55 +108,59 @@
     },
     {
         "name": "Modulator",
-        "stack": {
-            "name": "java",
-            "iconClasses": "devicon-java-plain"
+        "filter": {
+            "list": [ "java" ],
+            "color": "#f7c5c5"
         },
+        "stack": [
+            { "name": "Java", "iconClasses": "devicon-java-plain" }
+        ],
         "description": "Minecraft Plugin to load .jar Modules.",
         "imageUrl": "assets/img/modulator.png",
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
         "featured": false
     },
     {
-        "name": "Cross life: Apocalipse",
-        "stack": {
-            "name": "godot",
-            "iconClasses": "devicon-godot-plain"
+        "name": "Uchilecraft",
+        "filter": {
+            "list": [ "docker", "debian" ],
+            "color": "#c6def1"
         },
+        "stack": [
+            { "name": "project", "iconClasses": "devicon-github-original" }
+        ],
+        "description": "Minecraft server of the organization Esports Uchile",
+        "imageUrl": "assets/img/uchilecraft.png",
+        "previewUrl": "https://www.uchilecraft.cl",
+        "color": "#c6def1",
+        "featured": false
+    },
+    {
+        "name": "Cross life: Apocalipse",
+        "filter": {
+            "list": [ "godot" ],
+            "color": "#c6def1"
+        },
+        "stack": [
+            { "name": "Godot", "iconClasses": "devicon-godot-plain" }
+        ],
         "description": "RPG videogame made with Godot engine.",
         "imageUrl": "assets/img/game1.png",
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
         "featured": false
     },
     {
-        "name": "profile-page",
-        "stack": {
-            "name": "angular",
-            "iconClasses": "devicon-angularjs-plain"
-        },
-        "description": "Personal portfolio made with Angular and Scully",
-        "sourceUrl": "https://github.com/fabaindaiz/profile-page",
-        "featured": false
-    },
-    {
         "name": "water-simulation",
-        "stack": {
-            "name": "python",
-            "iconClasses": "devicon-python-plain"
+        "filter": {
+            "list": [ "python" ],
+            "color": "#fff59d"
         },
+        "stack": [
+            { "name": "Python", "iconClasses": "devicon-python-plain" }
+        ],
         "description": "Basic water simulation made with Python OpenGL",
         "imageUrl": "assets/img/water1.png",
         "sourceUrl": "https://github.com/fabaindaiz/water-simulation",
-        "featured": false
-    },
-    {
-        "name": "Tareas-CC",
-        "stack": {
-            "name": "python",
-            "iconClasses": "devicon-python-plain"
-        },
-        "description": "",
-        "sourceUrl": "https://github.com/fabaindaiz/Tareas-CC",
         "featured": false
     }
 ]

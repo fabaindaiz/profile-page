@@ -2,10 +2,6 @@
     width: 20vw;
 }
 
-.stack-link {
-  text-decoration: none;
-}
-
 .stack-icon:hover {
   transform: scale(1.6);
 }

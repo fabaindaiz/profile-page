@@ -4,10 +4,3 @@ export interface About {
     about: string[];
     intro: string[];
 }
-
-export interface Stack {
-    name: string;
-    iconClasses: string;
-    sourceUrl: string;
-    color: { background: string, icon: string };
-}
