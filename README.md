@@ -14,6 +14,13 @@ npm run build
 npm run scully:serve
 ```
 
+#### Deploy
+
+```bash
+docker build -t profile-page .
+docker run --name profile-page -d -p 8080:80 profile-page
+```
+
 ## References
 
 #### First steps

@@ -4,7 +4,7 @@ const defaultPostRenderers:string[] = [];
 export const config: ScullyConfig = {
   projectRoot: './src',
   projectName: 'profile-page',
-  outDir: './dist/static',
+  outDir: './dist/profile-page',
   defaultPostRenderers,
   routes: {
     '/blog/:slug': {

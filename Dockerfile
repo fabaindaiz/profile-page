@@ -1,6 +1,5 @@
 FROM node:latest as node
 WORKDIR /app
-COPY . .
 
 RUN apt-get update \
     && apt-get install -y wget gnupg \
@@ -10,9 +9,12 @@ RUN apt-get update \
     && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
-
+COPY package.json package-lock.json ./
 RUN npm install
+
+COPY . .
 RUN npm run build --prod
 
 FROM nginx:alpine
+COPY nginx/. /etc/nginx/.
 COPY --from=node /app/dist/profile-page /usr/share/nginx/html

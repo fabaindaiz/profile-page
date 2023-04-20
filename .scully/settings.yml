@@ -6,6 +6,6 @@ hostName: localhost
 projectName: profile-page
 homeFolder: C:\Users\fabia\Desktop\profile-page
 distFolder: dist/profile-page
-outDir: C:\Users\fabia\Desktop\profile-page\dist\static
+outDir: C:\Users\fabia\Desktop\profile-page\dist\profile-page
 handle404: ''
 allowErrorCollect: false
