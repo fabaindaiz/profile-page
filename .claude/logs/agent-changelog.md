@@ -23,6 +23,9 @@ redirects a trailing slash as the host does), `tools/screenshots.mjs --compare` 
 against a baseline, with three interactive states), and the dependencies: two unused Angular
 packages out, Bootstrap 5.3.8, marked 18.1. Last, the deferred `noindex` fix: `blog/:slug` matches only
 a published post's slug, so an unknown slug is the `noindex` not-found page with no canonical.
+After the close, at the owner's word: the site is `www.fadiaz.cl` only (no bare-domain check), and
+`tools/export.mjs`, the build as a folder to upload in the dashboard with pages as `<route>.html`
+(0 failures on the local preview; on Cloudflare not yet checked).
 
 **Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
 `blog/`, `tools/` (audit, check-site, postbuild, serve, screenshots, and the new check-live),
