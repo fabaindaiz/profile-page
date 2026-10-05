@@ -118,6 +118,7 @@ its answer.
 | When you change… | Move in the same change |
 |---|---|
 | a route, or a link to one | every literal link and fragment (`npm run gate` lists them); `docs/architecture.md` if a feature module was added |
+| a template, using a Bootstrap component or utility it did not use before | its part or utility key in `src/bootstrap.scss`, or it has no style |
 | a model in `src/app/core/models/` | its JSON file, and the `DATA` table in `tools/audit.mjs` for a new file |
 | a command or script in `package.json` | *Commands* above, the `verify` skill, `README.md` |
 | a check in `tools/audit.mjs` | the rule citing it here or in `docs/decisions.md` (`audit:enforcers`) |

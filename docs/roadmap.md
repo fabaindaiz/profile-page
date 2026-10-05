@@ -112,12 +112,17 @@ Then, with the address (d-115f49-a0fe6e): a canonical URL and `og:url` per index
 `/about`, all checked on the built pages by `tools/check-site.mjs`. The project images are WebP at
 600 pixels wide with their dimensions, converted once with no dependency added (owner's choice):
 `/project`'s first visit went from 1705 to 269 KiB (`tools/measure.mjs`, 2026-10-05, local build).
-**What is still missing:** the stylesheet is all of Bootstrap (28 kB compressed) and could be trimmed, and the initial bundle (524 kB raw) sits over
-`angular.json`'s 500 kB warning budget, a warning nothing fails on. On an unknown post slug the
-client drops the 404 page's `noindex` (the response stays a 404); deferred while the blog is hidden
-(d-115f49-fb5f23), and **to be fixed before the first real post is published**, which reopens the
-blog's routes. `tools/check-site.mjs` reads
-neither `srcset` nor HTML entities in links; no page uses them yet.
+Bootstrap trimmed to the parts the templates use (`src/bootstrap.scss`): the stylesheet went from
+196.5 to 68 kB raw (20.8 to 8.1 kB compressed, the build's estimate) and the initial bundle from
+524 to 397 kB, under `angular.json`'s 500 kB warning; 13 screenshots (every page at two widths, the
+open menu, a hovered card and button) were pixel-identical before and after (2026-10-05, local
+build).
+**What is still missing:** Bootstrap 5 is written with Sass `@import`, which Dart Sass 3 removes;
+`angular.json` silences that deprecation, so the build will fail when `@angular/build` ships Sass 3,
+unless Bootstrap has moved to modules first. On an unknown post slug the client drops the 404
+page's `noindex` (the response stays a 404); deferred while the blog is hidden (d-115f49-fb5f23),
+and **to be fixed before the first real post is published**, which reopens the blog's routes.
+`tools/check-site.mjs` reads neither `srcset` nor HTML entities in links; no page uses them yet.
 
 ### i-115f49-d63585 · Update the site content
 **State: Half done** (2026-10-05). The owner's answers to the plan's phase 7: the blog is hidden

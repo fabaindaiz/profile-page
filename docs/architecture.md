@@ -15,6 +15,7 @@ first visit fetches the page's HTML, one script, one stylesheet and one font, an
 | `src/app/blog/` | the blog landing and a post, routed only while a post is published (`siteRoutes` in `src/app/app.routes.ts`) |
 | `src/app/not-found/` | the page for any URL no route matches |
 | `src/content/` | the content: about, projects, stack, social, and the site's address (`site.json`); imported into the bundle by the services |
+| `src/styles.css`, `src/bootstrap.scss` | the global styles, and the parts of Bootstrap the templates use (not all of it) |
 | `src/assets/img/` | project images |
 | `blog/` | the posts, markdown with front matter |
 | `tools/icons.mjs`, `tools/posts.mjs` | generate the inline icons and the posts into the bundle before every build (`npm run generate`) |
