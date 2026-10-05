@@ -45,3 +45,7 @@ Cloudflare dashboard create a Worker from this GitHub repository (Workers Builds
 Cloudflare's build image reads `.nvmrc`; if it cannot provide Node 26, set `NODE_VERSION` to a 24.15
 or newer release, which Angular 22 also supports. Response headers (CSP, security headers,
 immutable caching of hashed files) come from `public/_headers`, completed by `tools/postbuild.mjs`.
+
+The site's address is `https://www.fadiaz.cl` (`src/content/site.json`): every canonical URL, the
+sitemap and `robots.txt` name that exact host. Attach it to the Worker as a custom domain; the bare
+`fadiaz.cl`, if it is served at all, should redirect to it, which is set up in Cloudflare, not here.

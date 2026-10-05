@@ -15,7 +15,7 @@ import { ProjectComponent } from './portfolio/project/project.component';
 export function siteRoutes(posts: readonly Post[]): Routes {
   return [
     { path: '', component: HomeComponent },
-    { path: 'about', component: AboutComponent, title: 'About Me' },
+    { path: 'about', component: AboutComponent, title: 'About Me', data: { profilePage: true } },
     { path: 'project', component: ProjectComponent, title: 'My Projects' },
     ...(posts.length ? [
       { path: 'blog', component: BlogLandingComponent, title: 'Blog' },

@@ -14,12 +14,12 @@ first visit fetches the page's HTML, one script, one stylesheet and one font, an
 | `src/app/portfolio/` | home, about, projects and links |
 | `src/app/blog/` | the blog landing and a post, routed only while a post is published (`siteRoutes` in `src/app/app.routes.ts`) |
 | `src/app/not-found/` | the page for any URL no route matches |
-| `src/content/` | the content: about, projects, stack, social; imported into the bundle by the services |
+| `src/content/` | the content: about, projects, stack, social, and the site's address (`site.json`); imported into the bundle by the services |
 | `src/assets/img/` | project images |
 | `blog/` | the posts, markdown with front matter |
 | `tools/icons.mjs`, `tools/posts.mjs` | generate the inline icons and the posts into the bundle before every build (`npm run generate`) |
 | `tools/serve.mjs`, `tools/measure.mjs` | serve a build as the host will; count each page's requests and bytes |
-| `wrangler.jsonc`, `public/_headers`, `tools/postbuild.mjs` | hosting on Cloudflare static assets: the build folder, URL handling, response headers (CSP hashes and immutable caching filled in after each build), and `404.html` |
+| `wrangler.jsonc`, `public/_headers`, `tools/postbuild.mjs` | hosting on Cloudflare static assets: the build folder, URL handling, response headers (CSP hashes and immutable caching filled in after each build), `404.html`, `sitemap.xml` and `robots.txt` |
 | `tools/audit.mjs` | the structural checks the gate runs |
 
 ## Layers

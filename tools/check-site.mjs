@@ -3,7 +3,10 @@
  * Check the built site the way a visitor meets it: every internal `href` and `src` in every HTML
  * file of the build resolves to a file the host would serve (tools/serve.mjs's rules), and every
  * `#fragment` names an `id` on the page it points to. This is the pre-ship check for the bug class
- * the sources cannot show (AGENTS.md): it reads the prerendered output, not the templates.
+ * the sources cannot show (AGENTS.md): it reads the prerendered output, not the templates. It also
+ * checks what tells search engines which pages exist: every indexable page names its own address as
+ * its canonical URL, a `noindex` page names none, and sitemap.xml lists exactly the indexable pages,
+ * as robots.txt says.
  *
  *   node tools/check-site.mjs [DIST]
  *
@@ -12,6 +15,8 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { DEFAULT_DIST, resolveFile } from './serve.mjs';
+
+const SITE = JSON.parse(readFileSync(new URL('../src/content/site.json', import.meta.url), 'utf8')).url;
 
 const dist = process.argv[2] ?? DEFAULT_DIST;
 if (!existsSync(dist)) {
@@ -60,6 +65,34 @@ for (const file of pages) {
       failures.push(`${page}: ${attr}="${value}" names #${fragment}, which ${urlOf(target)} has no id for`);
     }
   }
+}
+
+// What search engines are told: canonicals, the sitemap, robots.txt.
+const indexable = [];
+for (const file of pages) {
+  const page = urlOf(file);
+  const html = readFileSync(file, 'utf8');
+  const canonicals = [...html.matchAll(/<link\b[^>]*\brel="canonical"[^>]*>/g)].map((m) => m[0].match(/\bhref="([^"]*)"/)?.[1]);
+  if (/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html)) {
+    if (canonicals.length) failures.push(`${page}: is noindex but names a canonical URL`);
+    continue;
+  }
+  indexable.push(`${SITE}${page}`);
+  if (canonicals.length !== 1 || canonicals[0] !== `${SITE}${page}`) {
+    failures.push(`${page}: canonical should be ${SITE}${page}, is ${canonicals.length ? canonicals.join(', ') : 'missing'}`);
+  }
+}
+const sitemapFile = join(dist, 'sitemap.xml');
+if (!existsSync(sitemapFile)) {
+  failures.push('sitemap.xml: missing');
+} else {
+  const listed = [...readFileSync(sitemapFile, 'utf8').matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]);
+  for (const url of indexable.filter((u) => !listed.includes(u))) failures.push(`sitemap.xml: lacks ${url}`);
+  for (const url of listed.filter((u) => !indexable.includes(u))) failures.push(`sitemap.xml: lists ${url}, which is no indexable page`);
+}
+const robotsFile = join(dist, 'robots.txt');
+if (!existsSync(robotsFile) || !readFileSync(robotsFile, 'utf8').includes(`Sitemap: ${SITE}/sitemap.xml`)) {
+  failures.push(`robots.txt: missing, or names no Sitemap: ${SITE}/sitemap.xml`);
 }
 
 for (const f of failures) console.log(`FAIL      check-site: ${f}`);

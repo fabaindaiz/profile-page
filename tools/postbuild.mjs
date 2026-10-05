@@ -9,6 +9,9 @@
  * 3. Append one rule per file whose name carries a content hash, caching it for a year as
  *    `immutable`; everything else keeps the host's default (revalidate every time). A pattern per
  *    exact file name, because the host allows only one splat per pattern.
+ * 4. Write sitemap.xml, listing every prerendered page that is not `noindex` at the site's address
+ *    (src/content/site.json), and robots.txt, which names it. No `lastmod`: search engines use it
+ *    only when it is accurate, and nothing here knows when a page's content last changed.
  *
  *   node tools/postbuild.mjs [DIST]      (npm run build runs it)
  */
@@ -21,6 +24,8 @@ const fail = (msg) => {
   console.error(`postbuild: ${msg}`);
   process.exit(1);
 };
+
+const SITE = JSON.parse(readFileSync(new URL('../src/content/site.json', import.meta.url), 'utf8')).url;
 
 const notFound = join(dist, '404', 'index.html');
 if (!existsSync(notFound)) fail(`${notFound} was not prerendered; is the /404 route still there?`);
@@ -55,4 +60,15 @@ const rules = (headers.match(/^\//gm) ?? []).length;
 if (rules > 100) fail(`_headers has ${rules} rules; the host allows 100`);
 writeFileSync(headersFile, headers);
 
-console.log(`postbuild: 404.html written; _headers: ${hashes.size} inline script hashes, ${hashed.length} immutable files, ${rules} rules`);
+const indexable = all
+  .filter((p) => p.endsWith('index.html') && !p.endsWith('index.csr.html'))
+  .filter((p) => !/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/.test(readFileSync(join(dist, p), 'utf8')))
+  .map((p) => `${SITE}/${p.replace(/\/?index\.html$/, '')}`)
+  .sort();
+writeFileSync(
+  join(dist, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable.map((u) => `  <url><loc>${u}</loc></url>\n`).join('')}</urlset>\n`,
+);
+writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
+
+console.log(`postbuild: 404.html written; sitemap.xml: ${indexable.length} pages; _headers: ${hashes.size} inline script hashes, ${hashed.length} immutable files, ${rules} rules`);

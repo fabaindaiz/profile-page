@@ -162,6 +162,7 @@ const DATA = {
   'about.json': ['about.ts', 'About'],
   'projects.json': ['project.ts', 'Project'],
   'social.json': ['social.ts', 'Social'],
+  'site.json': ['site.ts', 'Site'],
   'stack.json': ['stack.ts', 'Stack'],
 };
 
@@ -255,8 +256,8 @@ const PATH_EXEMPT = {
   'dist/screenshots': 'output of tools/screenshots.mjs',
   'node_modules': 'created by npm install',
   '404.html': 'build output, copied from the prerendered /404 page by tools/postbuild.mjs',
-  'robots.txt': 'planned by i-115f49-636a4f; needs the site address',
-  'sitemap.xml': 'planned by i-115f49-636a4f; needs the site address',
+  'robots.txt': 'build output, written by tools/postbuild.mjs',
+  'sitemap.xml': 'build output, written by tools/postbuild.mjs',
   '.claude/settings.local.json': 'machine-local, never committed',
   '~/.config/agent-guides/carriers.toml': 'machine-local manifest, outside the repository',
   '~/.config/agent-guides/private-terms.txt': 'machine-local, outside the repository',

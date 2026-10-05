@@ -1,7 +1,10 @@
+import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router, TitleStrategy, provideRouter } from '@angular/router';
 import about from '../../content/about.json';
+import siteContent from '../../content/site.json';
+import social from '../../content/social.json';
 import { routes } from '../app.routes';
 import { POSTS } from '../blog/posts.generated';
 import { PageTitleStrategy } from './page-title.strategy';
@@ -15,7 +18,12 @@ describe('PageTitleStrategy', () => {
     });
     await TestBed.inject(Router).navigateByUrl(url);
     const meta = TestBed.inject(Meta);
+    const head = TestBed.inject(DOCUMENT).head;
+    const jsonLd = head.querySelector('script[type="application/ld+json"]')?.textContent;
     return {
+      canonical: head.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+      ogUrl: meta.getTag('property="og:url"')?.content,
+      structured: jsonLd ? JSON.parse(jsonLd) : undefined,
       title: TestBed.inject(Title).getTitle(),
       description: meta.getTag('name="description"')?.content,
       robots: meta.getTag('name="robots"')?.content,
@@ -38,5 +46,38 @@ describe('PageTitleStrategy', () => {
 
   it('keeps the not-found page out of search results', async () => {
     expect((await open('/no-such-page')).robots).toBe('noindex');
+  });
+
+  it('names each page\'s address on the site as its canonical and og:url', async () => {
+    const page = await open('/about#stack');
+    expect(page.canonical).toBe(`${siteContent.url}/about`);
+    expect(page.ogUrl).toBe(`${siteContent.url}/about`);
+  });
+
+  it('names the site\'s root as the home page\'s canonical', async () => {
+    expect((await open('/')).canonical).toBe(`${siteContent.url}/`);
+  });
+
+  it('gives the not-found page no canonical', async () => {
+    const page = await open('/no-such-page');
+    expect(page.canonical).toBeUndefined();
+    expect(page.ogUrl).toBeUndefined();
+  });
+
+  it('describes the owner as a ProfilePage on the about page', async () => {
+    expect((await open('/about')).structured).toEqual({
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      mainEntity: {
+        '@type': 'Person',
+        name: `${about.firstName} ${about.lastName}`,
+        url: `${siteContent.url}/`,
+        sameAs: social.map((s) => s.sourceUrl),
+      },
+    });
+  });
+
+  it('carries no structured data on other pages', async () => {
+    expect((await open('/project')).structured).toBeUndefined();
   });
 });

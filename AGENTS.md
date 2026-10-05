@@ -77,10 +77,11 @@ Two levels, both in CI:
 - `npm run gate` (no install; the pre-commit hook runs it): the sources' links, fragments, content
   shape and generated files, the instruction documents and the bundle.
 - `npm run check` (after `npm ci`): the Vitest suite, the prerendered build, every internal link
-  and fragment in the built HTML (`tools/check-site.mjs`), and the request budget, at most 4
-  requests besides images per page and none to another origin (`tools/measure.mjs --budget 4`)
-  (d-115f49-7d644b), and axe's WCAG 2.1 AA rules on every page at two widths (`tools/a11y.mjs`).
-  This is the pre-ship check for the bug class the sources cannot show.
+  and fragment in the built HTML and each page's canonical against `sitemap.xml`
+  (`tools/check-site.mjs`), and the request budget, at most 4 requests besides images per page and
+  none to another origin (`tools/measure.mjs --budget 4`) (d-115f49-7d644b), and axe's WCAG 2.1 AA
+  rules on every page at two widths (`tools/a11y.mjs`). This is the pre-ship check for the bug class
+  the sources cannot show.
 
 Neither sees navigation done without an `href` (a `<button routerLink>`), or how the page looks.
 After a change to `src/`, say which of these ran; what did not goes under *Not verified* in the
