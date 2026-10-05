@@ -13,19 +13,17 @@ is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robo
 `ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
 images are WebP and the stylesheet carries only the Bootstrap 5.3 the templates use: `/project`
 254 KiB, `/` 176 KiB. `npm run check` verifies the built site in CI. It is live at
-`https://www.fadiaz.cl`, deployed by hand by the owner on 2026-10-05 from the build of `dfa405c`
-(before Bootstrap 5.3 and the unknown-slug fix). `tools/check-live.mjs` at the close: headers, CSP,
-the `noindex` 404 and immutable caching hold; `/about` and `/project` redirect to a trailing slash
-(the upload skipped `wrangler.jsonc`). The site is served at `www.fadiaz.cl` only; the bare
+`https://www.fadiaz.cl`, deployed by the owner with `wrangler` on 2026-10-05 from the build of
+`cab0700` (the same script and stylesheet hashes as the local build): `tools/check-live.mjs`
+reports 0 failures. The site is served at `www.fadiaz.cl` only; the bare
 `fadiaz.cl` is not part of it (owner, 2026-10-05).
 
-**Waiting on the owner:** a `wrangler deploy`, or an upload of the folder `tools/export.mjs` writes
-(i-115f49-ab7102); the projects'
-text (i-115f49-d63585); a real post, which brings the blog back with nothing else to do.
+**Waiting on the owner:** the projects' text (i-115f49-d63585); a real post, which brings the blog back with nothing else to do.
 
 **Next session, first step:** nothing in `docs/plans/2026-10-05-roadmap-continuation.md` is left
-for the agent (its ledger). Ask whether the owner has run `npx wrangler@4.147.0 deploy` from `main`, or
-uploaded `tools/export.mjs`'s folder; then `node tools/check-live.mjs`, which should report 0 failures.
+for the agent (its ledger), and the site is live and checked. Check that the last CI run on `main` is
+green, then ask the owner what is next: the projects' text, a post, or the devicon icon
+(i-115f49-ab51be). After any deploy, `node tools/check-live.mjs`.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
@@ -111,14 +109,15 @@ toolchain.
 ## Hosting
 
 ### i-115f49-ab7102 · Deploy on Cloudflare Workers static assets and retire Docker and nginx
-**State: Half done** (2026-10-05). Configured: `wrangler.jsonc` (static assets only,
+**State: Done** (2026-10-05). Configured: `wrangler.jsonc` (static assets only,
 `drop-trailing-slash`, `404-page`), `public/_headers` (security headers and a CSP, completed after
 each build by `tools/postbuild.mjs`), and the steps in `README.md`. Docker and nginx removed
-(d-115f49-314943). The owner deployed the built site by uploading it in the dashboard; the check of
-the live site (i-115f49-90d836) found what that left:
-**What is still missing:** a deploy with `wrangler`, so `drop-trailing-slash` applies (today
-`/about` redirects to `/about/`, away from its canonical URL), from the owner's account. The bare
-`fadiaz.cl` is not served by this site, by the owner's choice (2026-10-05).
+(d-115f49-314943). The owner first uploaded the build in the dashboard, which skipped
+`wrangler.jsonc` (`/about` redirected to `/about/`), then deployed `cab0700` with `wrangler`:
+`tools/check-live.mjs` reports 0 failures; `/about/`, `/about.html` and `/about/index.html` all
+redirect to `/about`. The bare `fadiaz.cl` is not served by this site, by the owner's choice.
+**What is still missing:** whether Cloudflare's default serves `tools/export.mjs`'s `<route>.html`
+at `/route` stays unseen; the `wrangler` deploy made it unnecessary.
 **What it collides with.** Workers Builds, if used, may deploy without waiting for the GitHub check
 (unverified), and its build image's Node is unverified.
 **Answered by the live check:** `_headers` apply to the 404 response; a `Cache-Control` from
@@ -134,8 +133,7 @@ outside the code: `/about` and `/project` answer 307 to a trailing slash (the da
 not apply `wrangler.jsonc`). A third, `https://fadiaz.cl/` answering 404 from an nginx server, is
 not one: the site is served at `www.fadiaz.cl` only (owner, 2026-10-05), so `--apex` is not part of
 the routine run.
-**What is still missing:** a `wrangler deploy`, or an upload of `tools/export.mjs`'s folder, whose
-pages are `<route>.html` (i-115f49-ab7102); the owner's.
+After the owner's `wrangler` deploy of `cab0700`, the same day: 0 failures.
 
 ## Verification
 
