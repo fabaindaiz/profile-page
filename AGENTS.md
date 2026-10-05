@@ -18,12 +18,13 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
   places at once. Enforced: `audit:routes`, `audit:fragments` (d-115f49-87d6c2). Not seen: links
   built at runtime (keep their values in literal `*Path:` fields), and whether a fragment's `id` is
   on the page the link opens rather than on some page.
-- **Content matches its model.** Each file in `src/content/` is read through an interface in
-  `src/app/core/models/`, and `HttpClient`'s generic is a cast, not a check: a missing field
-  renders an empty section silently. Enforced for the top-level required fields by `audit:data`,
-  with the JSON → interface table in `tools/audit.mjs` (a new data file must be added there);
-  nested fields and value types are not checked until i-115f49-e325d4. Posts in `blog/` carry `title`,
-  `description` and `published` in their front matter: `audit:posts`.
+- **Content matches its model, and ships inside the bundle.** Each file in `src/content/` is
+  imported by its service and assigned to its interface in `src/app/core/models/`, so a missing or
+  mistyped field fails the build (rung 4); fetching it at runtime once cost eleven requests per page.
+  Before any install, `audit:data` checks the top-level required fields, with the JSON → interface
+  table in `tools/audit.mjs` (a new data file must be added there). Posts in `blog/` carry `title`,
+  `description` and `published` in their front matter: `audit:posts`, and `tools/posts.mjs` refuses a
+  post without them.
 - **A file a build derives is never tracked.** A committed copy is served in place of its source
   and goes stale without a sound: the tracked routes list once undid a route rename. Enforced:
   `audit:generated`, and `.gitignore` (d-115f49-9700ab).
@@ -62,8 +63,9 @@ Backed by `permissions.deny` in `.claude/settings.json`.
 npm run gate          # THE gate: tools/audit.mjs, bundle.py verify, record ids. No install needed
 npm ci                # install exactly the lockfile (needs the Node in .nvmrc)
 npm start             # ng serve on :4200 (client-side routing: hides the bug class above)
-npm run build         # ng build, then Scully prerenders into dist/profile-page
-npm run scully:serve  # serve the prerendered build: the closest thing to production today
+npm run build         # generate icons and posts (npm run generate), then ng build into dist/profile-page
+npm run preview -- dist/profile-page --spa   # serve the build as the host will (tools/serve.mjs)
+node tools/measure.mjs dist/profile-page --spa --routes /,/about   # requests and bytes per page
 npm test              # ng test, Karma (the specs are known to fail: docs/roadmap.md)
 ```
 

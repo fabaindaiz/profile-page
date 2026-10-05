@@ -4,18 +4,16 @@
   "scripts": {
     "ng": "ng",
     "gate": "node tools/audit.mjs && python3 .agents/tools/bundle.py verify && python3 .agents/tools/bundle.py ids docs/decisions.md docs/roadmap.md .claude/logs/agent-changelog.md",
-    "icons": "node tools/icons.mjs",
-    "prestart": "npm run icons",
+    "generate": "node tools/icons.mjs && node tools/posts.mjs",
+    "prestart": "npm run generate",
     "start": "ng serve",
-    "prebuild": "npm run icons",
-    "build": "ng build && npm run scully -- --scanRoutes",
-    "prewatch": "npm run icons",
+    "prebuild": "npm run generate",
+    "build": "ng build",
+    "preview": "node tools/serve.mjs",
+    "prewatch": "npm run generate",
     "watch": "ng build --watch --configuration development",
-    "pretest": "npm run icons",
-    "test": "ng test",
-    "scully": "npx scully --",
-    "scully:serve": "npx scully serve",
-    "scully-build": "ng build && npm run scully"
+    "pretest": "npm run generate",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -28,8 +26,6 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "@fontsource-variable/nunito": "^5.3.0",
-    "@scullyio/init": "^2.1.41",
-    "@scullyio/scully-plugin-puppeteer": "^2.1.41",
     "bootstrap": "^5.2.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -49,6 +45,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "marked": "^18.0.14",
     "typescript": "~4.9.4"
   }
 }

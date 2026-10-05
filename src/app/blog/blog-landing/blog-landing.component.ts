@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
-import { map } from 'rxjs/operators';
+import { POSTS } from '../posts.generated';
 
 @Component({
   selector: 'app-blog-landing',
@@ -8,14 +7,10 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./blog-landing.component.css']
 })
 export class BlogLandingComponent {
-  links$ = this.scully.available$.pipe(
-    map(routes => routes.filter((route: ScullyRoute) => route.route.startsWith('/blog/')))
-  );
+  posts = POSTS;
 
   respOptions = [
     { viewClasses: 'd-none d-md-flex', displayInColumn: false, titleClasses: 'display-3' },
     { viewClasses: 'd-flex d-md-none', displayInColumn: true, titleClasses: '' }
   ];
-
-  constructor(private scully: ScullyRoutesService) { }
 }

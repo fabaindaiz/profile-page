@@ -3,14 +3,14 @@
     <h1 [ngClass]="options.titleClasses" class="mb-5"><span class="fw-bold">Fabian's</span> Blog</h1>
     <div [ngClass]="{'justify-content-center flex-wrap': !options.displayInColumn,  'flex-column align-items-center': options.displayInColumn}"
         class="d-flex vw-90">
-        <div *ngFor="let page of links$ | async" class="card post-card m-3">
+        <div *ngFor="let post of posts" class="card post-card m-3">
             <div class="card-img-top bg-dark">
                 <app-icon name="fa-regular-newspaper" class="icon-4x m-5 text-white"></app-icon>
             </div>
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title post-title" [title]="page.title">{{page.title}}</h5>
-                <p class="card-text post-description flex-grow-1">{{page['description']}}</p>
-                <a [routerLink]="page.route" class="btn btn-outline-dark align-self-center">
+                <h5 class="card-title post-title" [title]="post.title">{{post.title}}</h5>
+                <p class="card-text post-description flex-grow-1">{{post.description}}</p>
+                <a [routerLink]="'/blog/' + post.slug" class="btn btn-outline-dark align-self-center">
                     <app-icon name="fa-regular-eye" class="icon-lg me-1"></app-icon>
                     Read
                 </a>

@@ -11,7 +11,7 @@
 | `src/content/` | the content: about, projects, stack, social |
 | `src/assets/img/` | project images |
 | `blog/` | the posts, markdown with front matter |
-| `scully.profile-page.config.ts` | which routes Scully prerenders, the blog's content folder among them |
+| `tools/icons.mjs`, `tools/posts.mjs` | generate the inline icons and the posts into the bundle before every build (`npm run generate`) |
 | `Dockerfile`, `nginx/` | today's deploy: build in Node with Chrome, serve with nginx |
 | `tools/audit.mjs` | the structural checks the gate runs |
 

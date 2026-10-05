@@ -1,7 +1,6 @@
 # ProfilePage
 
-A personal portfolio and markdown blog, built with Angular and prerendered to static HTML by
-Scully. Every page a visitor reaches is a file the build wrote, so a broken link only shows in the
+A personal portfolio and markdown blog, built with Angular as a static site. Every page a visitor reaches is a file the build wrote, so a broken link only shows in the
 built site, never on the development server. Rules, decisions and plans: [`AGENTS.md`](AGENTS.md).
 
 ## Commands
@@ -22,10 +21,10 @@ Enable the git hooks once per clone: `git config core.hooksPath .githooks`.
 npm run build
 ```
 
-#### Preview the prerendered build
+#### Preview the build
 
 ```bash
-npm run scully:serve
+npm run preview -- dist/profile-page --spa
 ```
 
 #### Unit tests
@@ -47,10 +46,6 @@ docker run --name profile-page -d -p 8080:80 profile-page
 
 - [setup local](https://angular.io/guide/setup-local)
 - [angular toh](https://angular.io/tutorial/tour-of-heroes/toh-pt0)
-
-#### Scully
-
-- [portfolio with scully](https://www.digitalocean.com/community/tutorials/how-to-build-a-jamstack-portfolio-with-angular-11-and-scully#step-7-previewing-the-static-site)
 
 #### Libraries
 

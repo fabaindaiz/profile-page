@@ -2,8 +2,7 @@
 /**
  * Measure what a first visit to each page of the built site costs: requests and bytes, by origin.
  *
- * Serves a build folder the way the target host does (a path is served from `<path>/index.html`,
- * `<path>.html` or the file itself, with no trailing-slash redirect), opens every page in a
+ * Serves a build folder the way the target host does (tools/serve.mjs), opens every page in a
  * headless Chromium with an empty cache, and counts every request the page makes until the
  * network is idle. A request to another origin is counted and fetched for real.
  *
@@ -15,9 +14,9 @@
  * With --budget N it exits 1 when any page makes more than N requests to its own origin, or any
  * request to another origin. Needs Playwright's Chromium (`npx playwright install chromium`).
  */
-import { createReadStream, existsSync, readdirSync, statSync } from 'node:fs';
-import { createServer } from 'node:http';
-import { extname, join, relative, sep } from 'node:path';
+import { existsSync, readdirSync, statSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
+import { DEFAULT_DIST, siteServer } from './serve.mjs';
 
 const args = process.argv.slice(2);
 const json = args.includes('--json');
@@ -27,27 +26,11 @@ const spa = args.includes('--spa');
 const routesAt = args.indexOf('--routes');
 const routes = routesAt >= 0 ? args[routesAt + 1].split(',') : null;
 const skip = new Set([budgetAt + 1, routesAt + 1].filter((i) => i > 0));
-const dist = args.find((a, i) => !a.startsWith('--') && !skip.has(i)) ?? 'dist/profile-page/browser';
+const dist = args.find((a, i) => !a.startsWith('--') && !skip.has(i)) ?? DEFAULT_DIST;
 
 if (!existsSync(dist)) {
   console.error(`measure: ${dist} does not exist; build first`);
   process.exit(2);
-}
-
-const TYPES = {
-  '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css',
-  '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg',
-  '.webp': 'image/webp', '.avif': 'image/avif', '.ico': 'image/x-icon', '.woff2': 'font/woff2',
-  '.woff': 'font/woff', '.ttf': 'font/ttf', '.txt': 'text/plain', '.xml': 'application/xml',
-};
-
-function resolveFile(urlPath) {
-  const clean = decodeURIComponent(urlPath.split(/[?#]/)[0]).replace(/\/+$/, '') || '/';
-  const base = join(dist, clean);
-  for (const candidate of [base, `${base}.html`, join(base, 'index.html')]) {
-    if (existsSync(candidate) && statSync(candidate).isFile()) return candidate;
-  }
-  return null;
 }
 
 /** Every page the build wrote: each `index.html`, by the URL it is served at. */
@@ -61,16 +44,7 @@ function pages(dir = dist) {
   });
 }
 
-const server = createServer((req, res) => {
-  const file = resolveFile(req.url) ?? (spa && !extname(req.url.split(/[?#]/)[0]) ? join(dist, 'index.html') : null);
-  const notFound = join(dist, '404.html');
-  if (!file) {
-    res.writeHead(404, { 'content-type': 'text/html' });
-    return existsSync(notFound) ? createReadStream(notFound).pipe(res) : res.end('not found');
-  }
-  res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
-  createReadStream(file).pipe(res);
-});
+const server = siteServer(dist, { spa });
 
 await new Promise((ok) => server.listen(0, '127.0.0.1', ok));
 const origin = `http://127.0.0.1:${server.address().port}`;

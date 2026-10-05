@@ -26,8 +26,9 @@ The gate cannot see these; run what the machine allows and say which ran:
 
 ```bash
 npm ci               # with the Node in .nvmrc
-npm run build        # ng build, then Scully's prerender
-npm run scully:serve # then open every page the change touched, at the prerendered URL
+npm run build                                # generate icons and posts, then ng build
+npm run preview -- dist/profile-page --spa   # then open every page the change touched
+node tools/measure.mjs dist/profile-page --spa --routes /,/about,/project,/blog   # requests per page
 ```
 
 Open the page, do not infer it: a section whose JSON lost a field renders empty with no error.

@@ -1,3 +1,7 @@
-<div class="vw-70">
-    <scully-content></scully-content>
-</div> 
+<div class="vw-70 post" *ngIf="post$ | async as post; else missing" [innerHTML]="post.html"></div>
+<ng-template #missing>
+    <div class="vw-70 post text-center">
+        <h1>Post not found</h1>
+        <p><a routerLink="/blog">Back to the blog</a></p>
+    </div>
+</ng-template>

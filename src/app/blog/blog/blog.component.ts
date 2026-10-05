@@ -1,19 +1,20 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, Router, ROUTES} from '@angular/router';
-
-declare var ng: any;
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { POSTS } from '../posts.generated';
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css'],
-  preserveWhitespaces: true,
-  encapsulation: ViewEncapsulation.Emulated
-
+  // The post body is inserted as HTML, which emulated encapsulation would leave unstyled.
+  encapsulation: ViewEncapsulation.None
 })
-export class BlogComponent implements OnInit {
-  ngOnInit() {}
+export class BlogComponent {
+  /** The post named by the URL, or null when no published post has that slug. */
+  post$ = this.route.paramMap.pipe(
+    map((params) => POSTS.find((post) => post.slug === params.get('slug')) ?? null)
+  );
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-  }
+  constructor(private route: ActivatedRoute) { }
 }
