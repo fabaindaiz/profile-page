@@ -250,10 +250,10 @@ const INSTRUCTION_DOCS = () => [
 /** Paths named that do not exist on purpose, each with its reason. */
 const PATH_EXEMPT = {
   'dist/profile-page': 'build output, created by the build',
-  'dist/profile-page/browser': 'build output of the application builder, after the migration',
+  'dist/profile-page/browser': 'build output of the application builder',
+  'dist/screenshots': 'output of tools/screenshots.mjs',
   'node_modules': 'created by npm install',
   '404.html': 'build output, copied from the prerendered /404 page by tools/not-found.mjs',
-  'tools/screenshots.mjs': 'planned by i-115f49-03e2ea',
   'robots.txt': 'planned by i-115f49-636a4f; needs the site address',
   'sitemap.xml': 'planned by i-115f49-636a4f; needs the site address',
   '.claude/settings.local.json': 'machine-local, never committed',

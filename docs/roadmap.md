@@ -38,7 +38,7 @@ would skip the code migrations. The update is done (i-115f49-8c7fbe), so nothing
 **What must be decided first.** Weekly or monthly; whether patches ever merge on their own.
 
 ### i-115f49-03e2ea · A committed script that screenshots every built page at two widths
-**State: Planned.**
+**State: Done** (2026-10-05, s-115f49-187eff): `tools/screenshots.mjs`.
 **What happens now.** Each visual check was a scratch script, rewritten as the build path changed:
 build, serve, open each route at 1280 and 390 pixels, save, look.
 **Cost.** About a minute to rewrite each time × done after every template change × every session
@@ -92,8 +92,8 @@ unverified; Angular 22 also runs on 24.15 or newer.
 `tools/check-site.mjs`, `tools/measure.mjs --budget 4` (which also fails on console errors and CSP
 violations) and `tools/a11y.mjs` (axe, WCAG 2.1 AA). Each was seen to fail on a planted fault.
 Content schemas were not needed: the content is typed against its models at compile time.
-**What is still missing:** nothing renders a page and compares it with how it should look
-(i-115f49-03e2ea is the first step); Lighthouse was not added.
+**What is still missing:** pages are screenshotted (`tools/screenshots.mjs`) but compared by eye,
+not against a stored baseline; Lighthouse was not added.
 
 ## The site
 

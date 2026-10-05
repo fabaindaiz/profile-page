@@ -29,6 +29,7 @@ npm ci               # with the Node in .nvmrc
 npm run build           # generate icons and posts, then prerender every route
 npm run preview         # then open every page the change touched
 node tools/measure.mjs  # requests and compressed bytes per page
+node tools/screenshots.mjs  # then look at every page the change touched, at both widths
 ```
 
 Open the page, do not infer it: a section whose JSON lost a field renders empty with no error.

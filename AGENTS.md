@@ -43,7 +43,8 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
   Before pushing,
   `git log --format=%B <base>..HEAD | grep -ci co-authored` must print 0.
 - **Look at the built site before calling a page change done.** No check renders a page and looks
-  at it, so a template change is unverified until the built page was opened (`npm run preview`).
+  at it, so a template change is unverified until the built page was opened (`npm run preview`) or
+  its screenshots looked at (`tools/screenshots.mjs`).
 
 ## Files you should not hand-edit
 
@@ -64,6 +65,7 @@ npm start             # ng serve on :4200 (client-side routing: hides the bug cl
 npm run build         # generate icons and posts, then prerender every route into dist/profile-page/browser
 npm run preview       # serve that build as the host will, 404s included (tools/serve.mjs)
 node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
+node tools/screenshots.mjs   # every built page at 1280 and 390 px, into dist/screenshots
 npm test              # generate, then the Vitest suite (ng test --watch=false)
 npm run check         # the built site: tests, build, links, request budget, accessibility (CI runs it)
 ```
