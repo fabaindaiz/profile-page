@@ -13,14 +13,13 @@ is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robo
 `ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
 images are WebP and the stylesheet carries only the Bootstrap the templates use: `/project` 252 KiB,
 `/` 174 KiB. `npm run check` verifies the built site in CI. It is configured for Cloudflare static
-assets and **not deployed**. This work is on the branch `site-content-and-weight`, not merged.
+assets and **not deployed**; the owner has the built site as a zip, to upload by hand.
 
 **Waiting on the owner:** the deploy from the Cloudflare account, with `www.fadiaz.cl` as the
 Worker's custom domain (`README.md`, *Deploy*); the projects' text (i-115f49-d63585); a real post,
 before which the `noindex` fix lands (i-115f49-636a4f).
 
-**Next session, first step:** if the branch is not merged, ask the owner whether to merge it; check
-that the last CI run on `main` is green; then Dependabot (i-115f49-7fea76), which needs only the
+**Next session, first step:** check that the last CI run on `main` is green; then Dependabot (i-115f49-7fea76), which needs only the
 owner's answer on weekly or monthly.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
