@@ -1,16 +1,17 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import stack from '../../../assets/json/stack.json';
 import { Stack } from '../models/stack';
 
+/** Compiled into the bundle: typed against the model at build time, and never fetched. */
+const STACK: Stack[] = stack;
 
 @Injectable({
   providedIn: 'root'
 })
 export class StackService {
 
-  constructor(private http: HttpClient) { }
-
-  getStack() {
-    return this.http.get<Stack[]>('assets/json/stack.json');
+  getStack(): Observable<Stack[]> {
+    return of(STACK);
   }
 }

@@ -1,16 +1,17 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import about from '../../../assets/json/about.json';
 import { About } from '../models/about';
 
+/** Compiled into the bundle: typed against the model at build time, and never fetched. */
+const ABOUT: About = about;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AboutService {
 
-  constructor(private http: HttpClient) { }
-
-  getAbout() {
-    return this.http.get<About>('assets/json/about.json');
+  getAbout(): Observable<About> {
+    return of(ABOUT);
   }
 }

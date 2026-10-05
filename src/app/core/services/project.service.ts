@@ -1,27 +1,17 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter, mergeAll, toArray } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import projects from '../../../assets/json/projects.json';
 import { Project } from '../models/project';
+
+/** Compiled into the bundle: typed against the model at build time, and never fetched. */
+const PROJECTS: Project[] = projects;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  constructor(private http: HttpClient) { }
-
   getProjects(featured?: boolean): Observable<Project[]> {
-    let projects$ = this.http.get<Project[]>('assets/json/projects.json');
-
-    if (featured) {
-      return projects$.pipe(
-        mergeAll(),
-        filter(project => project.featured || false),
-        toArray()
-      );
-    }
-
-    return projects$;
+    return of(featured ? PROJECTS.filter((project) => project.featured) : PROJECTS);
   }
 }
