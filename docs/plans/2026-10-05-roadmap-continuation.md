@@ -91,3 +91,8 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
   check passes against `npm run preview`.
 - 2026-10-05, phase 3 done: `tools/screenshots.mjs --compare`, 11 shots, deterministic over two
   runs, a planted style change caught.
+- 2026-10-05, phase 4 done, a commit each: the two unused packages out; Bootstrap 5.3.8 with
+  `$enable-dark-mode: false`; marked 18.1. Every step: `npm run check` green, 11 screenshots
+  identical. Ruling: devicon left at 2.15.1, since 2.17 drops the MySQL icon the about page shows
+  and a replacement is a visual choice for the owner. With phase 5 dropped, phase 6 waits for a
+  real post; what remains is the owner's (a `wrangler deploy`, the bare domain, the projects' text).

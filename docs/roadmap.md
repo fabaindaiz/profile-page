@@ -11,8 +11,8 @@ measurement, Blocked outside) and is never deleted. Ids come from
 costs a first visit 4 requests (HTML, script, stylesheet, font), none to another origin. Its address
 is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robots.txt` and a
 `ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
-images are WebP and the stylesheet carries only the Bootstrap the templates use: `/project` 252 KiB,
-`/` 174 KiB. `npm run check` verifies the built site in CI. It is configured for Cloudflare static
+images are WebP and the stylesheet carries only the Bootstrap 5.3 the templates use: `/project`
+254 KiB, `/` 176 KiB. `npm run check` verifies the built site in CI. It is configured for Cloudflare static
 assets; the owner deployed it by hand on 2026-10-05, and how it behaves online is not yet checked
 (i-115f49-90d836).
 
@@ -45,11 +45,14 @@ would skip the code migrations. The update is done (i-115f49-8c7fbe), so nothing
 `docs/plans/2026-10-05-roadmap-continuation.md`, phase 5.
 
 ### i-115f49-ab51be · Drop deprecated unused packages and take Bootstrap 5.3
-**State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 4).
-`@angular/animations` (deprecated by Angular) and `@angular/platform-browser-dynamic` are
-dependencies nothing imports; Bootstrap is 5.2.3 where 5.3.8 is out; devicon and marked have minors.
-**What it collides with.** Bootstrap 5.3 changes CSS the pages render, and only a screenshot shows
-it: it waits for i-115f49-097b7e. The owner wants Bootstrap 5.3 now (2026-10-05).
+**State: Done** (2026-10-05), one commit each, each with `npm run check` green and the 11
+screenshots of `tools/screenshots.mjs --compare` identical to the baseline: `@angular/animations`
+and `@angular/platform-browser-dynamic` removed; Bootstrap 5.3.8 (with `$enable-dark-mode: false`;
+the stylesheet 68 → 75.8 kB raw, 8.1 → 9.1 kB compressed, 5.3's per-component variables); marked
+18.1 (the test post converts as before).
+**What is still missing:** devicon stays at 2.15.1: 2.17 no longer ships `mysql-plain`, which the
+about page's stack shows, and a replacement (`mysql-original`, coloured) changes how it looks; the
+owner's choice.
 
 ### i-115f49-03e2ea · A committed script that screenshots every built page at two widths
 **State: Done** (2026-10-05, s-115f49-187eff): `tools/screenshots.mjs`.

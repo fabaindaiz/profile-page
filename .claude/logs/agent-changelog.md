@@ -16,7 +16,12 @@ the work that did not need them, one commit each: the blog is hidden while no po
 unpublished); canonical URLs, `og:url`, `sitemap.xml`, `robots.txt` and a schema.org `ProfilePage`
 on `/about`, from the address `www.fadiaz.cl`; project images as WebP at 600 pixels with their
 dimensions; only the parts of Bootstrap the templates use. A fix to `audit:routes`, which could not
-read a route object holding `data: { ... }`.
+read a route object holding `data: { ... }`. Then, after the merge and the zip the owner deployed by
+hand: a plan for the rest of the roadmap (`docs/plans/2026-10-05-roadmap-continuation.md`),
+`tools/check-live.mjs` (the deployed site against the build's promises; `tools/serve.mjs` now
+redirects a trailing slash as the host does), `tools/screenshots.mjs --compare` (pixel by pixel
+against a baseline, with three interactive states), and the dependencies: two unused Angular
+packages out, Bootstrap 5.3.8, marked 18.1.
 
 **Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
 `blog/`, `tools/audit.mjs`, `tools/check-site.mjs`, `tools/postbuild.mjs`, `AGENTS.md`, `README.md`,
@@ -50,32 +55,43 @@ step; `npm run gate` before every commit.
 - Splitting that fix from the SEO commit: the gate reads the working tree, where the new
   `site.json` was untracked, so `audit:doc-paths` refused; `git stash --keep-index
   --include-untracked` let the gate see exactly the staged commit.
+- `check-live`'s first run went to production instead of the local preview: its argument parsing
+  skipped index 0 when `--apex` was absent. It only read the public site; fixed before the next run.
+- The screenshot comparison's menu shot first differed by 1600 pixels between two identical runs:
+  a .15 s button transition. A wait fixed it, and two runs then gave 0.
+- devicon 2.17 failed the build (no `mysql-plain`); held at 2.15.1.
 - Small ones: two `open()` calls in one test reconfigured a used TestBed; a spec's import `site`
   collided with a local `site`; the shell did not split `$r` into `cwebp` arguments.
 
-**What was left undone.** The projects' text (the owner's). The `noindex` fix, before the first
+**What was left undone.** On the live site, three failures `check-live` found, all the owner's in
+Cloudflare: `/about` and `/project` redirect to a trailing slash (the dashboard upload did not apply
+`wrangler.jsonc`; a `wrangler deploy` does), and `fadiaz.cl` answers 404 from an nginx server. The
+deployed copy predates Bootstrap 5.3 (pixel-identical). devicon held at 2.15.1 (its 2.17 drops the
+MySQL icon). Dependabot dropped by the owner. The projects' text (the owner's). The `noindex` fix, before the first
 real post. Dependabot (not chosen this time). Sass 3 will remove the `@import` Bootstrap 5 is
 written with; its deprecation is silenced in `angular.json` (i-115f49-636a4f).
 
 **Deviation from the plan.** WebP only, not AVIF: one file per image and a plain `<img>`, no
 `<picture>`; every current browser decodes WebP. Reversible in minutes.
 
-**Not verified.** Anything on Cloudflare, including the custom domain and how `www` and the bare
-domain are set up there. Google's Rich Results Test on the `ProfilePage` (it needs the site
+**Not verified.** Google's Rich Results Test on the `ProfilePage` (it needs the site
 online). The blog's pages with a published post: their content tests skip while none is (4 skipped).
 Screenshot states not covered by the comparison: keyboard focus, a selected project filter.
 
 **Measured.** Local build, `tools/measure.mjs` and the Angular build's table, 2026-10-05:
 `/project` first visit 1705 → 252 KiB; `/` 190 → 174 KiB; stylesheet 196.5 → 68 kB raw (20.8 →
 8.1 kB estimated transfer); initial bundle 524 → 397 kB. 25 tests passed, 4 skipped; `check-site`
-5 pages, 60 links, 0 broken; axe 0 violations.
+5 pages, 60 links, 0 broken; axe 0 violations. With Bootstrap 5.3: `/` 176 KiB, `/project` 254 KiB,
+stylesheet 75.8 kB raw. `check-live` against `https://www.fadiaz.cl`: 3 failures, listed above.
 
 **Learned.** General: a gate piped into `tail` or `grep` reports the pipe's status, not its own;
 chain it bare. General: comparing screenshots pixel by pixel, after showing the capture is
 deterministic and the comparer sees a planted difference, turns "looks the same" into a measurement.
 Local: the stash procedure for a commit whose gate must not see later untracked files, here.
-Captured: 2 learnings, 4 frictions (gate behind a pipe, 2; gate reads the working tree, 1; shell
-word splitting, 1). Waiting on the owner: the projects' text, the deploy.
+General: a dashboard upload of a static build skips the deploy tool's configuration; check routing
+on the live site, not only the files. Captured: 3 learnings, 6 frictions (gate behind a pipe, 2;
+gate reads the working tree, 1; shell word splitting, 1; transition caught mid-way in a screenshot,
+1; a check's default target was production, 1). Waiting on the owner: a `wrangler deploy`, the bare domain, the projects' text, the devicon icon.
 
 ## 2026-10-05 · s-115f49-187eff — Optimise the static build and update Angular to 22
 
