@@ -9,10 +9,10 @@ import { ProjectComponent } from './portfolio/project/project.component';
 /** Every page, loaded with the app: one bundle, so a first visit fetches no route chunk. */
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'project', component: ProjectComponent },
-  { path: 'blog', component: BlogLandingComponent },
-  { path: 'blog/:slug', component: BlogComponent },
-  { path: '404', component: NotFoundComponent },
-  { path: '**', component: NotFoundComponent }
+  { path: 'about', component: AboutComponent, title: 'About Me' },
+  { path: 'project', component: ProjectComponent, title: 'My Projects' },
+  { path: 'blog', component: BlogLandingComponent, title: 'Blog' },
+  { path: 'blog/:slug', component: BlogComponent, title: 'Post not found' },
+  { path: '404', component: NotFoundComponent, title: 'Page not found', data: { noindex: true } },
+  { path: '**', component: NotFoundComponent, title: 'Page not found', data: { noindex: true } }
 ];
