@@ -8,17 +8,20 @@ measurement, Blocked outside) and is never deleted. Ids come from
 ## Where we are
 
 2026-10-05. The site is Angular 22, standalone and zoneless, prerendered to static HTML: every page
-costs a first visit 4 requests (HTML, script, stylesheet, font), none to another origin, down from
-22 on the home page (`docs/plans/2026-10-05-site-update.md` has the measurements). `npm run check`
-verifies the built site in CI. It is configured for Cloudflare static assets and **not deployed**.
-The work is merged into `main` and pushed; the session closed with a review in a fresh context
-(no blocker; what it deferred is under i-115f49-ab7102 and i-115f49-636a4f).
+costs a first visit 4 requests (HTML, script, stylesheet, font), none to another origin. Its address
+is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robots.txt` and a
+`ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
+images are WebP and the stylesheet carries only the Bootstrap the templates use: `/project` 252 KiB,
+`/` 174 KiB. `npm run check` verifies the built site in CI. It is configured for Cloudflare static
+assets and **not deployed**. This work is on the branch `site-content-and-weight`, not merged.
 
-**Waiting on the owner:** the site's address; the content questions in the plan's phase 7
-(projects, the blog, a contact link); whether and when to deploy (i-115f49-ab7102).
+**Waiting on the owner:** the deploy from the Cloudflare account, with `www.fadiaz.cl` as the
+Worker's custom domain (`README.md`, *Deploy*); the projects' text (i-115f49-d63585); a real post,
+before which the `noindex` fix lands (i-115f49-636a4f).
 
-**Next session, first step:** read `docs/plans/2026-10-05-site-update.md` §*Phase 7*, ask the owner
-those questions together, and check that the last CI run on `main` is green.
+**Next session, first step:** if the branch is not merged, ask the owner whether to merge it; check
+that the last CI run on `main` is green; then Dependabot (i-115f49-7fea76), which needs only the
+owner's answer on weekly or monthly.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then

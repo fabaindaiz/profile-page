@@ -171,3 +171,7 @@ the rest being `immutable`; that holds on the host and is unverified until a dep
    made with Scully. Which to update, add or feature?
 3. The blog's only post is a test. Keep the blog with real posts, or hide it until there is one?
 4. A contact or CV link: which, if any?
+
+**Answered on 2026-10-05** (the state is in `docs/roadmap.md`): 1, `www.fadiaz.cl`
+(d-115f49-a0fe6e); 2, still open, the owner's text (i-115f49-d63585); 3, hide the blog until a real
+post exists (d-115f49-fb5f23); 4, none beyond the current social links.

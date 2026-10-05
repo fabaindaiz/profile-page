@@ -8,6 +8,75 @@ of the file.
 
 ---
 
+## 2026-10-05 · s-115f49-e52a39 — Hide the blog, SEO with the address, lighter images and stylesheet
+
+**What.** Reviewed the roadmap with the owner and acted on the answers to the plan's phase 7 and
+the work that did not need them, one commit each: the blog is hidden while no post is published
+(its routes, prerendered post pages and menu item exist only while one is; the test post is
+unpublished); canonical URLs, `og:url`, `sitemap.xml`, `robots.txt` and a schema.org `ProfilePage`
+on `/about`, from the address `www.fadiaz.cl`; project images as WebP at 600 pixels with their
+dimensions; only the parts of Bootstrap the templates use. A fix to `audit:routes`, which could not
+read a route object holding `data: { ... }`.
+
+**Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
+`blog/`, `tools/audit.mjs`, `tools/check-site.mjs`, `tools/postbuild.mjs`, `AGENTS.md`, `README.md`,
+`docs/`, `.claude/skills/troubleshoot-site/`.
+
+**Why.** The owner asked to review the roadmap and evaluate how to continue, then answered: own
+domain, `www.fadiaz.cl`; hide the blog until a real post exists, deferring the `noindex` fix until
+then; no contact link beyond the social ones; and, meanwhile, the images (a one-time conversion, no
+dependency), the `noindex` fix (deferred by the blog answer) and trimming Bootstrap.
+
+**Architecture.** ✅ Complies. New decisions d-115f49-fb5f23 (the blog is routed only while a post
+is published) and d-115f49-a0fe6e (the site's address). The address is content, in
+`src/content/site.json` with its model and `DATA` row, read by the title strategy and by the tools.
+
+**Cards relied on, and the checks that ran.** `a-check-must-be-seen-to-fail`: the blog-hiding tests
+(red against a stub and against routes forced on), the SEO tests (three red before the code),
+`check-site`'s new checks (five planted canonical and sitemap faults, then five images without
+dimensions), `audit:routes` after its fix (a planted broken link), and the screenshot comparer (a
+planted different image) were each seen red. `derived-copy-goes-stale-silently`: `sitemap.xml` and
+`robots.txt` are written by the build into `dist`, never tracked. `npm run check` passed after every
+step; `npm run gate` before every commit.
+
+**Review.** none.
+
+**What went wrong on the way.**
+- Twice the gate was chained through a pipe (`| tail`, `| grep`), which hides its exit status; the
+  pre-commit hook ran it on the staged copy each time, and it passed.
+- `audit:routes` stopped seeing `/about` once its route held `data: { profilePage: true }`: the
+  parser matched only brace-free objects (the not-found routes had gone unseen the same way). Fixed
+  in its own commit.
+- Splitting that fix from the SEO commit: the gate reads the working tree, where the new
+  `site.json` was untracked, so `audit:doc-paths` refused; `git stash --keep-index
+  --include-untracked` let the gate see exactly the staged commit.
+- Small ones: two `open()` calls in one test reconfigured a used TestBed; a spec's import `site`
+  collided with a local `site`; the shell did not split `$r` into `cwebp` arguments.
+
+**What was left undone.** The projects' text (the owner's). The `noindex` fix, before the first
+real post. Dependabot (not chosen this time). Sass 3 will remove the `@import` Bootstrap 5 is
+written with; its deprecation is silenced in `angular.json` (i-115f49-636a4f).
+
+**Deviation from the plan.** WebP only, not AVIF: one file per image and a plain `<img>`, no
+`<picture>`; every current browser decodes WebP. Reversible in minutes.
+
+**Not verified.** Anything on Cloudflare, including the custom domain and how `www` and the bare
+domain are set up there. Google's Rich Results Test on the `ProfilePage` (it needs the site
+online). The blog's pages with a published post: their content tests skip while none is (4 skipped).
+Screenshot states not covered by the comparison: keyboard focus, a selected project filter.
+
+**Measured.** Local build, `tools/measure.mjs` and the Angular build's table, 2026-10-05:
+`/project` first visit 1705 → 252 KiB; `/` 190 → 174 KiB; stylesheet 196.5 → 68 kB raw (20.8 →
+8.1 kB estimated transfer); initial bundle 524 → 397 kB. 25 tests passed, 4 skipped; `check-site`
+5 pages, 60 links, 0 broken; axe 0 violations.
+
+**Learned.** General: a gate piped into `tail` or `grep` reports the pipe's status, not its own;
+chain it bare. General: comparing screenshots pixel by pixel, after showing the capture is
+deterministic and the comparer sees a planted difference, turns "looks the same" into a measurement.
+Local: the stash procedure for a commit whose gate must not see later untracked files, here.
+Captured: 2 learnings, 4 frictions (gate behind a pipe, 2; gate reads the working tree, 1; shell
+word splitting, 1). Waiting on the owner: the projects' text, the deploy.
+
 ## 2026-10-05 · s-115f49-187eff — Optimise the static build and update Angular to 22
 
 **What.** Executed `docs/plans/2026-10-05-site-update.md`, phases 1 to 6: a measured baseline; the
