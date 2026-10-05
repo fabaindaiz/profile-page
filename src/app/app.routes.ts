@@ -24,7 +24,6 @@ export function siteRoutes(posts: readonly Post[]): Routes {
       {
         path: 'blog/:slug',
         component: BlogComponent,
-        title: 'Post not found',
         canMatch: [(_route: Route, segments: UrlSegment[]) => posts.some((post) => post.slug === segments[1]?.path)],
       },
     ] : []),

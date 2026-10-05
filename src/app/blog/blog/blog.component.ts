@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { POSTS } from '../posts.generated';
 import { AsyncPipe } from '@angular/common';
@@ -11,10 +11,10 @@ import { AsyncPipe } from '@angular/common';
     // The post body is inserted as HTML, which emulated encapsulation would leave unstyled.
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [RouterLink, AsyncPipe]
+    imports: [AsyncPipe]
 })
 export class BlogComponent {
-  /** The post named by the URL, or null when no published post has that slug. */
+  /** The post named by the URL; the route matches only a published post's slug (app.routes.ts). */
   post$ = this.route.paramMap.pipe(
     map((params) => POSTS.find((post) => post.slug === params.get('slug')) ?? null)
   );
