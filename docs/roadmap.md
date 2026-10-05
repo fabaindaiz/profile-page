@@ -13,14 +13,14 @@ is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robo
 `ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
 images are WebP and the stylesheet carries only the Bootstrap the templates use: `/project` 252 KiB,
 `/` 174 KiB. `npm run check` verifies the built site in CI. It is configured for Cloudflare static
-assets and **not deployed**; the owner has the built site as a zip, to upload by hand.
+assets; the owner deployed it by hand on 2026-10-05, and how it behaves online is not yet checked
+(i-115f49-90d836).
 
-**Waiting on the owner:** the deploy from the Cloudflare account, with `www.fadiaz.cl` as the
-Worker's custom domain (`README.md`, *Deploy*); the projects' text (i-115f49-d63585); a real post,
+**Waiting on the owner:** the projects' text (i-115f49-d63585); a real post,
 before which the `noindex` fix lands (i-115f49-636a4f).
 
-**Next session, first step:** `docs/plans/2026-10-05-roadmap-continuation.md`: the owner's four
-decisions at its end, then its phases in order.
+**Next session, first step:** `docs/plans/2026-10-05-roadmap-continuation.md`: its ledger says
+which phases are done; continue with the next.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
@@ -37,17 +37,19 @@ paths in `.claude/settings.json` deny rules hold for a session started in a subf
 and they do not cover writes made through the shell.
 
 ### i-115f49-7fea76 · Dependency updates with Dependabot
-**State: Planned.** Dependabot with Angular minor and patch updates grouped, majors ignored.
+**State: Blocked outside** (owner's decision, 2026-10-05: no Dependabot; updates are done by hand,
+as i-115f49-ab51be does once). Dependabot with Angular minor and patch updates grouped, majors ignored.
 **What it collides with.** Neither bot runs `ng update` migrations: a bot bumping an Angular major
 would skip the code migrations. The update is done (i-115f49-8c7fbe), so nothing blocks it now.
-**What must be decided first.** Weekly or monthly; whether patches ever merge on their own.
+**What would reopen it.** The owner asking for it; the configuration is sketched in
+`docs/plans/2026-10-05-roadmap-continuation.md`, phase 5.
 
 ### i-115f49-ab51be · Drop deprecated unused packages and take Bootstrap 5.3
 **State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 4).
 `@angular/animations` (deprecated by Angular) and `@angular/platform-browser-dynamic` are
 dependencies nothing imports; Bootstrap is 5.2.3 where 5.3.8 is out; devicon and marked have minors.
 **What it collides with.** Bootstrap 5.3 changes CSS the pages render, and only a screenshot shows
-it: it waits for i-115f49-097b7e. **What must be decided first.** Whether Bootstrap 5.3 is wanted now.
+it: it waits for i-115f49-097b7e. The owner wants Bootstrap 5.3 now (2026-10-05).
 
 ### i-115f49-03e2ea · A committed script that screenshots every built page at two widths
 **State: Done** (2026-10-05, s-115f49-187eff): `tools/screenshots.mjs`.

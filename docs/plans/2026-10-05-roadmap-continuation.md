@@ -81,3 +81,7 @@ dependency).
 ## Ledger
 
 Rulings taken on the owner's behalf while executing, and results, are appended here as they happen.
+
+- 2026-10-05, the owner's answers: merge this plan and push `main`; the owner had already deployed
+  the built site by hand, so phase 1 is done and phase 2 is next; **no Dependabot** (phase 5 is
+  dropped, i-115f49-7fea76 blocked outside); Bootstrap 5.3 is wanted, in phase 4.
