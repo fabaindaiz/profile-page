@@ -8,8 +8,8 @@ describe('StackComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SocialComponent ]
-    })
+    imports: [SocialComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(SocialComponent);

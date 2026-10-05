@@ -1,13 +1,15 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AboutService } from '../../core/services/about.service';
 import { StackService } from '../../core/services/stack.service';
+import { NgClass, NgStyle, AsyncPipe } from '@angular/common';
+import { IconComponent } from '../../core/icon/icon.component';
 
 @Component({
     selector: 'app-about',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NgClass, NgStyle, IconComponent, AsyncPipe]
 })
 export class AboutComponent {
   about$ = this.aboutService.getAbout();

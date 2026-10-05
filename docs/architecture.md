@@ -1,38 +1,49 @@
 # Architecture
 
+A standalone Angular application: no NgModules, no zone.js, every route loaded with the app. A
+first visit fetches the page's HTML, one script, one stylesheet and one font, and nothing else
+(`tools/measure.mjs` measures it).
+
 ## The tree
 
 | Path | Holds |
 |---|---|
-| `src/app/app-routing.module.ts` | the top routes, each lazily loading a feature module |
-| `src/app/core/` | what every page uses: header, footer, the content models (`models/`) and the services that read them (`services/`) |
-| `src/app/portfolio/` | home, about, projects and links; routed by `portfolio-routing.module.ts` |
-| `src/app/blog/` | the blog landing and a post; routed by `blog-routing.module.ts` |
-| `src/content/` | the content: about, projects, stack, social |
+| `src/main.ts`, `src/app/app.config.ts` | the bootstrap and its providers: zoneless change detection, the router with anchor scrolling |
+| `src/app/app.routes.ts` | every route, flat, each naming its component directly |
+| `src/app/core/` | what every page uses: header, footer, the icon component, the content models (`models/`) and the services that serve them (`services/`) |
+| `src/app/portfolio/` | home, about, projects and links |
+| `src/app/blog/` | the blog landing and a post |
+| `src/app/not-found/` | the page for any URL no route matches |
+| `src/content/` | the content: about, projects, stack, social; imported into the bundle by the services |
 | `src/assets/img/` | project images |
 | `blog/` | the posts, markdown with front matter |
 | `tools/icons.mjs`, `tools/posts.mjs` | generate the inline icons and the posts into the bundle before every build (`npm run generate`) |
-| `Dockerfile`, `nginx/` | today's deploy: build in Node with Chrome, serve with nginx |
+| `tools/serve.mjs`, `tools/measure.mjs` | serve a build as the host will; count each page's requests and bytes |
+| `Dockerfile`, `nginx/` | the old deploy, until i-115f49-ab7102 retires it |
 | `tools/audit.mjs` | the structural checks the gate runs |
 
 ## Layers
 
-Feature modules (`portfolio`, `blog`) depend on `core`; `core` depends on no feature. Checked by
+Features (`portfolio`, `blog`, `not-found`) depend on `core`; `core` depends on no feature. Checked by
 reading on 2026-10-05; not enforced.
 
 ## Where a new file goes
 
-- **New content of an existing kind**: an entry in its JSON file, or a post in `blog/`. Nothing else.
+- **New content of an existing kind**: an entry in its file in `src/content/`, or a post in `blog/`.
 - **A new kind of content**: a model in `src/app/core/models/`, a service beside the others that
-  reads its JSON (copy `src/app/core/services/social.service.ts`), and a row in `DATA` in
-  `tools/audit.mjs`.
-- **A new section of a page**: a component in its feature module, exposing the service's
+  imports its JSON and assigns it to the model (copy `src/app/core/services/social.service.ts`), and
+  a row in `DATA` in `tools/audit.mjs`.
+- **A new section of a page**: a standalone component in its feature folder, exposing the service's
   observable as a `$` field read with the `async` pipe (copy
   `src/app/portfolio/social/social.component.ts`).
-- **A new route**: in the feature's routing module, with any link to it written as a literal
-  `routerLink` or a `*Path:` field, so `audit:routes` sees it.
+- **A new page**: a component, and its route in `src/app/app.routes.ts`, with every link to it
+  written as a literal `routerLink` or a `*Path:` field, so `audit:routes` sees it.
+- **A new icon**: name it (`devicon-<name>-<variant>` or `fa-<style>-<name>`) in a template or in the
+  content; `tools/icons.mjs` generates it, and fails the build if the packages have no such SVG.
 
 ## Deliberate deviations
 
 - Responsive layout renders some blocks twice (`respOptions`), one hidden per breakpoint. Recorded
   as it is, not as intended: i-115f49-636a4f replaces it.
+- Every route is loaded with the app instead of lazily: the whole site is one small bundle, and a
+  lazy chunk would cost every first visit one more request.

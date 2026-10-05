@@ -1,13 +1,16 @@
 import { Component, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { HeaderService } from '../services/header.service';
 import { AboutService } from '../services/about.service';
+import { RouterLink } from '@angular/router';
+import { IconComponent } from '../icon/icon.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [RouterLink, IconComponent, AsyncPipe]
 })
 export class HeaderComponent {
   isHome$ = this.headerService.isHome();

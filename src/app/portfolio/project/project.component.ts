@@ -3,13 +3,16 @@ import { mergeMap } from 'rxjs/operators';
 import { HeaderService } from '../../core/services/header.service';
 import { ProjectService } from '../../core/services/project.service';
 import { StackService } from '../../core/services/stack.service';
+import { NgClass, NgStyle, AsyncPipe } from '@angular/common';
+import { IconComponent } from '../../core/icon/icon.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NgClass, NgStyle, IconComponent, RouterLink, AsyncPipe]
 })
 export class ProjectComponent {
   filter = "";

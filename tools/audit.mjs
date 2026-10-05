@@ -113,7 +113,7 @@ function literalLinks() {
 }
 
 function checkRoutes() {
-  const patterns = routePatterns(join(APP, 'app-routing.module.ts'));
+  const patterns = routePatterns(join(APP, 'app.routes.ts'));
   for (const [file, link] of [...literalLinks(), ...redirects]) {
     if (!link.startsWith('/')) {
       fail('routes', `${rel(file)}: link "${link}" is relative; write it from the root`);
