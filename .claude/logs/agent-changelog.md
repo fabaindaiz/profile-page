@@ -28,7 +28,7 @@ After the close, at the owner's word: the site is `www.fadiaz.cl` only (no bare-
 (0 failures on the local preview; on Cloudflare not yet checked).
 
 **Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
-`blog/`, `tools/` (audit, check-site, postbuild, serve, screenshots, and the new check-live),
+`blog/`, `tools/` (audit, check-site, postbuild, serve, screenshots, and the new check-live and export),
 `package.json`, `AGENTS.md`, `README.md`, `docs/` (a new plan, `docs/plans/2026-10-05-roadmap-continuation.md`),
 `.claude/skills/troubleshoot-site/`, `.claude/skills/verify/`.
 
@@ -66,7 +66,13 @@ the front matter; a link to `/blog` while it is hidden stays unseen, written in 
 committed roadmap's *Where we are* contradicted its own items. Nits, fixed: the preview server
 redirected `//about/` to another host and redirected files; the post page's unreachable
 not-found branch; stale counts and a garbled line in this entry; two counts in the roadmap. It did
-not check the live site or the visual effect of Bootstrap 5.3 (the comparison did).
+not check the live site or the visual effect of Bootstrap 5.3 (the comparison did). A second
+delegated review, fresh and read-only, of the three commits after the close (www-only, the export):
+no blocker. Should-fix, both fixed: the README and the script stated as fact that the host serves
+`<route>.html` at `/route` (it is Cloudflare's documentation, and the preview serves both layouts
+alike, so the local check cannot show it); the export could drop the 404 page silently if `404.html`
+were missing. Nits fixed: refusals for an output inside the build and for a page that is both
+`<route>.html` and `<route>/index.html`; the changelog's *Areas*. Each refusal was run.
 
 **What went wrong on the way.**
 - Twice the gate was chained through a pipe (`| tail`, `| grep`), which hides its exit status; the

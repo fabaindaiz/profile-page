@@ -54,7 +54,8 @@ Deploy with `wrangler` (`npx wrangler@4.147.0 login` once, `npm run build`, then
 `npx wrangler@4.147.0 deploy`; add `--name <worker>` if the Worker has another name than
 `wrangler.jsonc`'s). An upload of the build in the dashboard serves the files but not
 `wrangler.jsonc`: on 2026-10-05 `/about` redirected to `/about/`. To upload by hand anyway, export a
-folder whose pages are `<route>.html`, which the host serves at `/route` with no configuration:
+folder whose pages are `<route>.html`, which, by Cloudflare's documentation, the host serves at
+`/route` with no configuration (not yet seen on the host; `check-live` after the upload shows it):
 
 ```bash
 node tools/export.mjs ~/Desktop/site-upload   # after npm run build
