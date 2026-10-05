@@ -70,8 +70,10 @@ export function siteServer(dist, { spa = false } = {}) {
   const rules = headerRules(dist);
   return createServer((req, res) => {
     const path = req.url.split(/[?#]/)[0];
-    if (path !== '/' && path.endsWith('/') && resolveFile(dist, path)) {
-      res.writeHead(307, { location: `${path.replace(/\/+$/, '')}${req.url.slice(path.length)}` });
+    // Only a page redirects, and to a path on this site: `//x/` must not become `//x`, another host.
+    if (path !== '/' && path.endsWith('/') && resolveFile(dist, path)?.endsWith('.html')) {
+      const to = `/${path.replace(/^\/+|\/+$/g, '')}`;
+      res.writeHead(307, { location: `${to}${req.url.slice(path.length)}` });
       return res.end();
     }
     const file = resolveFile(dist, req.url) ?? (spa && !extname(path) ? join(dist, 'index.html') : null);
