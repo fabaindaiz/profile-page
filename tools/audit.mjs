@@ -88,8 +88,17 @@ function matches(pattern, segs) {
   return pattern.length === segs.length;
 }
 
-/** A route parameter whose values are files: the link must name one that exists. */
-const PARAM_FILES = { 'blog/:slug': (slug) => join(ROOT, 'blog', `${slug}.md`) };
+/**
+ * A route parameter whose values are files: the link must name one that exists and, for a post,
+ * is published, since `blog/:slug` matches only a published post's slug (src/app/app.routes.ts).
+ */
+const PARAM_FILES = {
+  'blog/:slug': {
+    file: (slug) => join(ROOT, 'blog', `${slug}.md`),
+    usable: (file) => /^published:\s*true\s*$/m.test(read(file).split(/^---\s*$/m)[1] ?? ''),
+    why: 'is not published',
+  },
+};
 
 /**
  * Literal links: `routerLink` (quoted either way, or bound to a string literal) and internal
@@ -127,9 +136,11 @@ function checkRoutes() {
       fail('routes', `${rel(file)}: link "${link}" matches no route`);
       continue;
     }
-    const fileFor = PARAM_FILES[route.join('/')];
-    if (fileFor && !existsSync(fileFor(segs[segs.length - 1]))) {
-      fail('routes', `${rel(file)}: link "${link}" names no ${rel(fileFor(segs[segs.length - 1]))}`);
+    const param = PARAM_FILES[route.join('/')];
+    if (param) {
+      const target = param.file(segs[segs.length - 1]);
+      if (!existsSync(target)) fail('routes', `${rel(file)}: link "${link}" names no ${rel(target)}`);
+      else if (!param.usable(target)) fail('routes', `${rel(file)}: link "${link}" names ${rel(target)}, which ${param.why}`);
     }
   }
 }

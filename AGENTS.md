@@ -15,8 +15,10 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
 - **Every literal link and fragment resolves.** A `routerLink`, an internal `href`, a `*Path:`
   value, a redirect or a link in a post names a route the router defines (a post link names a post
   that exists), and a fragment names an `id` a template renders; a renamed route once broke five
-  places at once. Enforced: `audit:routes`, `audit:fragments` (d-115f49-87d6c2). Not seen: links
-  built at runtime (keep their values in literal `*Path:` fields), and whether a fragment's `id` is
+  places at once. Enforced: `audit:routes`, `audit:fragments` (d-115f49-87d6c2); a post link must
+  name a published post. Not seen: links built at runtime (keep their values in literal `*Path:`
+  fields), a link to `/blog` while no post is published (its routes then do not exist,
+  d-115f49-fb5f23; only `tools/check-site.mjs` on the build sees it), and whether a fragment's `id` is
   on the page the link opens rather than on some page.
 - **Content matches its model, and ships inside the bundle.** Each file in `src/content/` is
   imported by its service and assigned to its interface in `src/app/core/models/`, so a missing or
