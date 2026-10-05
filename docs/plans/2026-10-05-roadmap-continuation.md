@@ -102,3 +102,7 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
   blog returns whole. Nothing of this plan is left that is not the owner's.
 - 2026-10-05, after the close: the owner serves the site at `www.fadiaz.cl` only; the bare domain is
   not part of it, so phase 2's apex check is not run and its failure was not one.
+- 2026-10-05: the owner asked for a folder to upload by hand. `tools/export.mjs` copies the build
+  with each page as `<route>.html`, which the host's default serves at `/route` (ASSUMPTION from
+  Cloudflare's documentation, `docs/research/2026-10-05-site-quality-and-framework.md` row 1.3;
+  checked only on the local preview, 0 failures). `wrangler deploy` stays the recommended way.

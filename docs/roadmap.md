@@ -19,12 +19,13 @@ the `noindex` 404 and immutable caching hold; `/about` and `/project` redirect t
 (the upload skipped `wrangler.jsonc`). The site is served at `www.fadiaz.cl` only; the bare
 `fadiaz.cl` is not part of it (owner, 2026-10-05).
 
-**Waiting on the owner:** a `wrangler deploy` (i-115f49-ab7102); the projects'
+**Waiting on the owner:** a `wrangler deploy`, or an upload of the folder `tools/export.mjs` writes
+(i-115f49-ab7102); the projects'
 text (i-115f49-d63585); a real post, which brings the blog back with nothing else to do.
 
 **Next session, first step:** nothing in `docs/plans/2026-10-05-roadmap-continuation.md` is left
-for the agent (its ledger). Ask whether the owner has run `npx wrangler@4.147.0 deploy` from `main`;
-then `node tools/check-live.mjs`, which should report 0 failures.
+for the agent (its ledger). Ask whether the owner has run `npx wrangler@4.147.0 deploy` from `main`, or
+uploaded `tools/export.mjs`'s folder; then `node tools/check-live.mjs`, which should report 0 failures.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
@@ -133,7 +134,8 @@ outside the code: `/about` and `/project` answer 307 to a trailing slash (the da
 not apply `wrangler.jsonc`). A third, `https://fadiaz.cl/` answering 404 from an nginx server, is
 not one: the site is served at `www.fadiaz.cl` only (owner, 2026-10-05), so `--apex` is not part of
 the routine run.
-**What is still missing:** a `wrangler deploy` (i-115f49-ab7102); the owner's.
+**What is still missing:** a `wrangler deploy`, or an upload of `tools/export.mjs`'s folder, whose
+pages are `<route>.html` (i-115f49-ab7102); the owner's.
 
 ## Verification
 

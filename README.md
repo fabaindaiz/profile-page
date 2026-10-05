@@ -50,8 +50,16 @@ The site's address is `https://www.fadiaz.cl` (`src/content/site.json`): every c
 sitemap and `robots.txt` name that exact host. Attach it to the Worker as a custom domain. The bare
 `fadiaz.cl` is not part of the site.
 
-Deploy with `wrangler`, not by uploading the build in the dashboard: an upload on 2026-10-05 served
-the pages but not `wrangler.jsonc`'s `drop-trailing-slash`, so `/about` redirected to `/about/`.
+Deploy with `wrangler` (`npx wrangler@4.147.0 login` once, `npm run build`, then
+`npx wrangler@4.147.0 deploy`; add `--name <worker>` if the Worker has another name than
+`wrangler.jsonc`'s). An upload of the build in the dashboard serves the files but not
+`wrangler.jsonc`: on 2026-10-05 `/about` redirected to `/about/`. To upload by hand anyway, export a
+folder whose pages are `<route>.html`, which the host serves at `/route` with no configuration:
+
+```bash
+node tools/export.mjs ~/Desktop/site-upload   # after npm run build
+```
+
 After a deploy, check the live site against what the build promised:
 
 ```bash
