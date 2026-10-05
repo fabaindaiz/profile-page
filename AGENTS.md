@@ -65,7 +65,7 @@ npm run build         # generate icons and posts, then prerender every route int
 npm run preview       # serve that build as the host will, 404s included (tools/serve.mjs)
 node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
 npm test              # generate, then the Vitest suite (ng test --watch=false)
-npm run check         # the built site: tests, build, links, request budget (CI runs it)
+npm run check         # the built site: tests, build, links, request budget, accessibility (CI runs it)
 ```
 
 ## Verification
@@ -77,7 +77,8 @@ Two levels, both in CI:
 - `npm run check` (after `npm ci`): the Vitest suite, the prerendered build, every internal link
   and fragment in the built HTML (`tools/check-site.mjs`), and the request budget, at most 4
   requests besides images per page and none to another origin (`tools/measure.mjs --budget 4`)
-  (d-115f49-7d644b). This is the pre-ship check for the bug class the sources cannot show.
+  (d-115f49-7d644b), and axe's WCAG 2.1 AA rules on every page at two widths (`tools/a11y.mjs`).
+  This is the pre-ship check for the bug class the sources cannot show.
 
 Neither sees navigation done without an `href` (a `<button routerLink>`), or how the page looks.
 After a change to `src/`, say which of these ran; what did not goes under *Not verified* in the
@@ -106,7 +107,8 @@ its answer.
 - **What a static site must not do**: ship a link, fragment or asset that does not resolve
   (`audit:routes`, `audit:fragments`; the built output is unchecked until i-115f49-e325d4);
   navigate without an `<a>`, which keyboards, crawlers and link checkers cannot follow; show an
-  image without `alt`. The last two are not enforced yet (i-115f49-636a4f).
+  image without `alt`. Enforced on the built pages by `tools/a11y.mjs` (axe: link names, image
+  alt text, contrast and the rest of WCAG 2.1 AA's automatable rules).
 
 ## What changed → what must move
 
