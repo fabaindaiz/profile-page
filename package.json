@@ -14,7 +14,8 @@
     "prewatch": "npm run generate",
     "watch": "ng build --watch --configuration development",
     "pretest": "npm run generate",
-    "test": "ng test"
+    "test": "ng test",
+    "check": "npm test -- --watch=false && npm run build && node tools/check-site.mjs && node tools/measure.mjs --budget 4"
   },
   "private": true,
   "dependencies": {

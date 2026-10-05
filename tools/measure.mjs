@@ -11,8 +11,9 @@
  * --spa serves `index.html` for any path that is not a file, as a single-page host does (the
  * baseline, before every route was prerendered); --routes then names the pages to open.
  *
- * With --budget N it exits 1 when any page makes more than N requests to its own origin, or any
- * request to another origin. Needs Playwright's Chromium (`npx playwright install chromium`).
+ * With --budget N it exits 1 when any page makes more than N requests to its own origin besides
+ * images (the HTML, scripts, styles and fonts every visit pays for), or any request to another
+ * origin. Images are counted and reported, not budgeted: they are content, and load lazily. Needs Playwright's Chromium (`npx playwright install chromium`).
  */
 import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
@@ -95,7 +96,8 @@ if (json) {
 }
 
 if (budget !== null) {
-  const over = results.filter((r) => r.own > budget || r.thirdParty > 0);
-  for (const r of over) console.error(`measure: ${r.route} makes ${r.own} own and ${r.thirdParty} third-party requests (budget ${budget}, none third-party)`);
+  const fixed = (r) => r.detail.filter((d) => d.own && d.type !== 'image').length;
+  const over = results.filter((r) => fixed(r) > budget || r.thirdParty > 0);
+  for (const r of over) console.error(`measure: ${r.route} makes ${fixed(r)} own non-image and ${r.thirdParty} third-party requests (budget ${budget}, none third-party)`);
   process.exit(over.length ? 1 : 0);
 }

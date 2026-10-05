@@ -42,9 +42,8 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
   default says. Enforced: `.githooks/commit-msg` and CI over every commit (d-115f49-cad445).
   Before pushing,
   `git log --format=%B <base>..HEAD | grep -ci co-authored` must print 0.
-- **Look at the built site before calling a page change done.** The gate does not build or
-  render anything yet (see *Verification*), so a template change is unverified until the built
-  page was opened.
+- **Look at the built site before calling a page change done.** No check renders a page and looks
+  at it, so a template change is unverified until the built page was opened (`npm run preview`).
 
 ## Files you should not hand-edit
 
@@ -66,15 +65,23 @@ npm run build         # generate icons and posts, then prerender every route int
 npm run preview       # serve that build as the host will, 404s included (tools/serve.mjs)
 node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
 npm test              # generate, then the Vitest suite (ng test --watch=false)
+npm run check         # the built site: tests, build, links, request budget (CI runs it)
 ```
 
 ## Verification
 
-`npm run gate` sees the sources only: links, fragments, content shape, generated files, the
-instruction documents and the bundle. **It does not install, build, run the tests or render a
-page**, because the code needs an install on the Node in `.nvmrc`. So "the gate is green" never means "the
-site builds". After a change to `src/`, say which of those you ran; if none, write it under *Not
-verified* in the changelog entry. A claim needs a measurement, written with where it was taken.
+Two levels, both in CI:
+
+- `npm run gate` (no install; the pre-commit hook runs it): the sources' links, fragments, content
+  shape and generated files, the instruction documents and the bundle.
+- `npm run check` (after `npm ci`): the Vitest suite, the prerendered build, every internal link
+  and fragment in the built HTML (`tools/check-site.mjs`), and the request budget, at most 4
+  requests besides images per page and none to another origin (`tools/measure.mjs --budget 4`)
+  (d-115f49-7d644b). This is the pre-ship check for the bug class the sources cannot show.
+
+Neither sees navigation done without an `href` (a `<button routerLink>`), or how the page looks.
+After a change to `src/`, say which of these ran; what did not goes under *Not verified* in the
+changelog entry. A claim needs a measurement, written with where it was taken.
 
 When a change touches state, a contract, data, security or verification, look it up in
 `.agents/knowledge/INDEX.md` before a design decision and open only the cards it links; decide each
