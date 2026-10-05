@@ -5,9 +5,10 @@ import { ProjectService } from '../../core/services/project.service';
 import { StackService } from '../../core/services/stack.service';
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css']
+    selector: 'app-project',
+    templateUrl: './project.component.html',
+    styleUrls: ['./project.component.css'],
+    standalone: false
 })
 export class ProjectComponent {
   filter = "";

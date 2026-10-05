@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { SocialService } from '../../core/services/social.service';
 
 @Component({
-  selector: 'app-social',
-  templateUrl: './social.component.html',
-  styleUrls: ['./social.component.css']
+    selector: 'app-social',
+    templateUrl: './social.component.html',
+    styleUrls: ['./social.component.css'],
+    standalone: false
 })
 export class SocialComponent {
   socials$ = this.socialService.getSocial();

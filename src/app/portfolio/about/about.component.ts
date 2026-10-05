@@ -3,9 +3,10 @@ import { AboutService } from '../../core/services/about.service';
 import { StackService } from '../../core/services/stack.service';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+    selector: 'app-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css'],
+    standalone: false
 })
 export class AboutComponent {
   about$ = this.aboutService.getAbout();

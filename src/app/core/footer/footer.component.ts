@@ -3,9 +3,10 @@ import { HeaderService } from '../services/header.service';
 import { AboutService } from '../services/about.service';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+    selector: 'app-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.css'],
+    standalone: false
 })
 export class FooterComponent {
   isHome$ = this.headerService.isHome();

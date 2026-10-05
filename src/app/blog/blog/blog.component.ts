@@ -4,11 +4,12 @@ import { map } from 'rxjs/operators';
 import { POSTS } from '../posts.generated';
 
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css'],
-  // The post body is inserted as HTML, which emulated encapsulation would leave unstyled.
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-blog',
+    templateUrl: './blog.component.html',
+    styleUrls: ['./blog.component.css'],
+    // The post body is inserted as HTML, which emulated encapsulation would leave unstyled.
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class BlogComponent {
   /** The post named by the URL, or null when no published post has that slug. */

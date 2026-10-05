@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { POSTS } from '../posts.generated';
 
 @Component({
-  selector: 'app-blog-landing',
-  templateUrl: './blog-landing.component.html',
-  styleUrls: ['./blog-landing.component.css']
+    selector: 'app-blog-landing',
+    templateUrl: './blog-landing.component.html',
+    styleUrls: ['./blog-landing.component.css'],
+    standalone: false
 })
 export class BlogLandingComponent {
   posts = POSTS;
