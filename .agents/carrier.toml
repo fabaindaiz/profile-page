@@ -1,0 +1,12 @@
+# This repository's own fields. Carrier-owned: never listed in SHA256SUMS, never written by a release.
+carrier = "r-115f49"
+adopted = "2026-10-05"
+upstream = "r-5ed7e8"
+adapted = [
+  "Root instruction file: AGENTS.md is the source and CLAUDE.md only imports it (@AGENTS.md), so every assistant reads one file.",
+  "No nested area files: the repository has one area, so every rule lives in AGENTS.md.",
+  "Research register: docs/references.md indexes dated research files in docs/research/, which hold the findings and sources.",
+  "Structural audit: tools/audit.mjs in Node with no dependencies, not Python, so it runs in a Node repository before any install.",
+  "Gate: npm run gate checks sources only (audit, bundle verify, record ids); the build and tests join it after the framework update, because the current code builds only on an unsupported Node.",
+]
+declined = []
