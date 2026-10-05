@@ -18,7 +18,7 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
   places at once. Enforced: `audit:routes`, `audit:fragments` (d-115f49-87d6c2). Not seen: links
   built at runtime (keep their values in literal `*Path:` fields), and whether a fragment's `id` is
   on the page the link opens rather than on some page.
-- **Content matches its model.** Each file in `src/assets/json/` is read through an interface in
+- **Content matches its model.** Each file in `src/content/` is read through an interface in
   `src/app/core/models/`, and `HttpClient`'s generic is a cast, not a check: a missing field
   renders an empty section silently. Enforced for the top-level required fields by `audit:data`,
   with the JSON → interface table in `tools/audit.mjs` (a new data file must be added there);

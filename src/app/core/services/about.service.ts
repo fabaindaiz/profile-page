@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import about from '../../../assets/json/about.json';
+import about from '../../../content/about.json';
 import { About } from '../models/about';
 
 /** Compiled into the bundle: typed against the model at build time, and never fetched. */

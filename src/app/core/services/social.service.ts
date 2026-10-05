@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import social from '../../../assets/json/social.json';
+import social from '../../../content/social.json';
 import { Social } from '../models/social';
 
 /** Compiled into the bundle: typed against the model at build time, and never fetched. */

@@ -8,7 +8,7 @@
 | `src/app/core/` | what every page uses: header, footer, the content models (`models/`) and the services that read them (`services/`) |
 | `src/app/portfolio/` | home, about, projects and links; routed by `portfolio-routing.module.ts` |
 | `src/app/blog/` | the blog landing and a post; routed by `blog-routing.module.ts` |
-| `src/assets/json/` | the content: about, projects, stack, social |
+| `src/content/` | the content: about, projects, stack, social |
 | `src/assets/img/` | project images |
 | `blog/` | the posts, markdown with front matter |
 | `scully.profile-page.config.ts` | which routes Scully prerenders, the blog's content folder among them |

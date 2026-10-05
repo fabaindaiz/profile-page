@@ -188,10 +188,10 @@ function interfaceFields(file, name) {
 }
 
 function checkData() {
-  const dir = join(ROOT, 'src/assets/json');
+  const dir = join(ROOT, 'src/content');
   for (const name of readdirSync(dir).filter((n) => n.endsWith('.json'))) {
     if (!DATA[name]) {
-      fail('data', `src/assets/json/${name} has no interface mapped in tools/audit.mjs DATA`);
+      fail('data', `src/content/${name} has no interface mapped in tools/audit.mjs DATA`);
       continue;
     }
     const [modelFile, iface] = DATA[name];
@@ -204,7 +204,7 @@ function checkData() {
     try {
       value = JSON.parse(read(join(dir, name)));
     } catch (e) {
-      fail('data', `src/assets/json/${name} does not parse: ${e.message}`);
+      fail('data', `src/content/${name} does not parse: ${e.message}`);
       continue;
     }
     const items = Array.isArray(value) ? value : [value];

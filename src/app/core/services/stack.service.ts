@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import stack from '../../../assets/json/stack.json';
+import stack from '../../../content/stack.json';
 import { Stack } from '../models/stack';
 
 /** Compiled into the bundle: typed against the model at build time, and never fetched. */
