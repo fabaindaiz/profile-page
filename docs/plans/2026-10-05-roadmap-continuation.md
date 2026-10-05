@@ -85,3 +85,7 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
 - 2026-10-05, the owner's answers: merge this plan and push `main`; the owner had already deployed
   the built site by hand, so phase 1 is done and phase 2 is next; **no Dependabot** (phase 5 is
   dropped, i-115f49-7fea76 blocked outside); Bootstrap 5.3 is wanted, in phase 4.
+- 2026-10-05, phase 2 done: `tools/check-live.mjs`. Against the live site: 3 failures, all the
+  owner's to fix in Cloudflare (a `wrangler deploy` for `drop-trailing-slash`; the bare domain still
+  on an nginx server). `tools/serve.mjs` now redirects a trailing slash, as the host does, so the
+  check passes against `npm run preview`.

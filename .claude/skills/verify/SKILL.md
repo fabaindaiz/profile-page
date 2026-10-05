@@ -38,6 +38,12 @@ node tools/measure.mjs  # requests and compressed bytes per page
 node tools/screenshots.mjs  # then look at every page the change touched, at both widths
 ```
 
+After a deploy, the live site (read-only requests; `http://127.0.0.1:4300` checks `npm run preview`):
+
+```bash
+node tools/check-live.mjs --apex https://fadiaz.cl
+```
+
 Open the page, do not infer it: a section whose JSON lost a field renders empty with no error.
 
 ## Reporting

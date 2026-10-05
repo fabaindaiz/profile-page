@@ -256,7 +256,6 @@ const PATH_EXEMPT = {
   'dist/screenshots': 'output of tools/screenshots.mjs',
   'node_modules': 'created by npm install',
   '404.html': 'build output, copied from the prerendered /404 page by tools/postbuild.mjs',
-  'tools/check-live.mjs': 'planned by i-115f49-90d836; written after the deploy',
   'robots.txt': 'build output, written by tools/postbuild.mjs',
   'sitemap.xml': 'build output, written by tools/postbuild.mjs',
   '.claude/settings.local.json': 'machine-local, never committed',

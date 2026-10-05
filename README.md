@@ -49,3 +49,11 @@ immutable caching of hashed files) come from `public/_headers`, completed by `to
 The site's address is `https://www.fadiaz.cl` (`src/content/site.json`): every canonical URL, the
 sitemap and `robots.txt` name that exact host. Attach it to the Worker as a custom domain; the bare
 `fadiaz.cl`, if it is served at all, should redirect to it, which is set up in Cloudflare, not here.
+
+Deploy with `wrangler`, not by uploading the build in the dashboard: an upload on 2026-10-05 served
+the pages but not `wrangler.jsonc`'s `drop-trailing-slash`, so `/about` redirected to `/about/`.
+After a deploy, check the live site against what the build promised:
+
+```bash
+node tools/check-live.mjs --apex https://fadiaz.cl
+```

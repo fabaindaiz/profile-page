@@ -89,26 +89,29 @@ toolchain.
 ## Hosting
 
 ### i-115f49-ab7102 · Deploy on Cloudflare Workers static assets and retire Docker and nginx
-**State: Half done** (2026-10-05, s-115f49-187eff). Configured: `wrangler.jsonc` (static assets
-only, `drop-trailing-slash`, `404-page`), `public/_headers` (security headers and a CSP, completed
-after each build by `tools/postbuild.mjs`), and the steps in `README.md`. Docker and nginx removed
-(d-115f49-314943). **The missing half is the deploy**, from the owner's Cloudflare account.
-**What it collides with.** Workers Builds may deploy without waiting for the GitHub check
-(unverified), so a red `main` could ship; its build command runs `npm run build`, not the whole
-check, because the check needs a browser. Whether Cloudflare's build image provides Node 26 is
-unverified; Angular 22 also runs on 24.15 or newer.
-**Unverified until a deploy:** how Cloudflare applies `_headers` to `404.html` responses, and whether
-a `Cache-Control` from `_headers` replaces its default or joins it; `tools/serve.mjs` lets the last
-matching rule win, where Cloudflare may join the values (no two rules overlap today).
-**What must be decided first.** When to deploy; the site's address.
+**State: Half done** (2026-10-05). Configured: `wrangler.jsonc` (static assets only,
+`drop-trailing-slash`, `404-page`), `public/_headers` (security headers and a CSP, completed after
+each build by `tools/postbuild.mjs`), and the steps in `README.md`. Docker and nginx removed
+(d-115f49-314943). The owner deployed the built site by uploading it in the dashboard; the check of
+the live site (i-115f49-90d836) found what that left:
+**What is still missing:** a deploy with `wrangler`, so `drop-trailing-slash` applies (today
+`/about` redirects to `/about/`, away from its canonical URL); `fadiaz.cl` pointed at Cloudflare and
+redirected to `www.fadiaz.cl` (it answers 404 from an nginx server). Both from the owner's account.
+**What it collides with.** Workers Builds, if used, may deploy without waiting for the GitHub check
+(unverified), and its build image's Node is unverified.
+**Answered by the live check:** `_headers` apply to the 404 response; a `Cache-Control` from
+`_headers` replaces the host's default rather than joining it.
 
 ### i-115f49-90d836 · A read-only check of the deployed site
-**State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 2). `tools/check-live.mjs`,
-run by hand after a deploy: sitemap URLs answer 200, `/about/` redirects to `/about`, an unknown URL
-is a `noindex` 404, `_headers` arrive on a 200 and a 404, hashed files are `immutable` once, the bare
-domain redirects to `www`. It answers i-115f49-ab7102's "unverified until a deploy".
-**What it collides with.** Nothing in CI: a check against production would make CI depend on it.
-**What must be decided first.** Nothing; it waits for the deploy.
+**State: Done** (2026-10-05): `tools/check-live.mjs`, run by hand after a deploy, not in CI. It
+passes against `npm run preview` (whose server now redirects a trailing slash as the host does) and
+was seen to fail on six planted faults. First run against `https://www.fadiaz.cl`, the same day:
+headers and the CSP arrive on a 200 and on the 404, the 404 is the `noindex` page, hashed files
+carry one `immutable` rule (Cloudflare does not join it to its default). Three failures, both
+outside the code: `/about` and `/project` answer 307 to a trailing slash (the dashboard upload did
+not apply `wrangler.jsonc`), and `https://fadiaz.cl/` is a 404 from an nginx server, not Cloudflare.
+**What is still missing:** a `wrangler deploy`, and the bare domain pointed at Cloudflare and
+redirected to `www` (i-115f49-ab7102); the owner's.
 
 ## Verification
 

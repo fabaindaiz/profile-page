@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Serve a build folder the way the target host does: a path is served from the file itself,
- * `<path>.html` or `<path>/index.html`, with no trailing-slash redirect, and anything else is a 404
+ * `<path>.html` or `<path>/index.html`, a page asked for with a trailing slash is redirected to the
+ * path without it (`drop-trailing-slash` in wrangler.jsonc), and anything else is a 404
  * (`404.html` when the build has one). Text is gzip-compressed when the client accepts it, as the
  * host compresses it, so measured bytes are bytes on the wire. With `spa`, any extension-less path
  * falls back to `index.html`, as a single-page host does. The build's `_headers` file is applied as
@@ -69,6 +70,10 @@ export function siteServer(dist, { spa = false } = {}) {
   const rules = headerRules(dist);
   return createServer((req, res) => {
     const path = req.url.split(/[?#]/)[0];
+    if (path !== '/' && path.endsWith('/') && resolveFile(dist, path)) {
+      res.writeHead(307, { location: `${path.replace(/\/+$/, '')}${req.url.slice(path.length)}` });
+      return res.end();
+    }
     const file = resolveFile(dist, req.url) ?? (spa && !extname(path) ? join(dist, 'index.html') : null);
     if (!file) {
       const notFound = join(dist, '404.html');
