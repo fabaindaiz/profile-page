@@ -13,7 +13,8 @@
  *
  * With --budget N it exits 1 when any page makes more than N requests to its own origin besides
  * images (the HTML, scripts, styles and fonts every visit pays for), or any request to another
- * origin. Images are counted and reported, not budgeted: they are content, and load lazily. Needs Playwright's Chromium (`npx playwright install chromium`).
+ * origin. Images are counted and reported, not budgeted: they are content, and load lazily. It also
+ * exits 1 when a page logs an error, a CSP violation among them (the server enforces `_headers`). Needs Playwright's Chromium (`npx playwright install chromium`).
  */
 import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
@@ -69,6 +70,9 @@ try {
       });
     });
     page.on('requestfailed', (request) => requests.push({ url: request.url(), own: false, type: 'failed', bytes: 0 }));
+    const errors = [];
+    page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+    page.on('pageerror', (e) => errors.push(e.message));
     await page.goto(origin + route, { waitUntil: 'networkidle' });
     await context.close();
     const own = requests.filter((r) => r.own);
@@ -78,6 +82,7 @@ try {
       own: own.length,
       thirdParty: requests.length - own.length,
       kib: Math.round(requests.reduce((s, r) => s + r.bytes, 0) / 1024),
+      errors,
       detail: requests,
     });
   }
@@ -98,6 +103,7 @@ if (json) {
 if (budget !== null) {
   const fixed = (r) => r.detail.filter((d) => d.own && d.type !== 'image').length;
   const over = results.filter((r) => fixed(r) > budget || r.thirdParty > 0);
+  for (const r of results.filter((r) => r.errors.length)) console.error(`measure: ${r.route} logged: ${r.errors.join(' | ')}`);
   for (const r of over) console.error(`measure: ${r.route} makes ${fixed(r)} own non-image and ${r.thirdParty} third-party requests (budget ${budget}, none third-party)`);
-  process.exit(over.length ? 1 : 0);
+  process.exit(over.length || results.some((r) => r.errors.length) ? 1 : 0);
 }

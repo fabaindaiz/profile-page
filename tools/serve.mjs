@@ -4,11 +4,12 @@
  * `<path>.html` or `<path>/index.html`, with no trailing-slash redirect, and anything else is a 404
  * (`404.html` when the build has one). Text is gzip-compressed when the client accepts it, as the
  * host compresses it, so measured bytes are bytes on the wire. With `spa`, any extension-less path
- * falls back to `index.html`, as a single-page host does.
+ * falls back to `index.html`, as a single-page host does. The build's `_headers` file is applied as
+ * the host applies it (a pattern is a path with at most one `*`), so its CSP is enforced locally.
  *
  *   node tools/serve.mjs [DIST] [--spa] [--port N]      (npm run preview)
  */
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join } from 'node:path';
 import { createGzip } from 'node:zlib';
@@ -35,26 +36,47 @@ export function resolveFile(dist, urlPath) {
 
 const COMPRESSED = /^(text\/|application\/(json|xml)|image\/svg)/;
 
-function send(req, res, status, file) {
+/** The rules of a `_headers` file: [pattern as a RegExp, { header: value }]. */
+function headerRules(dist) {
+  const file = join(dist, '_headers');
+  if (!existsSync(file)) return [];
+  const rules = [];
+  for (const line of readFileSync(file, 'utf8').split('\n')) {
+    if (!line.trim() || line.trimStart().startsWith('#')) continue;
+    if (!/^\s/.test(line)) {
+      const pattern = line.trim().split('*').map((s) => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*');
+      rules.push([new RegExp(`^${pattern}$`), {}]);
+    } else if (rules.length) {
+      const at = line.indexOf(':');
+      rules[rules.length - 1][1][line.slice(0, at).trim().toLowerCase()] = line.slice(at + 1).trim();
+    }
+  }
+  return rules;
+}
+
+function send(req, res, status, file, rules) {
   const type = TYPES[extname(file)] ?? 'application/octet-stream';
   const gzip = COMPRESSED.test(type) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '');
-  res.writeHead(status, { 'content-type': type, ...(gzip ? { 'content-encoding': 'gzip' } : {}) });
+  const path = req.url.split(/[?#]/)[0];
+  const extra = Object.assign({}, ...rules.filter(([re]) => re.test(path)).map(([, h]) => h));
+  res.writeHead(status, { ...extra, 'content-type': type, ...(gzip ? { 'content-encoding': 'gzip' } : {}) });
   const body = createReadStream(file);
   (gzip ? body.pipe(createGzip()) : body).pipe(res);
 }
 
 /** An HTTP server over `dist`, not yet listening. */
 export function siteServer(dist, { spa = false } = {}) {
+  const rules = headerRules(dist);
   return createServer((req, res) => {
     const path = req.url.split(/[?#]/)[0];
     const file = resolveFile(dist, req.url) ?? (spa && !extname(path) ? join(dist, 'index.html') : null);
     if (!file) {
       const notFound = join(dist, '404.html');
-      if (existsSync(notFound)) return send(req, res, 404, notFound);
+      if (existsSync(notFound)) return send(req, res, 404, notFound, rules);
       res.writeHead(404, { 'content-type': 'text/plain' });
       return res.end('not found');
     }
-    send(req, res, 200, file);
+    send(req, res, 200, file, rules);
   });
 }
 

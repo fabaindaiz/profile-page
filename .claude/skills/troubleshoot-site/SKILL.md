@@ -1,6 +1,6 @@
 ---
 name: troubleshoot-site
-description: Diagnose a reported symptom of this site - a section that renders empty, a link or page that 404s, a post missing from the blog, a build or Docker build that fails, tests that fail. Use when something "doesn't show", "is blank", "gives 404", "no carga", "no aparece", "falla el build", or before guessing at a fix.
+description: Diagnose a reported symptom of this site - a section that renders empty, a link or page that 404s, a post missing from the blog, a build that fails, tests that fail. Use when something "doesn't show", "is blank", "gives 404", "no carga", "no aparece", "falla el build", or before guessing at a fix.
 allowed-tools: Bash, Read, Grep
 ---
 
@@ -27,7 +27,7 @@ The development server routes client-side, so it never shows this.
    `npm run build` (not `ng build` alone, which skips generating icons and posts) and open the URL
    with `npm run preview`.
 3. Every route is prerendered to `<route>/index.html`; a URL with no file gets `404.html`, which
-   the build copies from the prerendered `/404` page (`tools/not-found.mjs`). A new page whose route
+   the build copies from the prerendered `/404` page (`tools/postbuild.mjs`). A new page whose route
    is missing from `src/app/app.routes.ts` is never prerendered, and 404s on a hard load.
 
 ## A post is missing from the blog

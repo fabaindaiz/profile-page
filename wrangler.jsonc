@@ -1,0 +1,14 @@
+// Cloudflare Workers with static assets only: no Worker script, so every request is a free static
+// request (d-115f49-314943). Built by `npm run build`; see README.md, Deploy.
+{
+  "name": "profile-page",
+  "compatibility_date": "2026-10-05",
+  "assets": {
+    "directory": "./dist/profile-page/browser",
+    // Prerendered pages are <route>/index.html; serve them at /route, as the router links them,
+    // instead of redirecting /route to /route/.
+    "html_handling": "drop-trailing-slash",
+    // Unknown URLs get 404.html (the prerendered /404 page) with status 404, not the home page.
+    "not_found_handling": "404-page"
+  }
+}

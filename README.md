@@ -35,18 +35,13 @@ npm test
 
 #### Deploy
 
-```bash
-docker build -t profile-page .
-docker run --name profile-page -d -p 8080:80 profile-page
-```
+The site is static files on Cloudflare Workers static assets (`wrangler.jsonc`); requests to
+static assets are free on every plan. Not deployed from this repository yet. To connect it, in the
+Cloudflare dashboard create a Worker from this GitHub repository (Workers Builds) with:
 
-## References
+- build command: `npm ci && npm run build`
+- deploy command: `npx wrangler deploy`
 
-#### First steps
-
-- [setup local](https://angular.io/guide/setup-local)
-- [angular toh](https://angular.io/tutorial/tour-of-heroes/toh-pt0)
-
-#### Libraries
-
-- 
+Cloudflare's build image reads `.nvmrc`; if it cannot provide Node 26, set `NODE_VERSION` to a 24.15
+or newer release, which Angular 22 also supports. Response headers (CSP, security headers,
+immutable caching of hashed files) come from `public/_headers`, completed by `tools/postbuild.mjs`.

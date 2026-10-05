@@ -19,7 +19,7 @@ first visit fetches the page's HTML, one script, one stylesheet and one font, an
 | `blog/` | the posts, markdown with front matter |
 | `tools/icons.mjs`, `tools/posts.mjs` | generate the inline icons and the posts into the bundle before every build (`npm run generate`) |
 | `tools/serve.mjs`, `tools/measure.mjs` | serve a build as the host will; count each page's requests and bytes |
-| `Dockerfile`, `nginx/` | the old deploy, until i-115f49-ab7102 retires it |
+| `wrangler.jsonc`, `public/_headers`, `tools/postbuild.mjs` | hosting on Cloudflare static assets: the build folder, URL handling, response headers (CSP hashes and immutable caching filled in after each build), and `404.html` |
 | `tools/audit.mjs` | the structural checks the gate runs |
 
 ## Layers

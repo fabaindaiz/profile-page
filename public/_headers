@@ -1,0 +1,10 @@
+# Response headers for Cloudflare static assets. tools/postbuild.mjs fills the script-src placeholder with the
+# hash of every inline script the build wrote, and appends one immutable-cache rule per hashed file.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' SCRIPT_HASHES; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31449600; includeSubDomains
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: microphone=(), geolocation=(), camera=()
+  Cross-Origin-Opener-Policy: same-origin

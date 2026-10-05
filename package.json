@@ -9,7 +9,7 @@
     "start": "ng serve",
     "prebuild": "npm run generate",
     "build": "ng build",
-    "postbuild": "node tools/not-found.mjs",
+    "postbuild": "node tools/postbuild.mjs",
     "preview": "node tools/serve.mjs",
     "prewatch": "npm run generate",
     "watch": "ng build --watch --configuration development",
