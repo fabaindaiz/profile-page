@@ -1,20 +1,35 @@
-<div *ngFor="let options of respOptions" [ngClass]="options.viewClasses"
+@for (options of respOptions; track options) {
+  <div [ngClass]="options.viewClasses"
     class="flex-column align-items-center text-center vw-90 mx-auto">
-    <div class="d-flex justify-content-center vw-90 mx-auto" *ngIf="about$ | async as about">
-        <div *ngFor="let options of respOptions" [ngClass]="options.viewClasses"
+    @if (about$ | async; as about) {
+      <div class="d-flex justify-content-center vw-90 mx-auto">
+        @for (options of respOptions; track options) {
+          <div [ngClass]="options.viewClasses"
             class="flex-column align-items-center text-center w-75">
             <h1 [ngClass]="options.headingClass" class="mb-5"><span class="fw-bold">About</span> Me</h1>
-            <div *ngFor="let par of about.about">
-                <h4 *ngIf="!options.useSmallerHeadings" class="mb-4">{{par}}</h4>
-                <h5 *ngIf="options.useSmallerHeadings" class="mb-4">{{par}}</h5>
-            </div>
-        </div>
-    </div>
-
-    <div class="d-flex vw-90 justify-content-center flex-wrap" *ngIf="stacks$ | async as stacks">
-        <div *ngFor="let stack of stacks" class="stack-icon m-3"
+            @for (par of about.about; track par) {
+              <div>
+                @if (!options.useSmallerHeadings) {
+                  <h4 class="mb-4">{{par}}</h4>
+                }
+                @if (options.useSmallerHeadings) {
+                  <h5 class="mb-4">{{par}}</h5>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+    @if (stacks$ | async; as stacks) {
+      <div class="d-flex vw-90 justify-content-center flex-wrap">
+        @for (stack of stacks; track stack) {
+          <div class="stack-icon m-3"
             [ngStyle]="{ 'background-color': stack.color.background }">
             <app-icon [name]="stack.iconClasses" [ngStyle]="{ 'color': stack.color.icon }"></app-icon>
-        </div>
-    </div>
-</div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
