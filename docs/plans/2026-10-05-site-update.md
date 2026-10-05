@@ -76,3 +76,30 @@ it changes no request: the services fetch the same files either way).
 On `/`, 11 of the 21 own requests are the same four JSON files fetched again (`about.json` five
 times, the other three twice each): every component subscribes to its own copy of the fetch. Four
 icon fonts weigh 760 KiB (devicon alone 473 KiB), and the main bundle and the stylesheet 773 KiB.
+
+### Phase 2 — request diet, framework-independent (2026-10-05)
+
+Each step measured with `tools/measure.mjs` on the Angular 15 build, and looked at in screenshots
+of every route at desktop and phone widths against the baseline's.
+
+| Step | `/` requests | `/` KiB | Other effect |
+|---|---|---|---|
+| Baseline | 22 (1 third-party) | 1645 | |
+| Inline SVG icons instead of four icon fonts | 18 | 780 | 20 icons generated from the packages |
+| Content compiled into the bundle | 7 | 764 | a missing field now fails the build |
+| Native menu, ng-bootstrap removed | 7 | 586 | main bundle 126 to 84 kB compressed |
+| Nunito served from the site | 7 (0 third-party) | 586 | |
+| Posts converted at build time, Scully removed | 7 | 553 | `/blog` 9 to 8 requests |
+
+What remains on `/`: the HTML, `runtime`, `polyfills`, `main`, `styles`, the lazy portfolio
+chunk and the font. Phase 3 removes `runtime` (application builder), `polyfills` (zoneless) and the
+lazy chunk (routes loaded eagerly).
+
+**Found on the way.** `HeaderService.isHome()` captured its starting value once, so any later
+subscriber got the home page's value: fixed (`fix(header)`), found because the new menu subscribes
+when it opens. The small-screen menu button lost the caret ng-bootstrap's toggle drew; it has an
+accessible name instead. The greeting renders the name without a space ("FabianDiaz."): a template
+concatenation, for phase 6.
+
+**Ruling.** The specs are fixed after the update, on the test runner chosen there, not before it:
+fixing Karma specs that the update rewrites would be done twice.
