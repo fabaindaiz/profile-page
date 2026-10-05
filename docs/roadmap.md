@@ -19,8 +19,8 @@ assets and **not deployed**; the owner has the built site as a zip, to upload by
 Worker's custom domain (`README.md`, *Deploy*); the projects' text (i-115f49-d63585); a real post,
 before which the `noindex` fix lands (i-115f49-636a4f).
 
-**Next session, first step:** check that the last CI run on `main` is green; then Dependabot (i-115f49-7fea76), which needs only the
-owner's answer on weekly or monthly.
+**Next session, first step:** `docs/plans/2026-10-05-roadmap-continuation.md`: the owner's four
+decisions at its end, then its phases in order.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
@@ -41,6 +41,13 @@ and they do not cover writes made through the shell.
 **What it collides with.** Neither bot runs `ng update` migrations: a bot bumping an Angular major
 would skip the code migrations. The update is done (i-115f49-8c7fbe), so nothing blocks it now.
 **What must be decided first.** Weekly or monthly; whether patches ever merge on their own.
+
+### i-115f49-ab51be · Drop deprecated unused packages and take Bootstrap 5.3
+**State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 4).
+`@angular/animations` (deprecated by Angular) and `@angular/platform-browser-dynamic` are
+dependencies nothing imports; Bootstrap is 5.2.3 where 5.3.8 is out; devicon and marked have minors.
+**What it collides with.** Bootstrap 5.3 changes CSS the pages render, and only a screenshot shows
+it: it waits for i-115f49-097b7e. **What must be decided first.** Whether Bootstrap 5.3 is wanted now.
 
 ### i-115f49-03e2ea · A committed script that screenshots every built page at two widths
 **State: Done** (2026-10-05, s-115f49-187eff): `tools/screenshots.mjs`.
@@ -93,6 +100,14 @@ a `Cache-Control` from `_headers` replaces its default or joins it; `tools/serve
 matching rule win, where Cloudflare may join the values (no two rules overlap today).
 **What must be decided first.** When to deploy; the site's address.
 
+### i-115f49-90d836 · A read-only check of the deployed site
+**State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 2). `tools/check-live.mjs`,
+run by hand after a deploy: sitemap URLs answer 200, `/about/` redirects to `/about`, an unknown URL
+is a `noindex` 404, `_headers` arrive on a 200 and a 404, hashed files are `immutable` once, the bare
+domain redirects to `www`. It answers i-115f49-ab7102's "unverified until a deploy".
+**What it collides with.** Nothing in CI: a check against production would make CI depend on it.
+**What must be decided first.** Nothing; it waits for the deploy.
+
 ## Verification
 
 ### i-115f49-e325d4 · Pre-ship verification of the built site
@@ -102,6 +117,13 @@ violations) and `tools/a11y.mjs` (axe, WCAG 2.1 AA). Each was seen to fail on a 
 Content schemas were not needed: the content is typed against its models at compile time.
 **What is still missing:** pages are screenshotted (`tools/screenshots.mjs`) but compared by eye,
 not against a stored baseline; Lighthouse was not added.
+
+### i-115f49-097b7e · Compare screenshots against a baseline pixel by pixel
+**State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 3). A scratch version
+(every page at two widths, the open menu, a hovered card and button) showed the Bootstrap trim
+pixel-identical on 2026-10-05, after two captures were shown identical and a planted difference
+was caught. `tools/screenshots.mjs --compare <dir>` makes it a step, not a rewrite.
+**What it collides with.** CI's fonts differ from a laptop's, so a baseline is per machine: local only.
 
 ## The site
 
@@ -153,3 +175,6 @@ description still says the site uses Scully.
 | i-115f49-d63585 | No. |
 | i-115f49-7fea76 | No. |
 | i-115f49-03e2ea | No. |
+| i-115f49-ab51be | Not by itself; a package with a changed export would fail the build, which `npm run check` runs. |
+| i-115f49-90d836 | No: it is the check of the invariant against the deployed site. |
+| i-115f49-097b7e | No. |
