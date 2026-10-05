@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { HeaderService } from '../services/header.service';
 import { AboutService } from '../services/about.service';
 
@@ -17,5 +17,18 @@ export class HeaderComponent {
     { title: 'My Blog', homePath: '/blog', fragment: '', pagePath: '/blog' }
   ];
 
-  constructor(private aboutService: AboutService, private headerService: HeaderService) { }
+  /** The small-screen menu; closed by choosing an item, Escape, or a click anywhere else. */
+  menuOpen = false;
+
+  constructor(private aboutService: AboutService, private headerService: HeaderService, private host: ElementRef<HTMLElement>) { }
+
+  @HostListener('document:keydown.escape')
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  @HostListener('document:click', ['$event.target'])
+  closeMenuOutside(target: EventTarget | null) {
+    if (target instanceof Node && !this.host.nativeElement.contains(target)) this.menuOpen = false;
+  }
 }
