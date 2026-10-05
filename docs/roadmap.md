@@ -120,15 +120,17 @@ redirected to `www` (i-115f49-ab7102); the owner's.
 `tools/check-site.mjs`, `tools/measure.mjs --budget 4` (which also fails on console errors and CSP
 violations) and `tools/a11y.mjs` (axe, WCAG 2.1 AA). Each was seen to fail on a planted fault.
 Content schemas were not needed: the content is typed against its models at compile time.
-**What is still missing:** pages are screenshotted (`tools/screenshots.mjs`) but compared by eye,
-not against a stored baseline; Lighthouse was not added.
+**What is still missing:** Lighthouse was not added (`docs/plans/2026-10-05-roadmap-continuation.md`
+says why). Screenshots are compared against a baseline by hand, not in CI (i-115f49-097b7e).
 
 ### i-115f49-097b7e · Compare screenshots against a baseline pixel by pixel
-**State: Planned** (`docs/plans/2026-10-05-roadmap-continuation.md`, phase 3). A scratch version
-(every page at two widths, the open menu, a hovered card and button) showed the Bootstrap trim
-pixel-identical on 2026-10-05, after two captures were shown identical and a planted difference
-was caught. `tools/screenshots.mjs --compare <dir>` makes it a step, not a rewrite.
+**State: Done** (2026-10-05). `tools/screenshots.mjs --compare <dir>`: every page at two widths, the
+open small-screen menu, a hovered card and a hovered button, compared pixel by pixel with a baseline
+taken with `--out` from the build before a change; exits 1 on a difference. Two runs against one
+baseline gave 0 differing (after waiting out a .15 s button transition that first made the menu
+shot differ by 1600 pixels), and a planted `.card` border colour was caught on 6 of 11 shots.
 **What it collides with.** CI's fonts differ from a laptop's, so a baseline is per machine: local only.
+**What is still missing:** keyboard focus and a selected project filter are not among the states.
 
 ## The site
 

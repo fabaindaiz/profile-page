@@ -89,3 +89,5 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
   owner's to fix in Cloudflare (a `wrangler deploy` for `drop-trailing-slash`; the bare domain still
   on an nginx server). `tools/serve.mjs` now redirects a trailing slash, as the host does, so the
   check passes against `npm run preview`.
+- 2026-10-05, phase 3 done: `tools/screenshots.mjs --compare`, 11 shots, deterministic over two
+  runs, a planted style change caught.

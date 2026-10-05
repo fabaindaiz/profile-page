@@ -254,6 +254,7 @@ const PATH_EXEMPT = {
   'dist/profile-page': 'build output, created by the build',
   'dist/profile-page/browser': 'build output of the application builder',
   'dist/screenshots': 'output of tools/screenshots.mjs',
+  'dist/baseline': 'a baseline tools/screenshots.mjs --out writes, machine-local',
   'node_modules': 'created by npm install',
   '404.html': 'build output, copied from the prerendered /404 page by tools/postbuild.mjs',
   'robots.txt': 'build output, written by tools/postbuild.mjs',

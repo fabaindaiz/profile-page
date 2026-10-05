@@ -38,6 +38,15 @@ node tools/measure.mjs  # requests and compressed bytes per page
 node tools/screenshots.mjs  # then look at every page the change touched, at both widths
 ```
 
+For a style or template change, compare instead of looking: take the baseline from a build of the
+commit before the change, then rebuild with the change and compare. Any differing pixel is looked
+at, and said in the report.
+
+```bash
+node tools/screenshots.mjs --out dist/baseline   # on the build before the change
+node tools/screenshots.mjs --compare dist/baseline   # on the build after it; exits 1 on a difference
+```
+
 After a deploy, the live site (read-only requests; `http://127.0.0.1:4300` checks `npm run preview`):
 
 ```bash

@@ -23,7 +23,7 @@ template does not show: an empty list, or an optional field left out. Say which 
 Only the parts of Bootstrap the templates used on 2026-10-05 are built (`src/bootstrap.scss`): a
 component (`.modal`, `.nav`, `.form-control`…) or a utility kept out of `$used-utilities` (`.gap-3`,
 `.rounded`…) is not in the stylesheet. Import the part or add the utility's key there, then compare
-screenshots (`tools/screenshots.mjs`).
+screenshots (`tools/screenshots.mjs --compare`).
 
 ## A link or page gives 404, but works on `npm start`
 
