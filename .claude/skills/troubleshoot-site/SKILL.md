@@ -39,9 +39,7 @@ The development server routes client-side, so it never shows this.
 
 ## The build fails
 
-1. **Node.** The code is Angular 15: build on the Node in `.nvmrc`. `node:latest` in the
-   `Dockerfile` is outside Angular 15's supported range (ASSUMPTION: why a Docker build fails today
-   until i-115f49-8c7fbe).
+1. **Node.** Build on the Node in `.nvmrc`; Angular 22 refuses one outside its range.
 2. **Generation**: `tools/icons.mjs` fails on an icon name with no SVG in the icon packages, and
    `tools/posts.mjs` on a post without its front matter; both name the file.
 3. `npm ci` refuses when `package.json` and `package-lock.json` disagree: never edit the lockfile by
@@ -49,8 +47,9 @@ The development server routes client-side, so it never shows this.
 
 ## The unit tests fail
 
-They are known to fail by reading (i-115f49-8c7fbe): a spec asserts markup the template does not
-have, and two specs provide no `HttpClient`. Name that in the report, so it is not taken as new.
+Run `npm test`: it regenerates the icons and posts first, as the build does. A test that reads the
+content (`src/app/app.routes.spec.ts`) fails when the content and a page disagree, which is the point
+of it: read which page lost what.
 
 ## Reporting
 

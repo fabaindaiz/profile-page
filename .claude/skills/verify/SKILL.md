@@ -37,5 +37,4 @@ Open the page, do not infer it: a section whose JSON lost a field renders empty 
 
 Say what passed and what did not, with the output. Name every step above that was not run as
 **not verified**, and write it under *Not verified* in the changelog entry. Never call something
-verified that was not run. The specs are known to fail (`docs/roadmap.md`, i-115f49-8c7fbe):
-name that, so it is not presented as new.
+verified that was not run.

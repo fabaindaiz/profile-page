@@ -21,7 +21,7 @@ const NAME = /\b(devicon-[a-z0-9]+-(?:plain|original|line)(?:-wordmark)?|fa-(?:s
 function walk(dir) {
   return readdirSync(dir).flatMap((n) => {
     const p = join(dir, n);
-    return statSync(p).isDirectory() ? walk(p) : /\.(html|ts|json)$/.test(n) && p !== OUT ? [p] : [];
+    return statSync(p).isDirectory() ? walk(p) : /\.(html|ts|json)$/.test(n) && !n.endsWith('.spec.ts') && p !== OUT ? [p] : [];
   });
 }
 

@@ -30,9 +30,8 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
   `audit:generated`, and `.gitignore` (d-115f49-9700ab).
 - **Angular is the framework**, and it is being updated to the current major (d-115f49-908ed6;
   the plan is `docs/roadmap.md`). Do not add a second framework without the roadmap's decision.
-- **Node is pinned in `.nvmrc` only** (d-115f49-6364c7). It says 18 because the code is Angular 15,
-  whose supported range ends at Node 18 (npm's `engines` field is open-ended, so a newer Node may
-  install it, untested); it moves with the migration, never ahead of it.
+- **Node is pinned in `.nvmrc` only** (d-115f49-6364c7). It says 26: Angular 22 supports
+  `^22.22.3 || ^24.15.0 || >=26.0.0`, and 26 is the Node the site is built and tested on.
 
 ## Guardrails that are NOT relaxed
 
@@ -66,7 +65,7 @@ npm start             # ng serve on :4200 (client-side routing: hides the bug cl
 npm run build         # generate icons and posts, then prerender every route into dist/profile-page/browser
 npm run preview       # serve that build as the host will, 404s included (tools/serve.mjs)
 node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
-npm test              # ng test, Karma (the specs are known to fail: docs/roadmap.md)
+npm test              # generate, then the Vitest suite (ng test --watch=false)
 ```
 
 ## Verification
@@ -88,8 +87,8 @@ its answer.
 ## Engineering standards
 
 - **Tests come before the code they describe**, and each is seen to fail first; a bug fix starts
-  with the test that reproduces it. Today the specs are known to fail (i-115f49-8c7fbe), so no
-  test can be trusted to guard anything until that item makes them pass and joins the gate.
+  with the test that reproduces it, seen to fail against the bug (as the `isHome` regression test
+  in `src/app/core/services/header.service.spec.ts` was).
 - **Types stay at the strictness `tsconfig.json` sets**: `strict`, `noImplicitReturns`,
   `noPropertyAccessFromIndexSignature`, `noImplicitOverride`, `noFallthroughCasesInSwitch`, and
   `strictTemplates` with strict injection and input checks. Never loosen one to make an error go

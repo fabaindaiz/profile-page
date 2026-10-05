@@ -1,23 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../app.routes';
 import { HeaderComponent } from './header.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('HeaderComponent small-screen menu', () => {
+  async function setup() {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    const fixture = TestBed.createComponent(HeaderComponent);
+    await fixture.whenStable();
+    const element = fixture.nativeElement as HTMLElement;
+    const toggle = element.querySelector<HTMLButtonElement>('button[aria-controls="site-menu"]')!;
+    return { fixture, element, toggle };
+  }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-    imports: [HeaderComponent]
-})
-    .compileComponents();
-
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  it('opens with its button and says so in aria-expanded', async () => {
+    const { fixture, element, toggle } = await setup();
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    toggle.click();
+    await fixture.whenStable();
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(element.querySelector('#site-menu')).not.toBeNull();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('closes on Escape', async () => {
+    const { fixture, element, toggle } = await setup();
+    toggle.click();
+    await fixture.whenStable();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await fixture.whenStable();
+    expect(element.querySelector('#site-menu')).toBeNull();
   });
 });

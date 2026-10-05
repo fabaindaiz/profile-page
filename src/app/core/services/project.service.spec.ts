@@ -1,16 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-
+import { firstValueFrom } from 'rxjs';
+import projects from '../../../content/projects.json';
 import { ProjectService } from './project.service';
 
-describe('ProjectService', () => {
-  let service: ProjectService;
+describe('ProjectService.getProjects', () => {
+  const service = () => TestBed.inject(ProjectService);
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ProjectService);
+  it('returns every project when not asked for the featured ones', async () => {
+    expect((await firstValueFrom(service().getProjects())).length).toBe(projects.length);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('returns only the featured projects when asked for them', async () => {
+    const featured = await firstValueFrom(service().getProjects(true));
+    expect(featured.length).toBe(projects.filter((p) => p.featured).length);
+    expect(featured.every((p) => p.featured)).toBe(true);
   });
 });
