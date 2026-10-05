@@ -11,11 +11,14 @@ measurement, Blocked outside) and is never deleted. Ids come from
 costs a first visit 4 requests (HTML, script, stylesheet, font), none to another origin, down from
 22 on the home page (`docs/plans/2026-10-05-site-update.md` has the measurements). `npm run check`
 verifies the built site in CI. It is configured for Cloudflare static assets and **not deployed**.
-The work is on the branch feat/site-update, not merged.
+The work is merged into `main` and pushed; the session closed with a review in a fresh context
+(no blocker; what it deferred is under i-115f49-ab7102 and i-115f49-636a4f).
 
 **Waiting on the owner:** the site's address; the content questions in the plan's phase 7
-(projects, the blog, a contact link); whether and when to deploy (i-115f49-ab7102); merging the
-branch.
+(projects, the blog, a contact link); whether and when to deploy (i-115f49-ab7102).
+
+**Next session, first step:** read `docs/plans/2026-10-05-site-update.md` §*Phase 7*, ask the owner
+those questions together, and check that the last CI run on `main` is green.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
