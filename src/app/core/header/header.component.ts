@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { HeaderService } from '../services/header.service';
 import { AboutService } from '../services/about.service';
 
@@ -6,6 +6,7 @@ import { AboutService } from '../services/about.service';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class HeaderComponent {

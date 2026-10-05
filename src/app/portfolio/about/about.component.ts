@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AboutService } from '../../core/services/about.service';
 import { StackService } from '../../core/services/stack.service';
 
@@ -6,6 +6,7 @@ import { StackService } from '../../core/services/stack.service';
     selector: 'app-about',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AboutComponent {

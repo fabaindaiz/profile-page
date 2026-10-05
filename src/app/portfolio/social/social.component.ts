@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SocialService } from '../../core/services/social.service';
 
 @Component({
     selector: 'app-social',
     templateUrl: './social.component.html',
     styleUrls: ['./social.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SocialComponent {

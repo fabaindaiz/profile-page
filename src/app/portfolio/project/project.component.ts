@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
 import { HeaderService } from '../../core/services/header.service';
 import { ProjectService } from '../../core/services/project.service';
@@ -8,6 +8,7 @@ import { StackService } from '../../core/services/stack.service';
     selector: 'app-project',
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProjectComponent {

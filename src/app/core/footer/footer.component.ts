@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { HeaderService } from '../services/header.service';
 import { AboutService } from '../services/about.service';
 
@@ -6,6 +6,7 @@ import { AboutService } from '../services/about.service';
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class FooterComponent {

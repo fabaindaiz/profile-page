@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { POSTS } from '../posts.generated';
 
 @Component({
     selector: 'app-blog-landing',
     templateUrl: './blog-landing.component.html',
     styleUrls: ['./blog-landing.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BlogLandingComponent {
