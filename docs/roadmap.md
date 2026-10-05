@@ -12,21 +12,39 @@ costs a first visit 4 requests (HTML, script, stylesheet, font), none to another
 is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robots.txt` and a
 `ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
 images are WebP and the stylesheet carries only the Bootstrap 5.3 the templates use: `/project`
-254 KiB, `/` 176 KiB. `npm run check` verifies the built site in CI. It is configured for Cloudflare static
-assets; the owner deployed it by hand on 2026-10-05, and how it behaves online is not yet checked
-(i-115f49-90d836).
+254 KiB, `/` 176 KiB. `npm run check` verifies the built site in CI. It is live at
+`https://www.fadiaz.cl`, deployed by hand by the owner on 2026-10-05 from the build of `dfa405c`
+(before Bootstrap 5.3 and the unknown-slug fix). `tools/check-live.mjs` at the close: headers, CSP,
+the `noindex` 404 and immutable caching hold; `/about` and `/project` redirect to a trailing slash
+(the upload skipped `wrangler.jsonc`), and `fadiaz.cl` is a 404 from an nginx server.
 
 **Waiting on the owner:** a `wrangler deploy` and the bare domain (i-115f49-ab7102); the projects'
 text (i-115f49-d63585); a real post, which brings the blog back with nothing else to do.
 
-**Next session, first step:** `docs/plans/2026-10-05-roadmap-continuation.md`: its ledger says
-which phases are done; continue with the next.
+**Next session, first step:** nothing in `docs/plans/2026-10-05-roadmap-continuation.md` is left
+for the agent (its ledger). Ask whether the owner has run `npx wrangler@4.147.0 deploy` from `main`
+and pointed `fadiaz.cl` at Cloudflare; then `node tools/check-live.mjs --apex https://fadiaz.cl`,
+which should report 0 failures.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
 `npm run check`.
 
 ## Process and tooling
+
+### i-115f49-3ae189 · The gate chained through a pipe hides its exit status
+**State: Done** (2026-10-05, s-115f49-e52a39): `AGENTS.md`, *Guardrails*, now says never through a
+pipe. **What happens now.** `npm run gate | tail && git commit` commits on `tail`'s status.
+**Seen in.** s-115f49-e52a39, 3 times (twice before a commit, once on a screenshot comparison's
+exit code); `bundle.py count "pipe"` found it in no earlier entry. The pre-commit hook ran the gate
+each time, so nothing unchecked landed. **Cost of the fix.** One line, done.
+
+### i-115f49-c2d67a · check-live serves the local build itself
+**State: Planned.** **What happens now.** Checking `npm run preview` with `tools/check-live.mjs`
+means starting `tools/serve.mjs` on a port in the background, running the check, and killing the
+server: done by hand 3 times in s-115f49-e52a39. **The fix.** A `--preview` flag that starts
+`siteServer` on a free port, as `tools/screenshots.mjs` does; about fifteen lines. **When.** The
+next time the check is run on a local build.
 
 ### i-115f49-679bb3 · Gate in CI and stop tracking generated files
 **State: Done** (2026-10-05, s-115f49-bc5070). `.github/workflows/ci.yml` runs `npm run gate` on
@@ -110,7 +128,7 @@ redirected to `www.fadiaz.cl` (it answers 404 from an nginx server). Both from t
 passes against `npm run preview` (whose server now redirects a trailing slash as the host does) and
 was seen to fail on six planted faults. First run against `https://www.fadiaz.cl`, the same day:
 headers and the CSP arrive on a 200 and on the 404, the 404 is the `noindex` page, hashed files
-carry one `immutable` rule (Cloudflare does not join it to its default). Three failures, both
+carry one `immutable` rule (Cloudflare does not join it to its default). Three failures, all
 outside the code: `/about` and `/project` answer 307 to a trailing slash (the dashboard upload did
 not apply `wrangler.jsonc`), and `https://fadiaz.cl/` is a 404 from an nginx server, not Cloudflare.
 **What is still missing:** a `wrangler deploy`, and the bare domain pointed at Cloudflare and
@@ -148,8 +166,9 @@ Then, with the address (d-115f49-a0fe6e): a canonical URL and `og:url` per index
 `/project`'s first visit went from 1705 to 269 KiB (`tools/measure.mjs`, 2026-10-05, local build).
 Bootstrap trimmed to the parts the templates use (`src/bootstrap.scss`): the stylesheet went from
 196.5 to 68 kB raw (20.8 to 8.1 kB compressed, the build's estimate) and the initial bundle from
-524 to 397 kB, under `angular.json`'s 500 kB warning; 13 screenshots (every page at two widths, the
-open menu, a hovered card and button) were pixel-identical before and after (2026-10-05, local
+524 to 397 kB, under `angular.json`'s 500 kB warning; 13 screenshots from a scratch script (every
+page and an unknown URL at two widths, the open menu, a hovered card and button) were
+pixel-identical before and after (2026-10-05, local
 build).
 An unknown post slug is now the not-found page, `noindex` and with no canonical: `blog/:slug`
 matches only a published post's slug (2026-10-05, tests seen to fail first). With the test post
@@ -190,3 +209,5 @@ description still says the site uses Scully.
 | i-115f49-ab51be | Not by itself; a package with a changed export would fail the build, which `npm run check` runs. |
 | i-115f49-90d836 | No: it is the check of the invariant against the deployed site. |
 | i-115f49-097b7e | No. |
+| i-115f49-3ae189 | No. |
+| i-115f49-c2d67a | No. |

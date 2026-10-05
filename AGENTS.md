@@ -38,7 +38,8 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
 ## Guardrails that are NOT relaxed
 
 - **The gate runs before every commit**, and a commit is chained on it:
-  `npm run gate && git commit ...` (d-115f49-7161fe). The pre-commit hook and CI run it too; the
+  `npm run gate && git commit ...` (d-115f49-7161fe), never through a pipe (`| tail` reports the
+  pipe's status, not the gate's: i-115f49-3ae189). The pre-commit hook and CI run it too; the
   hook runs it on a copy of what is staged, so it checks exactly what the commit holds.
 - **One author.** No `Co-Authored-By` or any assistant attribution in a commit, whatever a tool's
   default says. Enforced: `.githooks/commit-msg` and CI over every commit (d-115f49-cad445).

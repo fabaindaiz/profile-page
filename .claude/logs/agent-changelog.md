@@ -25,13 +25,23 @@ packages out, Bootstrap 5.3.8, marked 18.1. Last, the deferred `noindex` fix: `b
 a published post's slug, so an unknown slug is the `noindex` not-found page with no canonical.
 
 **Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
-`blog/`, `tools/audit.mjs`, `tools/check-site.mjs`, `tools/postbuild.mjs`, `AGENTS.md`, `README.md`,
-`docs/`, `.claude/skills/troubleshoot-site/`.
+`blog/`, `tools/` (audit, check-site, postbuild, serve, screenshots, and the new check-live),
+`package.json`, `AGENTS.md`, `README.md`, `docs/` (a new plan, `docs/plans/2026-10-05-roadmap-continuation.md`),
+`.claude/skills/troubleshoot-site/`, `.claude/skills/verify/`.
 
 **Why.** The owner asked to review the roadmap and evaluate how to continue, then answered: own
 domain, `www.fadiaz.cl`; hide the blog until a real post exists, deferring the `noindex` fix until
 then; no contact link beyond the social ones; and, meanwhile, the images (a one-time conversion, no
-dependency), the `noindex` fix (deferred by the blog answer) and trimming Bootstrap.
+dependency), the `noindex` fix (deferred by the blog answer) and trimming Bootstrap. Then: a zip to
+upload by hand and a merge; "continue with the roadmap and make a plan" (merge and push it, no
+Dependabot, Bootstrap 5.3; the owner had deployed the zip); "continue with the next phase"; and the
+close, with everything pushed to `main`.
+
+**Rulings taken on the owner's behalf** (from the plans' ledgers). WebP only, not AVIF. The blog
+hidden by making its routes depend on a published post, so it returns by itself. Bootstrap's
+dark-mode variables off (`$enable-dark-mode: false`). devicon held at 2.15.1. Phase 6's `noindex`
+fix done before a real post exists, on "continue with the next phase". `tools/serve.mjs` made to
+redirect a trailing slash, so the preview behaves as the host.
 
 **Architecture.** ✅ Complies. New decisions d-115f49-fb5f23 (the blog is routed only while a post
 is published) and d-115f49-a0fe6e (the site's address). The address is content, in
@@ -45,7 +55,15 @@ planted different image) were each seen red. `derived-copy-goes-stale-silently`:
 `robots.txt` are written by the build into `dist`, never tracked. `npm run check` passed after every
 step; `npm run gate` before every commit.
 
-**Review.** none.
+**Review.** At the close, a delegated reviewer in a fresh context, read-only, over `d5970ab..main`
+(16 commits): it ran the gate, the tests, the build, `check-site`, the budget, axe and `check-live`
+on a local preview, and compared every class the templates use with the trimmed stylesheet. No
+blocker. Should-fix, both fixed: `audit:routes` accepted a link to an unpublished post (now it reads
+the front matter; a link to `/blog` while it is hidden stays unseen, written in `AGENTS.md`); the
+committed roadmap's *Where we are* contradicted its own items. Nits, fixed: the preview server
+redirected `//about/` to another host and redirected files; the post page's unreachable
+not-found branch; stale counts and a garbled line in this entry; two counts in the roadmap. It did
+not check the live site or the visual effect of Bootstrap 5.3 (the comparison did).
 
 **What went wrong on the way.**
 - Twice the gate was chained through a pipe (`| tail`, `| grep`), which hides its exit status; the
@@ -68,19 +86,20 @@ step; `npm run gate` before every commit.
 Cloudflare: `/about` and `/project` redirect to a trailing slash (the dashboard upload did not apply
 `wrangler.jsonc`; a `wrangler deploy` does), and `fadiaz.cl` answers 404 from an nginx server. The
 deployed copy predates Bootstrap 5.3 (pixel-identical). devicon held at 2.15.1 (its 2.17 drops the
-MySQL icon). Dependabot dropped by the owner. The projects' text (the owner's). Dependabot (not chosen this time). Sass 3 will remove the `@import` Bootstrap 5 is
-written with; its deprecation is silenced in `angular.json` (i-115f49-636a4f).
+MySQL icon). Dependabot dropped by the owner. The projects' text (the owner's). Sass 3 will remove
+the `@import` Bootstrap 5 is written with; its deprecation is silenced in `angular.json` (i-115f49-636a4f).
 
 **Deviation from the plan.** WebP only, not AVIF: one file per image and a plain `<img>`, no
 `<picture>`; every current browser decodes WebP. Reversible in minutes.
 
 **Not verified.** Google's Rich Results Test on the `ProfilePage` (it needs the site
-online). The blog's pages with a published post: their content tests skip while none is (4 skipped).
+online). The blog with a published post was checked once, on a build not committed (all 30 tests,
+`check-site`, axe, budget); in the committed state 3 content tests skip while no post is published.
 Screenshot states not covered by the comparison: keyboard focus, a selected project filter.
 
 **Measured.** Local build, `tools/measure.mjs` and the Angular build's table, 2026-10-05:
 `/project` first visit 1705 → 252 KiB; `/` 190 → 174 KiB; stylesheet 196.5 → 68 kB raw (20.8 →
-8.1 kB estimated transfer); initial bundle 524 → 397 kB. 25 tests passed, 4 skipped; `check-site`
+8.1 kB estimated transfer); initial bundle 524 → 397 kB. At the close: 27 tests passed, 3 skipped; `check-site`
 5 pages, 60 links, 0 broken; axe 0 violations. With Bootstrap 5.3: `/` 176 KiB, `/project` 254 KiB,
 stylesheet 75.8 kB raw. `check-live` against `https://www.fadiaz.cl`: 3 failures, listed above.
 
@@ -91,7 +110,10 @@ Local: the stash procedure for a commit whose gate must not see later untracked 
 General: a dashboard upload of a static build skips the deploy tool's configuration; check routing
 on the live site, not only the files. Captured: 3 learnings, 6 frictions (gate behind a pipe, 2;
 gate reads the working tree, 1; shell word splitting, 1; transition caught mid-way in a screenshot,
-1; a check's default target was production, 1). Waiting on the owner: a `wrangler deploy`, the bare domain, the projects' text, the devicon icon.
+1; a check's default target was production, 1). Counted at the close with `bundle.py count`: the
+gate behind a pipe, 3 times this session and in no earlier entry, is i-115f49-3ae189 (fixed in
+`AGENTS.md`); serving the build by hand to run `check-live` on it, 3 times, is i-115f49-c2d67a
+(planned). Waiting on the owner: a `wrangler deploy`, the bare domain, the projects' text, the devicon icon.
 
 ## 2026-10-05 · s-115f49-187eff — Optimise the static build and update Angular to 22
 
