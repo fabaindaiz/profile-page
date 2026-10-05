@@ -66,7 +66,7 @@ the owner's content (i-115f49-d63585). Which Astro option the owner means is ope
 
 **Not verified.** The `Project` change was not compiled: nothing was installed or built. That Scully
 regenerates `.scully/` and its routes list on every build, so untracking them breaks no build, is an
-ASSUMPTION until the next build. The CI workflow has not run: nothing is pushed. That the `./` path
+ASSUMPTION until the next build. The CI workflow ran once, on the push of this session's work, and passed. That the `./` path
 form in `.claude/settings.json` deny rules resolves from the repository root is an ASSUMPTION. That
 `setup-node` reads a bare `18` from `.nvmrc` is an ASSUMPTION.
 
