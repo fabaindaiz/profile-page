@@ -1,4 +1,13 @@
 #!/bin/sh
 # Runs the gate before every commit (d-115f49-7161fe). Enable once per clone:
 #   git config core.hooksPath .githooks
-exec npm run --silent gate
+# The gate runs on a copy of what is staged, not on the working tree, so it checks exactly what the
+# commit will hold: unstaged edits and untracked files can neither pass nor fail it.
+gitdir=$(git rev-parse --absolute-git-dir) || exit 1
+top=$(git rev-parse --show-toplevel) || exit 1
+index=${GIT_INDEX_FILE:-$gitdir/index}
+case $index in /*) ;; *) index=$top/$index ;; esac
+tmp=$(mktemp -d) || exit 1
+trap 'rm -rf "$tmp"' EXIT
+GIT_INDEX_FILE=$index git checkout-index --all --prefix="$tmp/" || exit 1
+cd "$tmp" && GIT_DIR=$gitdir GIT_WORK_TREE=$tmp GIT_INDEX_FILE=$index npm run --silent gate
