@@ -6,7 +6,7 @@
  * name as `audit:<name>`. If a rule changes there, change it here too; if a check here has no
  * rule, it should not be failing the build (the `enforcers` check reports both directions).
  *
- * Node only, no dependencies: it runs before `npm install`, on any Node version.
+ * Node only, no dependencies: it runs before `npm install`, on Node 12.17 or newer.
  * Failures stop the gate; advisories are printed every run and stop nothing.
  */
 import { execFileSync } from 'node:child_process';
@@ -40,17 +40,31 @@ function tracked(...paths) {
 // ---------------------------------------------------------------------------------------------
 // routes: every literal link resolves to a route the router defines.
 
+const stripComments = (src) => src.replace(/\/\*[^]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+
+/** Redirect targets, checked as links once every route is known. */
+const redirects = [];
+
 /** Route patterns as segment arrays, following loadChildren into the feature routing module. */
 function routePatterns(routingFile, prefix = []) {
   if (!existsSync(routingFile)) {
     fail('routes', `routing module not found: ${rel(routingFile)}`);
     return [];
   }
-  const src = read(routingFile);
+  const src = stripComments(read(routingFile));
+  if (/\bchildren\s*:/.test(src)) {
+    // Fail closed: nested routes would be read at the wrong level, so a broken link could pass.
+    fail('routes', `${rel(routingFile)} declares children routes, which this check does not model yet`);
+  }
   const patterns = [];
   for (const [obj] of src.matchAll(/\{[^{}]*\bpath:\s*'[^']*'[^{}]*\}/g)) {
     const path = obj.match(/\bpath:\s*'([^']*)'/)[1];
     const segs = [...prefix, ...path.split('/').filter(Boolean)];
+    const redirect = obj.match(/\bredirectTo:\s*'([^']*)'/);
+    if (redirect) {
+      const target = redirect[1].startsWith('/') ? redirect[1] : `/${[...prefix, redirect[1]].join('/')}`;
+      redirects.push([routingFile, target]);
+    }
     const lazy = obj.match(/loadChildren:[^]*?import\('([^']+)'\)/);
     if (lazy) {
       // Convention checked here: ./x/x.module is routed by ./x/x-routing.module.ts beside it.
@@ -73,35 +87,55 @@ function matches(pattern, segs) {
   return pattern.length === segs.length;
 }
 
-/** Literal links: `routerLink="..."` in templates, and `*Path: '...'` values in component code. */
+/** A route parameter whose values are files: the link must name one that exists. */
+const PARAM_FILES = { 'blog/:slug': (slug) => join(ROOT, 'blog', `${slug}.md`) };
+
+/**
+ * Literal links: `routerLink` (quoted either way, or bound to a string literal) and internal
+ * `href="/..."` in templates, `*Path:` values in component code, and internal links in posts.
+ * Not seen: links computed at runtime.
+ */
 function literalLinks() {
   const links = [];
   for (const f of walk(APP, (p) => p.endsWith('.html'))) {
-    for (const m of read(f).matchAll(/(?<![[\w-])routerLink="([^"]*)"/g)) links.push([f, m[1]]);
+    const src = read(f);
+    for (const m of src.matchAll(/(?<![[\w-])routerLink=(["'])(.*?)\1/g)) links.push([f, m[2]]);
+    for (const m of src.matchAll(/\[routerLink\]="'([^']*)'"/g)) links.push([f, m[1]]);
+    for (const m of src.matchAll(/(?<![[\w-])href="(\/(?!\/)[^"]*)"/g)) links.push([f, m[1]]);
   }
   for (const f of walk(APP, (p) => p.endsWith('.ts') && !p.endsWith('.spec.ts') && !p.includes('routing'))) {
-    for (const m of read(f).matchAll(/\b\w*Path:\s*'([^']*)'/g)) links.push([f, m[1]]);
+    for (const m of read(f).matchAll(/\b\w*Path:\s*(["'])(.*?)\1/g)) links.push([f, m[2]]);
+  }
+  for (const f of walk(join(ROOT, 'blog'), (p) => p.endsWith('.md'))) {
+    for (const m of read(f).matchAll(/\]\((\/(?!\/)[^)\s]*)\)/g)) links.push([f, m[1]]);
   }
   return links;
 }
 
 function checkRoutes() {
   const patterns = routePatterns(join(APP, 'app-routing.module.ts'));
-  for (const [file, link] of literalLinks()) {
+  for (const [file, link] of [...literalLinks(), ...redirects]) {
     if (!link.startsWith('/')) {
       fail('routes', `${rel(file)}: link "${link}" is relative; write it from the root`);
       continue;
     }
     const segs = link.split(/[?#]/)[0].split('/').filter(Boolean);
     // A wildcard route accepts anything, so it cannot vouch for a link: match concrete routes only.
-    if (!patterns.some((p) => !p.includes('**') && matches(p, segs))) {
+    const route = patterns.find((p) => !p.includes('**') && matches(p, segs));
+    if (!route) {
       fail('routes', `${rel(file)}: link "${link}" matches no route`);
+      continue;
+    }
+    const fileFor = PARAM_FILES[route.join('/')];
+    if (fileFor && !existsSync(fileFor(segs[segs.length - 1]))) {
+      fail('routes', `${rel(file)}: link "${link}" names no ${rel(fileFor(segs[segs.length - 1]))}`);
     }
   }
 }
 
 // ---------------------------------------------------------------------------------------------
 // fragments: every literal fragment names an element id some template renders.
+// Not seen: whether that template is the one rendered at the link's route.
 
 function checkFragments() {
   const ids = new Set();
@@ -130,7 +164,7 @@ const DATA = {
   'stack.json': ['stack.ts', 'Stack'],
 };
 
-/** Top-level fields of `export interface name`, as [field, optional]. */
+/** Top-level fields of `export interface name`, as [field, optional]. Nested types are not read. */
 function interfaceFields(file, name) {
   const src = read(file);
   const start = src.indexOf(`export interface ${name} {`);
@@ -142,7 +176,7 @@ function interfaceFields(file, name) {
     if (ch === '{') depth++;
     if (ch === '}') depth--;
     if (depth === 0) break;
-    if (depth === 1 && (ch === '\n' || ch === ';')) {
+    if (depth === 1 && (ch === '\n' || ch === ';' || ch === ',')) {
       const m = line.match(/^\s*(\w+)(\?)?\s*:/);
       if (m) fields.push([m[1], Boolean(m[2])]);
       line = '';
@@ -191,7 +225,7 @@ function checkData() {
 
 function checkPosts() {
   for (const f of walk(join(ROOT, 'blog'), (p) => p.endsWith('.md'))) {
-    const fm = read(f).match(/^---\n([^]*?)\n---/);
+    const fm = read(f).replace(/\r\n/g, '\n').match(/^---\n([^]*?)\n---/);
     if (!fm) {
       fail('posts', `${rel(f)} has no front matter`);
       continue;
@@ -233,13 +267,18 @@ function checkDocPaths() {
       fail('doc-paths', `instruction document missing: ${doc}`);
       continue;
     }
-    for (const [, token] of read(file).matchAll(/`([^`\s]+)`/g)) {
-      const path = token.replace(/\/$/, '').replace(/:\d+$/, '');
+    const src = read(file);
+    const tokens = [
+      ...[...src.matchAll(/`([^`\s]+)`/g)].map((m) => m[1]),
+      ...[...src.matchAll(/\]\(([^)\s]+)\)/g)].map((m) => m[1]),
+    ];
+    for (const token of tokens) {
+      const path = token.replace(/#.*$/, '').replace(/\/$/, '').replace(/:\d+$/, '');
       if (/[<>*$(){}|=]|^https?:|^\.\.?$|^-/.test(path) || PATH_EXEMPT[path]) continue;
       if (path.includes('/')) {
         if (!/^[\w.~-]+(\/[\w.@-]+)+$/.test(path)) continue;
         if (!existsSync(join(ROOT, path))) fail('doc-paths', `${doc} names \`${token}\`, which does not exist`);
-      } else if (/^[\w.-]+\.(md|json|jsonc|ts|mjs|js|yml|yaml|toml|conf|html)$/.test(path)) {
+      } else if (/^[\w.-]+\.(md|json|jsonc|ts|mjs|js|yml|yaml|toml|conf|html|sh|py|css|txt)$/.test(path)) {
         if (!existsSync(join(ROOT, path)) && !trackedNames.has(path)) {
           fail('doc-paths', `${doc} names \`${token}\`, which no file in the repository is called`);
         }
