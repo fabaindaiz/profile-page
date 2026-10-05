@@ -103,3 +103,71 @@ concatenation, for phase 6.
 
 **Ruling.** The specs are fixed after the update, on the test runner chosen there, not before it:
 fixing Karma specs that the update rewrites would be done twice.
+
+### Phase 3 — Angular 15 to 22 (2026-10-05)
+
+`ng update` one major at a time, 16 to 22, a commit and a green build per step, all on Node 26.
+TypeScript 6 refused two unused compiler options at 22. Then the application builder (esbuild,
+output in `dist/profile-page/browser`), standalone components with the NgModules removed, every
+route loaded with the app, zoneless change detection (zone.js removed), and static prerendering
+with `@angular/ssr` (`outputMode: "static"`, one file per post through `getPrerenderParams`, the
+`/404` page copied to `404.html`). Hydration takes over the prerendered HTML: 39 kB raw (11 kB
+compressed) of script it costs, against redrawing every page on load. Tests moved to Vitest: the
+CLI's boilerplate specs became 16 behaviour tests, the `isHome` regression test seen to fail against
+the code before its fix. `.nvmrc` is 26.
+
+**Deviation.** The specs were fixed after the update, not before (the ruling in phase 2).
+
+### Phase 4 — the built site, verified (2026-10-05)
+
+`npm run check`, run by CI after `npm ci`: the tests, the build, `tools/check-site.mjs` (every
+internal `href`, `src` and fragment in the built HTML resolves; three planted breaks found) and
+`tools/measure.mjs --budget 4` (at most four requests besides images per page, none third-party,
+and no console error: a planted inline script was refused by the CSP and failed it). Content is
+typed against its models at compile time, which replaced the planned zod schemas: a missing field
+already fails the build.
+
+### Phase 5 — Cloudflare configuration (2026-10-05)
+
+`wrangler.jsonc`: static assets only, `drop-trailing-slash`, `404-page`. `public/_headers`: the
+nginx security headers, `Referrer-Policy` as OWASP recommends, COOP, and a CSP whose script
+hashes `tools/postbuild.mjs` fills in after each build, with an `immutable` rule per hashed file
+(one rule per file name: the host allows a single splat per pattern). Docker and nginx removed.
+**Not deployed**: that is the owner's account and the owner's call.
+
+### Phase 6 — quality (2026-10-05)
+
+Every block rendered once, with responsive type keeping the old sizes (home HTML 105 to 61 kB);
+navigation as `<a>` (56 to 88 internal links the check can follow); one `<h1>` per page; names for
+icon-only links and stack icons; lazy project images; a title, description and social tags per page,
+`noindex` on the not-found page; axe's WCAG 2.1 AA rules on every page at two widths in
+`npm run check` (0 violations; two planted ones found). Pages looked at, desktop and phone, after
+each change.
+
+**Not done, and why.** A canonical URL, `og:url`, `sitemap.xml`, `robots.txt` and JSON-LD need the
+site's address, which the owner has not given. Project images are still PNG (1.5 MB on `/project`):
+converting them needs an image tool this repository does not have yet. The stylesheet is all of
+Bootstrap (196 kB raw, 28 kB compressed); trimming it is a separate change.
+
+## Result
+
+| Route | Requests before | Requests now | Third-party before | Third-party now |
+|---|---|---|---|---|
+| `/` | 22 | 4 | 1 | 0 |
+| `/about` | 14 | 4 | 1 | 0 |
+| `/project` | 21 | 9 (5 are project images) | 1 | 0 |
+| `/blog` | 11 | 4 | 1 | 0 |
+| a post | 12 (and it rendered an error outside Scully's static pages) | 4 | 1 | 0 |
+
+The four requests are the page, one script (106 kB compressed), one stylesheet (28 kB) and one
+font. Bytes before were measured uncompressed and bytes now compressed, so only the request counts
+compare: `/` now transfers 190 KiB compressed. A repeat visit should revalidate the HTML only,
+the rest being `immutable`; that holds on the host and is unverified until a deploy.
+
+## Phase 7 — content: questions for the owner
+
+1. The site's address (domain), for the canonical, `og:url`, sitemap and JSON-LD.
+2. Projects: 5 of 12 have an image and 4 are featured; one description still says the site is
+   made with Scully. Which to update, add or feature?
+3. The blog's only post is a test. Keep the blog with real posts, or hide it until there is one?
+4. A contact or CV link: which, if any?

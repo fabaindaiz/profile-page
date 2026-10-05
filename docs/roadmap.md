@@ -7,64 +7,62 @@ measurement, Blocked outside) and is never deleted. Ids come from
 
 ## Where we are
 
-2026-10-05. The site is Angular 15 with Scully, unchanged since 2023, deployed by a Docker image
-with nginx; whether that image runs anywhere today is unknown. Angular 15's supported Node range
-ends at 18; on this machine's Node 26 it is untested, and nothing has been installed or built yet.
-The agent method is installed (`.agents/`, carrier `r-115f49`), the gate runs on sources only, and
-CI runs it and the single-author check on every push. The owner's next step is updating the site:
-i-115f49-8c7fbe first.
+2026-10-05. The site is Angular 22, standalone and zoneless, prerendered to static HTML: every page
+costs a first visit 4 requests (HTML, script, stylesheet, font), none to another origin, down from
+22 on the home page (`docs/plans/2026-10-05-site-update.md` has the measurements). `npm run check`
+verifies the built site in CI. It is configured for Cloudflare static assets and **not deployed**.
+The work is on the branch feat/site-update, not merged.
 
-**Waiting on the owner:** nothing.
+**Waiting on the owner:** the site's address; the content questions in the plan's phase 7
+(projects, the blog, a contact link); whether and when to deploy (i-115f49-ab7102); merging the
+branch.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
-`bundle.py`, Node 12.17 or newer for `npm run gate`; the Node in `.nvmrc` to build the code.
-First step: `nvm use` (Node 18), `npm ci`, `npm run build`, and record what fails.
+`bundle.py`, the Node in `.nvmrc` (26), `npm ci`, `npx playwright install chromium`, then
+`npm run check`.
 
 ## Process and tooling
 
 ### i-115f49-679bb3 · Gate in CI and stop tracking generated files
 **State: Done** (2026-10-05, s-115f49-bc5070). `.github/workflows/ci.yml` runs `npm run gate` on
-every push and pull request; `.scully/` and the routes list Scully writes into `src/assets/` are
-untracked and ignored.
-**What is still missing:** the gate builds nothing and runs no test (d-115f49-7161fe); a build and
-the test run join it in i-115f49-8c7fbe. `audit:fragments` checks a fragment against every
-template, not the page its link opens. Whether the `./` paths in `.claude/settings.json` deny rules
-hold for a session started in a subfolder is unverified, and they do not cover writes made through
-the shell.
+every push and pull request; generated files are untracked and ignored.
+**What is still missing:** `audit:fragments` checks a fragment against every template, not the page
+its link opens (the built-site check, `tools/check-site.mjs`, does check the page). Whether the `./`
+paths in `.claude/settings.json` deny rules hold for a session started in a subfolder is unverified,
+and they do not cover writes made through the shell.
 
 ### i-115f49-7fea76 · Dependency updates with Dependabot
 **State: Planned.** Dependabot with Angular minor and patch updates grouped, majors ignored.
 **What it collides with.** Neither bot runs `ng update` migrations: a bot bumping an Angular major
-would skip the code migrations. Turning it on before i-115f49-8c7fbe would open PRs against a
-version line that is about to be replaced.
+would skip the code migrations. The update is done (i-115f49-8c7fbe), so nothing blocks it now.
 **What must be decided first.** Weekly or monthly; whether patches ever merge on their own.
+
+### i-115f49-03e2ea · A committed script that screenshots every built page at two widths
+**State: Planned.**
+**What happens now.** Each visual check was a scratch script, rewritten as the build path changed:
+build, serve, open each route at 1280 and 390 pixels, save, look.
+**Cost.** About a minute to rewrite each time × done after every template change × every session
+that touches a page.
+**The fix.** `tools/screenshots.mjs` beside `tools/measure.mjs`, reusing `tools/serve.mjs`.
+**Seen in.** s-115f49-187eff, more than ten times.
 
 ## The framework
 
 ### i-115f49-8c7fbe · Update Angular from 15 to the current major and replace Scully
-**State: Planned.** Decided: Angular stays (d-115f49-908ed6).
-**What it collides with.** Scully does not run past Angular 15–16, so it must go before or during
-the first steps; the blog's `<scully-content>` and `ScullyRoutesService` have no drop-in
-replacement. The supported Node changes at 16→17, 19→20 and 21→22 (`docs/references.md`): Node 18
-serves 15 to 19, and Node 22.22.3 or newer serves 18 to 22, so `.nvmrc` can move once, at 18, or
-twice; it moves with the step, never ahead (d-115f49-6364c7). The output folder moves to `dist/profile-page/browser`
-with the application builder. ng-bootstrap moves one major per Angular major.
-**What is already in its favour.** About ten components; strict TypeScript and strict templates
-already on; content already separated into JSON and markdown.
-**What must be decided first.** The prerender path for the blog (`@angular/ssr` with a markdown
-library, or Analog: i-115f49-394f15); whether to also migrate to standalone components, control
-flow and zoneless during the update or after; Karma or Vitest. The specs are known to fail by
-reading (`app.component.spec.ts` asserts markup the template does not have; header and project specs
-provide no `HttpClient`): fix or replace them in the first step, so the test run can join the gate.
+**State: Done** (2026-10-05, s-115f49-187eff). Angular 22.2 by `ng update`, one major per commit;
+the application builder; standalone components, no NgModules; zoneless; static prerendering with
+`@angular/ssr`; Vitest. Scully was replaced by `tools/posts.mjs`, which converts the posts at build
+time. Measured: 4 requests per page, the script 106 kB compressed.
+**What is still missing:** the old `*ngIf` style is gone (the control-flow migration ran), but the
+components still take their services through constructors, not `inject()`; harmless, and left as
+it is.
 
 ### i-115f49-394f15 · Evaluate Analog for markdown content routes
-**State: Planned** (owner's request, 2026-10-05).
-**What it collides with.** Analog moves the build to Vite and routing to files, which d-115f49-908ed6
-does not rule out but i-115f49-8c7fbe would have to absorb; it needs Angular 20 or newer first.
-**What is already in its favour.** It keeps Angular components as they are and brings markdown
-content routes, front matter and a sitemap built in.
-**What must be decided first.** Whether Analog replaces the hand-built markdown path inside
-i-115f49-8c7fbe, or is evaluated after it.
+**State: Closed by measurement** (2026-10-05). The blog's need, posts converted to HTML and
+prerendered one file each, is met by `tools/posts.mjs` (about sixty lines, no request added per
+page). Analog would replace that with a move to Vite and file-based routing.
+**What would reopen it.** Posts needing what a script is poor at: MDX, embedded components, code
+highlighting at scale.
 
 ### i-115f49-a26e87 · Evaluate Astro for the site
 **State: Blocked outside** (owner's decision, 2026-10-05: keep Angular, no Astro for now).
@@ -77,56 +75,57 @@ toolchain.
 ## Hosting
 
 ### i-115f49-ab7102 · Deploy on Cloudflare Workers static assets and retire Docker and nginx
-**State: Planned.** Recommended by the research: a Worker with only static assets
-(`wrangler.jsonc`), `html_handling: "drop-trailing-slash"`, `not_found_handling: "404-page"`, the
-nginx security headers moved to `public/_headers`, and Cloudflare's Git integration building
-previews, so no Cloudflare token lives in GitHub.
-**What it collides with.** d-115f49-87d6c2: Cloudflare's default trailing-slash handling redirects
-every internal link once. **It does not ship before i-115f49-e325d4**: the gate checks sources only,
-and the check that blocks a broken built site is that item; a deploy before it ships the bug class
-nobody here can see. Workers Builds may deploy without waiting for the GitHub check, so its
-build command should run the gate too (unverified).
-**What must be decided first.** Workers or Pages; whether Docker and nginx are deleted or kept for
-local preview; whether to add a Content-Security-Policy.
+**State: Half done** (2026-10-05, s-115f49-187eff). Configured: `wrangler.jsonc` (static assets
+only, `drop-trailing-slash`, `404-page`), `public/_headers` (security headers and a CSP, completed
+after each build by `tools/postbuild.mjs`), and the steps in `README.md`. Docker and nginx removed
+(d-115f49-314943). **The missing half is the deploy**, from the owner's Cloudflare account.
+**What it collides with.** Workers Builds may deploy without waiting for the GitHub check
+(unverified), so a red `main` could ship; its build command runs `npm run build`, not the whole
+check, because the check needs a browser. Whether Cloudflare's build image provides Node 26 is
+unverified; Angular 22 also runs on 24.15 or newer.
+**What must be decided first.** When to deploy; the site's address.
 
 ## Verification
 
 ### i-115f49-e325d4 · Pre-ship verification of the built site
-**State: Planned.** Content schemas the types derive from (replacing `audit:data` and `audit:posts`),
-a link and fragment check over the built folder, and a smoke test with an accessibility check that
-visits every route.
-**What it collides with.** Links made by `<button routerLink>` render no `href`, so a link checker
-cannot see them; they become `<a>` (i-115f49-636a4f) or the smoke test covers them.
-**What must be decided first.** Which tools (the research recommends zod, linkinator and Playwright
-with axe); whether Lighthouse blocks or only reports.
+**State: Done** (2026-10-05, s-115f49-187eff). `npm run check` in CI: tests, build,
+`tools/check-site.mjs`, `tools/measure.mjs --budget 4` (which also fails on console errors and CSP
+violations) and `tools/a11y.mjs` (axe, WCAG 2.1 AA). Each was seen to fail on a planted fault.
+Content schemas were not needed: the content is typed against its models at compile time.
+**What is still missing:** nothing renders a page and compares it with how it should look
+(i-115f49-03e2ea is the first step); Lighthouse was not added.
 
 ## The site
 
 ### i-115f49-636a4f · Site quality: accessibility, SEO, weight and CSP
-**State: Planned.** Navigation as `<a>`, alt text, one `<h1>` per page and no duplicated content;
-a title, description and social tags per route, a canonical and a sitemap; self-hosted fonts, the
-icon font replaced by the icons used; a CSP.
-**What it collides with.** Nothing settled; most of it is easier after i-115f49-8c7fbe.
-**What must be decided first.** Order against the update.
+**State: Half done** (2026-10-05, s-115f49-187eff). Done: one render per block, `<a>` navigation,
+one `<h1>` per page, accessible names, lazy images; a title, description and social tags per page;
+self-hosted font and inline icons; a CSP.
+**What is still missing:** a canonical URL, `og:url`, `sitemap.xml`, `robots.txt` and JSON-LD,
+which need the site's address (content, the owner's); project images as WebP or AVIF with their
+dimensions (1.5 MB of PNG on `/project`), which needs an image tool; the stylesheet is all of
+Bootstrap (28 kB compressed) and could be trimmed.
 
 ### i-115f49-d63585 · Update the site content
-**State: Planned.** Bio, projects and posts are the owner's to write; the only post is a test.
-One project entry carries a stray top-level `color` that no model declares (`audit:data` advisory).
+**State: Planned.** Bio, projects and posts are the owner's to write; the questions are in the
+plan's phase 7. One project entry carries a stray top-level `color` that no model declares
+(`audit:data` advisory), and one description still says the site uses Scully.
 **What must be decided first.** The owner's text.
 
 ## Closed by measurement
 
-None yet.
+- i-115f49-394f15 (Analog): the blog works without it, at no request per page.
 
 ## What each one costs the invariant
 
 | Idea | Does it break "every route, link, fragment and asset resolves as served"? |
 |---|---|
-| i-115f49-8c7fbe | Yes, during the update: every route is re-prerendered by a different tool and the output folder moves. |
-| i-115f49-394f15 | Yes: routing moves to files, so every route is redefined. |
+| i-115f49-8c7fbe | It did, and `npm run check` showed it held after: every route prerendered, every link checked. |
+| i-115f49-394f15 | Yes: routing would move to files, so every route is redefined. |
 | i-115f49-a26e87 | Yes: every page is rewritten. |
-| i-115f49-ab7102 | Yes, unless trailing-slash handling matches the links. |
+| i-115f49-ab7102 | Not if `drop-trailing-slash` stays: the links are written without a slash. |
 | i-115f49-e325d4 | No: it is the check of the invariant against the built output. |
-| i-115f49-636a4f | No, and it helps: `<a>` links become visible to link checkers. |
+| i-115f49-636a4f | No, and it helped: `<a>` links became visible to the link check. |
 | i-115f49-d63585 | No. |
 | i-115f49-7fea76 | No. |
+| i-115f49-03e2ea | No. |

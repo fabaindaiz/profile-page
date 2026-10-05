@@ -8,6 +8,73 @@ of the file.
 
 ---
 
+## 2026-10-05 · s-115f49-187eff — Optimise the static build and update Angular to 22
+
+**What.** Executed `docs/plans/2026-10-05-site-update.md`, phases 1 to 6: a measured baseline; the
+request diet (inline SVG icons generated from the icon packages, content compiled into the bundle,
+a native menu instead of ng-bootstrap, the font served from the site, posts converted at build time
+instead of Scully); Angular 15 to 22 by `ng update`, the application builder, standalone, zoneless,
+static prerendering with `@angular/ssr`; a Vitest suite; `npm run check` in CI (tests, build, link
+and fragment check of the built HTML, request budget, console and CSP errors, axe); Cloudflare
+static-assets configuration with a CSP, and Docker and nginx removed; accessibility and SEO fixes.
+
+**Areas.** `src/`, `tools/`, `public/`, `wrangler.jsonc`, `angular.json`, `package.json`,
+`tsconfig*.json`, `.nvmrc`, `.github/workflows/ci.yml`, `.vscode/launch.json`, `AGENTS.md`,
+`README.md`, `docs/`, `.claude/skills/`.
+
+**Why.** The owner asked to optimise the static build for the fewest requests per page, because of
+Cloudflare's free plan, and for a plan to improve and complete the site; then: the goal is speed and
+a static site, follow every step in the order chosen, use the npm already on the machine. The free
+plan turned out not to charge static requests (read first-hand), so the diet is for speed.
+
+**Architecture.** ✅ Complies. d-115f49-908ed6 held (Angular); new decisions d-115f49-7d644b (the
+built-site check) and d-115f49-314943 (hosting).
+
+**Cards relied on, and the checks that ran.** `a-check-must-be-seen-to-fail`: the content typing
+(a removed field failed the build), the `isHome` regression test (failed against the old code),
+`tools/check-site.mjs` (three planted breaks), the CSP check (a planted inline script) and
+`tools/a11y.mjs` (two planted violations) were each seen red. `derived-copy-goes-stale-silently`:
+the generated icons and posts are untracked and regenerated before every build, serve and test.
+`unrunnable-system-moves-the-gate`: no longer applies; the site builds and runs here, and the gate
+gained the built-site level.
+
+**Review.** none.
+
+**What went wrong on the way.**
+- The new menu exposed a latent bug: `HeaderService.isHome()` gave late subscribers the home
+  page's value. Fixed with its own regression test.
+- The first icon pass broke one icon, whose content name carried an extra `colored` word, and made
+  the icon circles 75 px tall. Both were caught by measuring the boxes in a browser.
+- `<a>` links in a flex row wrapped their arrow on phones, where the old `<button>`s had not; the
+  screenshot caught it.
+- Probes read the DOM right after a click, and zoneless renders a tick later. Two false failures
+  ("Escape does not close") were cleared by waiting.
+- Three tool hiccups:
+  - `npm run build`'s grep missed Angular 17's new casing.
+  - A JSON loader choked on a commented `tsconfig`.
+  - The `_headers` placeholder was first replaced inside its own comment.
+- Two doc paths went stale twice (`404.html`, a renamed script); `audit:doc-paths` refused the
+  commit both times.
+
+**What was left undone.** Phase 7 (content) and the domain-dependent SEO wait on the owner. The
+deploy is configured, not done. Project images are still PNG. Bootstrap is untrimmed. Dependabot is
+not set up. A committed screenshot script (i-115f49-03e2ea).
+
+**Not verified.** Anything on Cloudflare: whether its build image provides Node 26, whether Workers
+Builds waits for GitHub checks, how a repeat visit caches. The new CI job has not run (not pushed).
+
+**Measured.** First visit, own requests besides images: 22 → 4 on `/`, 4 on every page; third-party
+requests 1 → 0; `/` 190 KiB compressed. Script 106 kB and stylesheet 28 kB compressed. 20 tests;
+`check-site` 88 internal links, 0 broken; axe 0 violations at two widths.
+
+**Learned.** General: before optimising for a provider's limits, read the provider's billing page;
+the premise here (free-plan request counts) did not hold for static assets, and the work changed
+from cost to speed. General: an end-to-end probe of a zoneless app must wait for the DOM, not read
+it right after the event. Local: the screenshot procedure, repeated more than ten times, is
+i-115f49-03e2ea. Captured: 2 learnings, 5 frictions (scratch screenshot scripts, >10; output
+format greps, 1; JSONC parsing, 1; placeholder in a comment, 1; zoneless timing in probes, 2).
+Waiting on the owner: the domain, the content questions, the deploy, the merge.
+
 ## 2026-10-05 · s-115f49-818e9f — Finish the bootstrap checklist and delete ANGULAR.md
 
 **What.** Walked the method's bootstrap checklist and added what was missing: the

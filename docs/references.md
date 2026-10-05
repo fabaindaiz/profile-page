@@ -59,6 +59,18 @@ or 26); the rest is to be re-read at its source before a decision cites it.
 
   **Not applied yet:** the deploy, i-115f49-ab7102; until then CI only runs the gate.
 
+## Hosting, checked first-hand
+
+- **Cloudflare's billing pages for static assets** (Workers static assets, and Pages Functions
+  pricing), read 2026-10-05 — "requests to static assets are free and unlimited", on both platforms
+  and every plan; only requests that run a Worker script or a Function count against the free quota.
+
+  **What it confirms:** a fully static site spends nothing, however many files a page fetches.
+
+  **What we do differently, on purpose:** the request diet was done anyway, for speed, not cost.
+
+  Produced: d-115f49-314943.
+
 ## What to read first
 
 | If you are about to touch… | Read | And watch out for |
