@@ -14,8 +14,7 @@ The agent method is installed (`.agents/`, carrier `r-115f49`), the gate runs on
 CI runs it and the single-author check on every push. The owner's next step is updating the site:
 i-115f49-8c7fbe first.
 
-**Waiting on the owner:** whether `ANGULAR.md` (the CLI's
-boilerplate, repeating `README.md`) is deleted.
+**Waiting on the owner:** nothing.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
 `bundle.py`, Node 12.17 or newer for `npm run gate`; the Node in `.nvmrc` to build the code.
@@ -83,7 +82,9 @@ toolchain.
 nginx security headers moved to `public/_headers`, and Cloudflare's Git integration building
 previews, so no Cloudflare token lives in GitHub.
 **What it collides with.** d-115f49-87d6c2: Cloudflare's default trailing-slash handling redirects
-every internal link once. Workers Builds may deploy without waiting for the GitHub check, so its
+every internal link once. **It does not ship before i-115f49-e325d4**: the gate checks sources only,
+and the check that blocks a broken built site is that item; a deploy before it ships the bug class
+nobody here can see. Workers Builds may deploy without waiting for the GitHub check, so its
 build command should run the gate too (unverified).
 **What must be decided first.** Workers or Pages; whether Docker and nginx are deleted or kept for
 local preview; whether to add a Content-Security-Policy.
