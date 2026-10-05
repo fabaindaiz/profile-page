@@ -13,7 +13,7 @@ reused. A reversed row says so in place and points at what replaced it.
 |---|---|---|---|
 | d-115f49-87d6c2 | Every literal route link and fragment resolves to a route the router defines and an id a template renders | A route rename once had to touch five files by hand, and the tracked routes list regressed it afterwards; a development server hides a broken link because it routes client-side | `audit:routes`, `audit:fragments` |
 | d-115f49-9700ab | Files Scully generates are not tracked (`.scully/`, the routes list in `src/assets/`) | A tracked copy is served in place of its source and goes stale silently (card `derived-copy-goes-stale-silently`); the tracked copy also carried a machine-local home path into a public repository | `audit:generated`, `.gitignore` |
-| d-115f49-908ed6 | Angular stays the framework, updated to the current major; Analog and Astro are evaluated as roadmap items, not adopted | Owner's decision, 2026-10-05; Angular 15 left support in 2024 and Scully does not follow it past 15 (`docs/research/2026-10-05-angular-scully-cloudflare.md`) | — |
+| d-115f49-908ed6 | Angular stays the framework, updated to the current major, without Astro for now; Analog is evaluated as a roadmap item | Owner's decisions, 2026-10-05 (Astro set aside the same day: i-115f49-a26e87); Angular 15 left support in 2024 and Scully does not follow it past 15 (`docs/research/2026-10-05-angular-scully-cloudflare.md`) | — |
 
 ## The repository and its process
 

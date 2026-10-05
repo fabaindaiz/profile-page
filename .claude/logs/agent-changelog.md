@@ -8,6 +8,23 @@ of the file.
 
 ---
 
+## 2026-10-05 · s-115f49-aa8e47 — Keep Angular and set Astro aside
+
+**What.** Recorded the owner's decision to keep Angular without Astro for now: i-115f49-a26e87 is
+blocked outside until the owner asks again, and d-115f49-908ed6 says so.
+
+**Areas.** `docs/roadmap.md`, `docs/decisions.md`.
+
+**Why.** The owner answered the open question from s-115f49-bc5070 after asking what Astro is.
+
+**Architecture.** ✅ Complies.
+
+**Cards relied on, and the checks that ran.** none.
+
+**Review.** none.
+
+**Learned.** Captured: 0 learnings, 0 frictions. Nothing needs you.
+
 ## 2026-10-05 · s-115f49-bc5070 — Bootstrap the agent-guides method and the CI gate
 
 **What.** Installed the agent-guides bundle 0.0.26 (carrier `r-115f49`) and wrote the instruction

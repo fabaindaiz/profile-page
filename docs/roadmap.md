@@ -14,7 +14,7 @@ The agent method is installed (`.agents/`, carrier `r-115f49`), the gate runs on
 CI runs it and the single-author check on every push. The owner's next step is updating the site:
 i-115f49-8c7fbe first.
 
-**Waiting on the owner:** which Astro option i-115f49-a26e87 means; whether `ANGULAR.md` (the CLI's
+**Waiting on the owner:** whether `ANGULAR.md` (the CLI's
 boilerplate, repeating `README.md`) is deleted.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
@@ -68,11 +68,12 @@ content routes, front matter and a sitemap built in.
 i-115f49-8c7fbe, or is evaluated after it.
 
 ### i-115f49-a26e87 · Evaluate Astro for the site
-**State: Planned** (owner's request, 2026-10-05).
+**State: Blocked outside** (owner's decision, 2026-10-05: keep Angular, no Astro for now).
 **What it collides with.** Rewriting the pages as Astro would end d-115f49-908ed6; Astro with
 Angular components embedded through Analog's Astro integration would keep Angular but add a second
 toolchain.
-**What must be decided first.** Which of the two the owner means — this was asked and is open.
+**What would reopen it.** The owner asking for it again; the facts for that conversation are in
+`docs/research/2026-10-05-site-quality-and-framework.md` §5. Do not propose it otherwise.
 
 ## Hosting
 
