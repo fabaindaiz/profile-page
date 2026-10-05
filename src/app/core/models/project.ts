@@ -4,8 +4,8 @@ export interface Project {
     stack: pstack[];
     description: string;
     imageUrl?: string;
-    sourceUrl: string;
-    previewUrl: string;
+    sourceUrl?: string;
+    previewUrl?: string;
     featured?: boolean;
 }
 
