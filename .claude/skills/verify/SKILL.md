@@ -8,7 +8,7 @@ allowed-tools: Bash, Read
 
 The site's one invariant is that every route, link, fragment and asset resolves in the static
 output as served, and the development server hides breaking it. The gate checks the sources for it;
-nothing yet checks the built output.
+`npm run check` checks the built output.
 
 ## The gate
 
@@ -22,7 +22,13 @@ ids`. It installs nothing and builds nothing.
 
 ## If `src/` changed
 
-The gate cannot see these; run what the machine allows and say which ran:
+The gate cannot see these; run them and say which ran:
+
+```bash
+npm run check   # tests, build, links and fragments in the built HTML, request budget, CSP, axe
+```
+
+And to look at what changed:
 
 ```bash
 npm ci               # with the Node in .nvmrc

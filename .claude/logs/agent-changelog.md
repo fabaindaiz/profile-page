@@ -38,7 +38,14 @@ the generated icons and posts are untracked and regenerated before every build, 
 `unrunnable-system-moves-the-gate`: no longer applies; the site builds and runs here, and the gate
 gained the built-site level.
 
-**Review.** none.
+**Review.** At the close, in a fresh context (a delegated reviewer, read-only; a clean `npm ci`
+and build in a worktree, the CSP hashes recomputed, planted CSP and link faults, the 404 flow). No
+blocker. Should-fix, all fixed before the merge: the `verify` skill and `AGENTS.md` still said the
+built output was unchecked; the CI file's header said it installed nothing; `wrangler` was used
+unpinned. Nits fixed: the `npm test` command line, `*ngIf` in a standard, the generated-files
+decision's wording, the home page's `/blog#` link. Deferred to the roadmap: `_headers` merge
+semantics and 404-response headers on Cloudflare, `noindex` lost on a client-side unknown slug,
+`srcset` and entities unread by `check-site`, the bundle-size warning.
 
 **What went wrong on the way.**
 - The new menu exposed a latent bug: `HeaderService.isHome()` gave late subscribers the home

@@ -66,7 +66,7 @@ npm run build         # generate icons and posts, then prerender every route int
 npm run preview       # serve that build as the host will, 404s included (tools/serve.mjs)
 node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
 node tools/screenshots.mjs   # every built page at 1280 and 390 px, into dist/screenshots
-npm test              # generate, then the Vitest suite (ng test --watch=false)
+npm test -- --watch=false   # generate, then the Vitest suite once (plain npm test watches)
 npm run check         # the built site: tests, build, links, request budget, accessibility (CI runs it)
 ```
 
@@ -102,12 +102,12 @@ its answer.
 - **Types stay at the strictness `tsconfig.json` sets**: `strict`, `noImplicitReturns`,
   `noPropertyAccessFromIndexSignature`, `noImplicitOverride`, `noFallthroughCasesInSwitch`, and
   `strictTemplates` with strict injection and input checks. Never loosen one to make an error go
-  away. Enforced by the compiler at build, which the gate does not run yet.
-- **A type at a boundary is the contract.** A field the template guards with `*ngIf` is optional in
+  away. Enforced by the compiler at build (`npm run check`).
+- **A type at a boundary is the contract.** A field the template guards with `@if` is optional in
   its interface; a required one is present in every data entry (`audit:data`).
 - **Comments say why, never the change that produced them.** Match the file's density.
 - **What a static site must not do**: ship a link, fragment or asset that does not resolve
-  (`audit:routes`, `audit:fragments`; the built output is unchecked until i-115f49-e325d4);
+  (`audit:routes`, `audit:fragments` on the sources; `tools/check-site.mjs` on the built output);
   navigate without an `<a>`, which keyboards, crawlers and link checkers cannot follow; show an
   image without `alt`. Enforced on the built pages by `tools/a11y.mjs` (axe: link names, image
   alt text, contrast and the rest of WCAG 2.1 AA's automatable rules).

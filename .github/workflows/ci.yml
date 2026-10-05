@@ -1,5 +1,5 @@
-# The gate on every push and pull request (d-115f49-7161fe). It installs nothing from npm:
-# the gate checks sources only, so it runs before the code can be built on a supported Node.
+# Two jobs on every push and pull request: the gate (d-115f49-7161fe), which needs no install,
+# and the built site (d-115f49-7d644b), which runs npm ci and installs Playwright's Chromium.
 name: ci
 
 on:

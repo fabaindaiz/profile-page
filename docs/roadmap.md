@@ -83,6 +83,9 @@ after each build by `tools/postbuild.mjs`), and the steps in `README.md`. Docker
 (unverified), so a red `main` could ship; its build command runs `npm run build`, not the whole
 check, because the check needs a browser. Whether Cloudflare's build image provides Node 26 is
 unverified; Angular 22 also runs on 24.15 or newer.
+**Unverified until a deploy:** how Cloudflare applies `_headers` to `404.html` responses, and whether
+a `Cache-Control` from `_headers` replaces its default or joins it; `tools/serve.mjs` lets the last
+matching rule win, where Cloudflare may join the values (no two rules overlap today).
 **What must be decided first.** When to deploy; the site's address.
 
 ## Verification
@@ -104,7 +107,10 @@ self-hosted font and inline icons; a CSP.
 **What is still missing:** a canonical URL, `og:url`, `sitemap.xml`, `robots.txt` and JSON-LD,
 which need the site's address (content, the owner's); project images as WebP or AVIF with their
 dimensions (1.5 MB of PNG on `/project`), which needs an image tool; the stylesheet is all of
-Bootstrap (28 kB compressed) and could be trimmed.
+Bootstrap (28 kB compressed) and could be trimmed, and the initial bundle (524 kB raw) sits over
+`angular.json`'s 500 kB warning budget, a warning nothing fails on. On an unknown post slug the
+client drops the 404 page's `noindex` (the response stays a 404). `tools/check-site.mjs` reads
+neither `srcset` nor HTML entities in links; no page uses them yet.
 
 ### i-115f49-d63585 · Update the site content
 **State: Planned.** Bio, projects and posts are the owner's to write; the questions are in the

@@ -40,7 +40,7 @@ static assets are free on every plan. Not deployed from this repository yet. To 
 Cloudflare dashboard create a Worker from this GitHub repository (Workers Builds) with:
 
 - build command: `npm ci && npm run build`
-- deploy command: `npx wrangler deploy`
+- deploy command: `npx wrangler@4.147.0 deploy` (pinned: wrangler is not a dependency of the site)
 
 Cloudflare's build image reads `.nvmrc`; if it cannot provide Node 26, set `NODE_VERSION` to a 24.15
 or newer release, which Angular 22 also supports. Response headers (CSP, security headers,
