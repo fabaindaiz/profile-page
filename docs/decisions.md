@@ -20,8 +20,8 @@ reused. A reversed row says so in place and points at what replaced it.
 | Id | Decision | Why | Enforced in |
 |---|---|---|---|
 | d-115f49-dadcf1 | `AGENTS.md` is the single instruction source; `CLAUDE.md` holds only `@AGENTS.md` | Two instruction files that can disagree will; Claude Code reads `CLAUDE.md`, the other assistants read `AGENTS.md` | `audit:doc-paths` checks both exist; the import line itself is — |
-| d-115f49-7161fe | `npm run gate` is the one gate, and it runs without an install | The code cannot be built on a current Node, so a gate that needs a build would never run; one command means one definition of green | `.githooks/pre-commit`, `.github/workflows/ci.yml` |
-| d-115f49-cad445 | Every commit has one author and no `Co-Authored-By` trailer | Owner's rule for every repository; tools add the trailer by default | `.githooks/commit-msg` |
+| d-115f49-7161fe | `npm run gate` is the one gate, and it runs without an install | The code's supported Node (18) is out of support and nothing is installed, so a gate that needed a build would not run before the update; one command means one definition of green | `.githooks/pre-commit`, `.github/workflows/ci.yml` |
+| d-115f49-cad445 | Every commit has one author and no `Co-Authored-By` trailer | Owner's rule for every repository; tools add the trailer by default | `.githooks/commit-msg`; CI checks every commit, for clones without the hook |
 | d-115f49-6364c7 | Node is pinned in `.nvmrc` only, at the version the current Angular supports | Two pins drift; CI's `setup-node` and Cloudflare's build image both read `.nvmrc` (`docs/research/2026-10-05-gate-ci-deploy.md`) | `.github/workflows/ci.yml` reads it; the version itself is — |
 | d-115f49-c0e193 | Repository documents are written in English; the conversation is in Spanish | Owner's rule; identifiers and commands are English already | — |
 | d-115f49-17da15 | No nested `CLAUDE.md` while the repository has one area — *a non-decision, recorded so it is not proposed as a cleanup* | Every rule here applies to all of `src/`; a nested file would repeat the root | — |

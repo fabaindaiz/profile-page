@@ -6,7 +6,7 @@ built site, never on the development server. Rules, decisions and plans: [`AGENT
 
 ## Commands
 
-The code is Angular 15 and needs the Node in `.nvmrc` (18); install with `npm ci`.
+The code is Angular 15; build it on the Node in `.nvmrc` (18), after `npm ci`.
 
 #### Gate (no install needed)
 

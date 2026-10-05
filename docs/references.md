@@ -7,7 +7,9 @@ files in `docs/research/`; every new one gets a row here.
 
 The four files of 2026-10-05 were written by delegated research agents and are relayed: the
 Angular, Scully and ng-bootstrap versions and the Node range of Angular 22 were re-checked
-first-hand on npm the same day; the rest is to be re-read at its source before a decision cites it.
+first-hand on npm the same day, as was each major's `engines.node` (15 and 16: from Node 18.10; 17:
+18.13 or 20.9; 18 and 19: 18.19.1, 20.11.1 or 22; 20 and 21: 20.19, 22.12 or 24; 22: 22.22.3, 24.15
+or 26); the rest is to be re-read at its source before a decision cites it.
 
 ## Research files
 
@@ -61,7 +63,7 @@ first-hand on npm the same day; the rest is to be re-read at its source before a
 
 | If you are about to touch… | Read | And watch out for |
 |---|---|---|
-| `package.json` versions, the Angular update | `docs/research/2026-10-05-angular-scully-cloudflare.md` §1–3 | one major per step; the Node range changes at 17→18 and 21→22 |
+| `package.json` versions, the Angular update | `docs/research/2026-10-05-angular-scully-cloudflare.md` §1–3 | one major per step; the Node range changes at 16→17, 19→20 and 21→22, and Node 22.22.3 or newer satisfies 18 through 22 |
 | the blog or prerendering | the same file, §2, and `docs/research/2026-10-05-site-quality-and-framework.md` §5 | Scully's `<scully-content>` has no drop-in replacement |
 | hosting, headers, caching | `docs/research/2026-10-05-angular-scully-cloudflare.md` §4–5 | Cloudflare's default trailing-slash redirect; SPA fallback serves the prerendered home |
 | CI, lint, the gate | `docs/research/2026-10-05-gate-ci-deploy.md` | Workers Builds may deploy without waiting for GitHub checks (unverified) |

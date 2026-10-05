@@ -12,15 +12,17 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
 
 ## Non-negotiable constraints
 
-- **Every literal link and fragment resolves.** A `routerLink="/x"` or a `*Path: '/x'` value
-  names a route the router defines, and a fragment names an `id` a template renders; a renamed
-  route once broke five places at once. Enforced: `audit:routes`, `audit:fragments`
-  (d-115f49-87d6c2). Links built at runtime (`[routerLink]="expr"`) are not seen by it: keep
-  their values in literal `*Path:` fields.
+- **Every literal link and fragment resolves.** A `routerLink`, an internal `href`, a `*Path:`
+  value, a redirect or a link in a post names a route the router defines (a post link names a post
+  that exists), and a fragment names an `id` a template renders; a renamed route once broke five
+  places at once. Enforced: `audit:routes`, `audit:fragments` (d-115f49-87d6c2). Not seen: links
+  built at runtime (keep their values in literal `*Path:` fields), and whether a fragment's `id` is
+  on the page the link opens rather than on some page.
 - **Content matches its model.** Each file in `src/assets/json/` is read through an interface in
   `src/app/core/models/`, and `HttpClient`'s generic is a cast, not a check: a missing field
-  renders an empty section silently. Enforced: `audit:data`, with the JSON → interface table in
-  `tools/audit.mjs`; a new data file must be added there. Posts in `blog/` carry `title`,
+  renders an empty section silently. Enforced for the top-level required fields by `audit:data`,
+  with the JSON → interface table in `tools/audit.mjs` (a new data file must be added there);
+  nested fields and value types are not checked until i-115f49-e325d4. Posts in `blog/` carry `title`,
   `description` and `published` in their front matter: `audit:posts`.
 - **A file a build derives is never tracked.** A committed copy is served in place of its source
   and goes stale without a sound: the tracked routes list once undid a route rename. Enforced:
@@ -28,14 +30,17 @@ This file is the single instruction source for every assistant; `CLAUDE.md` only
 - **Angular is the framework**, and it is being updated to the current major (d-115f49-908ed6;
   the plan is `docs/roadmap.md`). Do not add a second framework without the roadmap's decision.
 - **Node is pinned in `.nvmrc` only** (d-115f49-6364c7). It says 18 because the code is Angular 15,
-  which supports no newer Node; it moves with each step of the migration, never ahead of it.
+  whose supported range ends at Node 18 (npm's `engines` field is open-ended, so a newer Node may
+  install it, untested); it moves with the migration, never ahead of it.
 
 ## Guardrails that are NOT relaxed
 
 - **The gate runs before every commit**, and a commit is chained on it:
-  `npm run gate && git commit ...` (d-115f49-7161fe). The pre-commit hook and CI run it too.
+  `npm run gate && git commit ...` (d-115f49-7161fe). The pre-commit hook and CI run it too; the
+  hook runs it on a copy of what is staged, so it checks exactly what the commit holds.
 - **One author.** No `Co-Authored-By` or any assistant attribution in a commit, whatever a tool's
-  default says. Enforced: `.githooks/commit-msg` (d-115f49-cad445). Before pushing,
+  default says. Enforced: `.githooks/commit-msg` and CI over every commit (d-115f49-cad445).
+  Before pushing,
   `git log --format=%B <base>..HEAD | grep -ci co-authored` must print 0.
 - **Look at the built site before calling a page change done.** The gate does not build or
   render anything yet (see *Verification*), so a template change is unverified until the built
@@ -66,7 +71,7 @@ npm test              # ng test, Karma (the specs are known to fail: docs/roadma
 
 `npm run gate` sees the sources only: links, fragments, content shape, generated files, the
 instruction documents and the bundle. **It does not install, build, run the tests or render a
-page**, because the code needs Node 18 and an install. So "the gate is green" never means "the
+page**, because the code needs an install on the Node in `.nvmrc`. So "the gate is green" never means "the
 site builds". After a change to `src/`, say which of those you ran; if none, write it under *Not
 verified* in the changelog entry. A claim needs a measurement, written with where it was taken.
 

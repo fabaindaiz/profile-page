@@ -8,14 +8,18 @@ measurement, Blocked outside) and is never deleted. Ids come from
 ## Where we are
 
 2026-10-05. The site is Angular 15 with Scully, unchanged since 2023, deployed by a Docker image
-with nginx; whether that image runs anywhere today is unknown. It cannot be built on the Node this
-machine has (26), only on Node 18, and nothing has been installed or built in this session. The
-agent method is installed (`.agents/`, carrier `r-115f49`), the gate runs on sources only, and CI
-runs it on every push. The owner's next step is updating the site: i-115f49-8c7fbe first, and the
-open question on i-115f49-a26e87 before it starts.
+with nginx; whether that image runs anywhere today is unknown. Angular 15's supported Node range
+ends at 18; on this machine's Node 26 it is untested, and nothing has been installed or built yet.
+The agent method is installed (`.agents/`, carrier `r-115f49`), the gate runs on sources only, and
+CI runs it and the single-author check on every push. The owner's next step is updating the site:
+i-115f49-8c7fbe first.
+
+**Waiting on the owner:** which Astro option i-115f49-a26e87 means; whether `ANGULAR.md` (the CLI's
+boilerplate, repeating `README.md`) is deleted.
 
 **To continue on another machine:** clone, `git config core.hooksPath .githooks`, Python 3.11+ for
-`bundle.py`, any Node for `npm run gate`; Node 18 (`.nvmrc`) only to build the current code.
+`bundle.py`, Node 12.17 or newer for `npm run gate`; the Node in `.nvmrc` to build the code.
+First step: `nvm use` (Node 18), `npm ci`, `npm run build`, and record what fails.
 
 ## Process and tooling
 
@@ -23,8 +27,11 @@ open question on i-115f49-a26e87 before it starts.
 **State: Done** (2026-10-05, s-115f49-bc5070). `.github/workflows/ci.yml` runs `npm run gate` on
 every push and pull request; `.scully/` and the routes list Scully writes into `src/assets/` are
 untracked and ignored.
-**What is still missing:** the gate builds nothing and runs no test (d-115f49-7161fe). A build and
-the test run join it in i-115f49-8c7fbe, once they can run on a supported Node.
+**What is still missing:** the gate builds nothing and runs no test (d-115f49-7161fe); a build and
+the test run join it in i-115f49-8c7fbe. `audit:fragments` checks a fragment against every
+template, not the page its link opens. Whether the `./` paths in `.claude/settings.json` deny rules
+hold for a session started in a subfolder is unverified, and they do not cover writes made through
+the shell.
 
 ### i-115f49-7fea76 · Dependency updates with Dependabot
 **State: Planned.** Dependabot with Angular minor and patch updates grouped, majors ignored.
@@ -39,8 +46,9 @@ version line that is about to be replaced.
 **State: Planned.** Decided: Angular stays (d-115f49-908ed6).
 **What it collides with.** Scully does not run past Angular 15–16, so it must go before or during
 the first steps; the blog's `<scully-content>` and `ScullyRoutesService` have no drop-in
-replacement. Each major needs its own Node (18 up to 17; 22.22+ or 24.15+ from 18 on), and
-`.nvmrc` moves with it (d-115f49-6364c7). The output folder moves to `dist/profile-page/browser`
+replacement. The supported Node changes at 16→17, 19→20 and 21→22 (`docs/references.md`): Node 18
+serves 15 to 19, and Node 22.22.3 or newer serves 18 to 22, so `.nvmrc` can move once, at 18, or
+twice; it moves with the step, never ahead (d-115f49-6364c7). The output folder moves to `dist/profile-page/browser`
 with the application builder. ng-bootstrap moves one major per Angular major.
 **What is already in its favour.** About ten components; strict TypeScript and strict templates
 already on; content already separated into JSON and markdown.
