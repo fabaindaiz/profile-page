@@ -25,7 +25,7 @@ packages out, Bootstrap 5.3.8, marked 18.1. Last, the deferred `noindex` fix: `b
 a published post's slug, so an unknown slug is the `noindex` not-found page with no canonical.
 After the close, at the owner's word: the site is `www.fadiaz.cl` only (no bare-domain check), and
 `tools/export.mjs`, the build as a folder to upload in the dashboard with pages as `<route>.html`
-(0 failures on the local preview; on Cloudflare not yet checked). Then the owner deployed `cab0700`
+(0 failures on the local preview; on Cloudflare not yet checked). Then the owner deployed `main`
 with `wrangler`, and `check-live` on `https://www.fadiaz.cl` reported 0 failures.
 
 **Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
@@ -73,7 +73,11 @@ no blocker. Should-fix, both fixed: the README and the script stated as fact tha
 `<route>.html` at `/route` (it is Cloudflare's documentation, and the preview serves both layouts
 alike, so the local check cannot show it); the export could drop the 404 page silently if `404.html`
 were missing. Nits fixed: refusals for an output inside the build and for a page that is both
-`<route>.html` and `<route>/index.html`; the changelog's *Areas*. Each refusal was run.
+`<route>.html` and `<route>/index.html`; the changelog's *Areas*. Each refusal was run. A third,
+of the commit recording the `wrangler` deploy: its claims held (the live hashes, `check-live` 0
+failures); should-fix, fixed: four statements elsewhere still said the site was undeployed or
+failing (this entry's *What was left undone*, `README.md`'s *Deploy*, the plan's ledger), and the
+roadmap's owner list missed the devicon choice.
 
 **What went wrong on the way.**
 - Twice the gate was chained through a pipe (`| tail`, `| grep`), which hides its exit status; the
@@ -92,10 +96,9 @@ were missing. Nits fixed: refusals for an output inside the build and for a page
 - Small ones: two `open()` calls in one test reconfigured a used TestBed; a spec's import `site`
   collided with a local `site`; the shell did not split `$r` into `cwebp` arguments.
 
-**What was left undone.** On the live site, three failures `check-live` found, all the owner's in
-Cloudflare: `/about` and `/project` redirect to a trailing slash (the dashboard upload did not apply
-`wrangler.jsonc`; a `wrangler deploy` does), and `fadiaz.cl` answers 404 from an nginx server. The
-deployed copy predates Bootstrap 5.3 (pixel-identical). devicon held at 2.15.1 (its 2.17 drops the
+**What was left undone.** Nothing on the live site: after the owner's `wrangler` deploy, `check-live`
+reports 0 failures (the trailing-slash redirects came from the earlier dashboard upload; the bare
+domain is not part of the site). devicon held at 2.15.1 (its 2.17 drops the
 MySQL icon). Dependabot dropped by the owner. The projects' text (the owner's). Sass 3 will remove
 the `@import` Bootstrap 5 is written with; its deprecation is silenced in `angular.json` (i-115f49-636a4f).
 

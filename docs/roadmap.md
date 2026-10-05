@@ -13,12 +13,14 @@ is `www.fadiaz.cl` (d-115f49-a0fe6e): canonical URLs, `og:url`, a sitemap, `robo
 `ProfilePage` on `/about`. The blog is hidden until a post is published (d-115f49-fb5f23). Project
 images are WebP and the stylesheet carries only the Bootstrap 5.3 the templates use: `/project`
 254 KiB, `/` 176 KiB. `npm run check` verifies the built site in CI. It is live at
-`https://www.fadiaz.cl`, deployed by the owner with `wrangler` on 2026-10-05 from the build of
-`cab0700` (the same script and stylesheet hashes as the local build): `tools/check-live.mjs`
-reports 0 failures. The site is served at `www.fadiaz.cl` only; the bare
+`https://www.fadiaz.cl`, deployed by the owner with `wrangler` on 2026-10-05: it serves the same
+script and stylesheet hashes as a build of `main` (no site file changed after `e976207`), and
+`tools/check-live.mjs` reports 0 failures. The site is served at `www.fadiaz.cl` only; the bare
 `fadiaz.cl` is not part of it (owner, 2026-10-05).
 
-**Waiting on the owner:** the projects' text (i-115f49-d63585); a real post, which brings the blog back with nothing else to do.
+**Waiting on the owner:** the projects' text (i-115f49-d63585); a real post, which brings the blog
+back with nothing else to do; whether to replace the MySQL icon so devicon can move to 2.17
+(i-115f49-ab51be).
 
 **Next session, first step:** nothing in `docs/plans/2026-10-05-roadmap-continuation.md` is left
 for the agent (its ledger), and the site is live and checked. Check that the last CI run on `main` is
@@ -113,7 +115,7 @@ toolchain.
 `drop-trailing-slash`, `404-page`), `public/_headers` (security headers and a CSP, completed after
 each build by `tools/postbuild.mjs`), and the steps in `README.md`. Docker and nginx removed
 (d-115f49-314943). The owner first uploaded the build in the dashboard, which skipped
-`wrangler.jsonc` (`/about` redirected to `/about/`), then deployed `cab0700` with `wrangler`:
+`wrangler.jsonc` (`/about` redirected to `/about/`), then deployed `main` with `wrangler`:
 `tools/check-live.mjs` reports 0 failures; `/about/`, `/about.html` and `/about/index.html` all
 redirect to `/about`. The bare `fadiaz.cl` is not served by this site, by the owner's choice.
 **What is still missing:** whether Cloudflare's default serves `tools/export.mjs`'s `<route>.html`
@@ -133,7 +135,7 @@ outside the code: `/about` and `/project` answer 307 to a trailing slash (the da
 not apply `wrangler.jsonc`). A third, `https://fadiaz.cl/` answering 404 from an nginx server, is
 not one: the site is served at `www.fadiaz.cl` only (owner, 2026-10-05), so `--apex` is not part of
 the routine run.
-After the owner's `wrangler` deploy of `cab0700`, the same day: 0 failures.
+After the owner's `wrangler` deploy of `main`, the same day: 0 failures.
 
 ## Verification
 

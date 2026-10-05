@@ -36,8 +36,9 @@ npm test
 #### Deploy
 
 The site is static files on Cloudflare Workers static assets (`wrangler.jsonc`); requests to
-static assets are free on every plan. Not deployed from this repository yet. To connect it, in the
-Cloudflare dashboard create a Worker from this GitHub repository (Workers Builds) with:
+static assets are free on every plan. It is deployed by hand with `wrangler` from this repository
+(below). To deploy on every push instead, in the Cloudflare dashboard create a Worker from this
+GitHub repository (Workers Builds) with:
 
 - build command: `npm ci && npm run build`
 - deploy command: `npx wrangler@4.147.0 deploy` (pinned: wrangler is not a dependency of the site)

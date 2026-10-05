@@ -106,3 +106,6 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
   with each page as `<route>.html`, which the host's default serves at `/route` (ASSUMPTION from
   Cloudflare's documentation, `docs/research/2026-10-05-site-quality-and-framework.md` row 1.3;
   checked only on the local preview, 0 failures). `wrangler deploy` stays the recommended way.
+- 2026-10-05: the owner deployed `main` with `wrangler`; `www.fadiaz.cl` serves the current build's
+  hashes and `tools/check-live.mjs` reports 0 failures. Phase 1 is complete, and nothing in this
+  plan is left; what remains (the projects' text, a post, the devicon icon) is in `docs/roadmap.md`.
