@@ -26,9 +26,9 @@ The gate cannot see these; run what the machine allows and say which ran:
 
 ```bash
 npm ci               # with the Node in .nvmrc
-npm run build                                # generate icons and posts, then ng build
-npm run preview -- dist/profile-page --spa   # then open every page the change touched
-node tools/measure.mjs dist/profile-page --spa --routes /,/about,/project,/blog   # requests per page
+npm run build           # generate icons and posts, then prerender every route
+npm run preview         # then open every page the change touched
+node tools/measure.mjs  # requests and compressed bytes per page
 ```
 
 Open the page, do not infer it: a section whose JSON lost a field renders empty with no error.

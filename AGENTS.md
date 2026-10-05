@@ -63,9 +63,9 @@ Backed by `permissions.deny` in `.claude/settings.json`.
 npm run gate          # THE gate: tools/audit.mjs, bundle.py verify, record ids. No install needed
 npm ci                # install exactly the lockfile (needs the Node in .nvmrc)
 npm start             # ng serve on :4200 (client-side routing: hides the bug class above)
-npm run build         # generate icons and posts (npm run generate), then ng build into dist/profile-page
-npm run preview -- dist/profile-page --spa   # serve the build as the host will (tools/serve.mjs)
-node tools/measure.mjs dist/profile-page --spa --routes /,/about   # requests and bytes per page
+npm run build         # generate icons and posts, then prerender every route into dist/profile-page/browser
+npm run preview       # serve that build as the host will, 404s included (tools/serve.mjs)
+node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
 npm test              # ng test, Karma (the specs are known to fail: docs/roadmap.md)
 ```
 

@@ -2,14 +2,16 @@
 /**
  * Serve a build folder the way the target host does: a path is served from the file itself,
  * `<path>.html` or `<path>/index.html`, with no trailing-slash redirect, and anything else is a 404
- * (`404.html` when the build has one). With `spa`, any extension-less path falls back to
- * `index.html`, as a single-page host does.
+ * (`404.html` when the build has one). Text is gzip-compressed when the client accepts it, as the
+ * host compresses it, so measured bytes are bytes on the wire. With `spa`, any extension-less path
+ * falls back to `index.html`, as a single-page host does.
  *
  *   node tools/serve.mjs [DIST] [--spa] [--port N]      (npm run preview)
  */
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join } from 'node:path';
+import { createGzip } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
 export const DEFAULT_DIST = 'dist/profile-page/browser';
@@ -31,6 +33,16 @@ export function resolveFile(dist, urlPath) {
   return null;
 }
 
+const COMPRESSED = /^(text\/|application\/(json|xml)|image\/svg)/;
+
+function send(req, res, status, file) {
+  const type = TYPES[extname(file)] ?? 'application/octet-stream';
+  const gzip = COMPRESSED.test(type) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '');
+  res.writeHead(status, { 'content-type': type, ...(gzip ? { 'content-encoding': 'gzip' } : {}) });
+  const body = createReadStream(file);
+  (gzip ? body.pipe(createGzip()) : body).pipe(res);
+}
+
 /** An HTTP server over `dist`, not yet listening. */
 export function siteServer(dist, { spa = false } = {}) {
   return createServer((req, res) => {
@@ -38,11 +50,11 @@ export function siteServer(dist, { spa = false } = {}) {
     const file = resolveFile(dist, req.url) ?? (spa && !extname(path) ? join(dist, 'index.html') : null);
     if (!file) {
       const notFound = join(dist, '404.html');
-      res.writeHead(404, { 'content-type': 'text/html' });
-      return existsSync(notFound) ? createReadStream(notFound).pipe(res) : res.end('not found');
+      if (existsSync(notFound)) return send(req, res, 404, notFound);
+      res.writeHead(404, { 'content-type': 'text/plain' });
+      return res.end('not found');
     }
-    res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
-    createReadStream(file).pipe(res);
+    send(req, res, 200, file);
   });
 }
 

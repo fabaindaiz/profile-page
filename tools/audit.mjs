@@ -252,6 +252,7 @@ const PATH_EXEMPT = {
   'dist/profile-page': 'build output, created by the build',
   'dist/profile-page/browser': 'build output of the application builder, after the migration',
   'node_modules': 'created by npm install',
+  '404.html': 'build output, copied from the prerendered /404 page by tools/not-found.mjs',
   'wrangler.jsonc': 'planned by i-115f49-ab7102',
   'public/_headers': 'planned by i-115f49-ab7102',
   '.claude/settings.local.json': 'machine-local, never committed',

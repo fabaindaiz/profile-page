@@ -24,7 +24,7 @@ npm run build
 #### Preview the build
 
 ```bash
-npm run preview -- dist/profile-page --spa
+npm run preview
 ```
 
 #### Unit tests

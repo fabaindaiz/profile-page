@@ -26,8 +26,9 @@ The development server routes client-side, so it never shows this.
 2. If the link resolves: the page was not prerendered, or the host does not fall back. Build with
    `npm run build` (not `ng build` alone, which skips generating icons and posts) and open the URL
    with `npm run preview`.
-3. Today's host falls back to `index.html` through nginx's `try_files` (`nginx/nginx.conf`); a host
-   without that fallback 404s on every route that was not prerendered.
+3. Every route is prerendered to `<route>/index.html`; a URL with no file gets `404.html`, which
+   the build copies from the prerendered `/404` page (`tools/not-found.mjs`). A new page whose route
+   is missing from `src/app/app.routes.ts` is never prerendered, and 404s on a hard load.
 
 ## A post is missing from the blog
 
