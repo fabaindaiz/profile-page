@@ -112,13 +112,19 @@ which need the site's address (content, the owner's); project images as WebP or 
 dimensions (1.5 MB of PNG on `/project`), which needs an image tool; the stylesheet is all of
 Bootstrap (28 kB compressed) and could be trimmed, and the initial bundle (524 kB raw) sits over
 `angular.json`'s 500 kB warning budget, a warning nothing fails on. On an unknown post slug the
-client drops the 404 page's `noindex` (the response stays a 404). `tools/check-site.mjs` reads
+client drops the 404 page's `noindex` (the response stays a 404); deferred while the blog is hidden
+(d-115f49-fb5f23), and **to be fixed before the first real post is published**, which reopens the
+blog's routes. `tools/check-site.mjs` reads
 neither `srcset` nor HTML entities in links; no page uses them yet.
 
 ### i-115f49-d63585 · Update the site content
-**State: Planned.** Bio, projects and posts are the owner's to write; the questions are in the
-plan's phase 7. One project entry carries a stray top-level `color` that no model declares
-(`audit:data` advisory), and one description still says the site uses Scully.
+**State: Half done** (2026-10-05). The owner's answers to the plan's phase 7: the blog is hidden
+until a real post exists (d-115f49-fb5f23: the test post is `published: false`, and the blog's
+routes and menu item exist only while a post is published); no contact or CV link beyond the
+current social links.
+**What is still missing:** the projects, the owner's to write: which to update, add or feature.
+One entry carries a stray top-level `color` that no model declares (`audit:data` advisory), and one
+description still says the site uses Scully.
 **What must be decided first.** The owner's text.
 
 ## Closed by measurement

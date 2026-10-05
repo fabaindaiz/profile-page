@@ -21,7 +21,7 @@ describe('HeaderService.isHome', () => {
 
   it('starts a subscriber made after leaving home from the current page, not the first one', async () => {
     const isHome = service.isHome();
-    await router.navigateByUrl('/blog');
+    await router.navigateByUrl('/about');
     expect(await firstValueFrom(isHome)).toBe(false);
   });
 });

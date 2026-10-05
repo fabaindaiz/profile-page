@@ -4,6 +4,7 @@ import { AboutService } from '../services/about.service';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../icon/icon.component';
 import { AsyncPipe } from '@angular/common';
+import { POSTS } from '../../blog/posts.generated';
 
 @Component({
     selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent {
     { title: 'About Me', homePath: '/', fragment: 'about', pagePath: '/about' },
     { title: 'My Projects', homePath: '/', fragment: 'project', pagePath: '/project' },
     { title: 'My Blog', homePath: '/blog', fragment: '', pagePath: '/blog' }
-  ];
+  ].filter((item) => item.pagePath !== '/blog' || POSTS.length > 0);  // the blog's routes need a post
 
   /** The small-screen menu; closed by choosing an item, Escape, or a click anywhere else. */
   menuOpen = false;

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { routes } from '../../app.routes';
+import { POSTS } from '../../blog/posts.generated';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent small-screen menu', () => {
@@ -29,5 +30,11 @@ describe('HeaderComponent small-screen menu', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await fixture.whenStable();
     expect(element.querySelector('#site-menu')).toBeNull();
+  });
+
+  it('offers the blog only while a post is published', async () => {
+    const { element } = await setup();
+    const links = [...element.querySelectorAll('nav a')].map((a) => a.getAttribute('href'));
+    expect(links.includes('/blog')).toBe(POSTS.length > 0);
   });
 });

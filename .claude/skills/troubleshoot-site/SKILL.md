@@ -36,6 +36,8 @@ The development server routes client-side, so it never shows this.
    `published: false` is hidden on purpose.
 2. The blog lists what `tools/posts.mjs` generated into the bundle, which only `npm run generate`
    (run by every build, serve and test script) rewrites; `ng build` alone uses the last copy.
+3. The whole blog is gone (`/blog` gives 404, no *My Blog* in the menu): no post is published. Its
+   routes, prerendered pages and menu item exist only while one is (d-115f49-fb5f23).
 
 ## The build fails
 

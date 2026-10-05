@@ -12,7 +12,7 @@ first visit fetches the page's HTML, one script, one stylesheet and one font, an
 | `src/app/app.routes.ts` | every route, flat, each naming its component directly |
 | `src/app/core/` | what every page uses: header, footer, the icon component, the content models (`models/`) and the services that serve them (`services/`) |
 | `src/app/portfolio/` | home, about, projects and links |
-| `src/app/blog/` | the blog landing and a post |
+| `src/app/blog/` | the blog landing and a post, routed only while a post is published (`siteRoutes` in `src/app/app.routes.ts`) |
 | `src/app/not-found/` | the page for any URL no route matches |
 | `src/content/` | the content: about, projects, stack, social; imported into the bundle by the services |
 | `src/assets/img/` | project images |

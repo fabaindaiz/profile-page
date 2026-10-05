@@ -30,7 +30,7 @@ describe('PageTitleStrategy', () => {
     expect((await open('/about')).title).toBe(`About Me · ${site}`);
   });
 
-  it('titles and describes a post from its front matter', async () => {
+  it.runIf(POSTS.length > 0)('titles and describes a post from its front matter', async () => {
     const page = await open(`/blog/${POSTS[0].slug}`);
     expect(page.title).toBe(`${POSTS[0].title} · ${site}`);
     expect(page.description).toBe(POSTS[0].description);
