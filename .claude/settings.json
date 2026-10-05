@@ -8,9 +8,7 @@
       "Bash(python3 .agents/tools/bundle.py ids *)",
       "Bash(python3 .agents/tools/bundle.py id *)",
       "Bash(python3 .agents/tools/bundle.py privacy *)",
-      "Bash(git status)",
-      "Bash(git diff *)",
-      "Bash(git log *)"
+      "Bash(git status)"
     ],
     "deny": [
       "Edit(./.agents/README.md)",
