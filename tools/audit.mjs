@@ -57,7 +57,8 @@ function routePatterns(routingFile, prefix = []) {
     fail('routes', `${rel(routingFile)} declares children routes, which this check does not model yet`);
   }
   const patterns = [];
-  for (const [obj] of src.matchAll(/\{[^{}]*\bpath:\s*'[^']*'[^{}]*\}/g)) {
+  // A route object, which may hold one level of braces (`data: { ... }`), with `path` at its top level.
+  for (const [obj] of src.matchAll(/\{(?:[^{}]|\{[^{}]*\})*?\bpath:\s*'[^']*'(?:[^{}]|\{[^{}]*\})*\}/g)) {
     const path = obj.match(/\bpath:\s*'([^']*)'/)[1];
     const segs = [...prefix, ...path.split('/').filter(Boolean)];
     const redirect = obj.match(/\bredirectTo:\s*'([^']*)'/);
