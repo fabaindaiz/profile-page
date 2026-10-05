@@ -68,7 +68,7 @@ deploy is configured, not done. Project images are still PNG. Bootstrap is untri
 not set up. A committed screenshot script (i-115f49-03e2ea).
 
 **Not verified.** Anything on Cloudflare: whether its build image provides Node 26, whether Workers
-Builds waits for GitHub checks, how a repeat visit caches. The new CI job has not run (not pushed).
+Builds waits for GitHub checks, how a repeat visit caches. The new CI job ran on the merge to `main` and passed, both jobs.
 
 **Measured.** First visit, own requests besides images: 22 → 4 on `/`, 4 on every page; third-party
 requests 1 → 0; `/` 190 KiB compressed. Script 106 kB and stylesheet 28 kB compressed. 20 tests;
@@ -80,7 +80,7 @@ from cost to speed. General: an end-to-end probe of a zoneless app must wait for
 it right after the event. Local: the screenshot procedure, repeated more than ten times, is
 i-115f49-03e2ea. Captured: 2 learnings, 5 frictions (scratch screenshot scripts, >10; output
 format greps, 1; JSONC parsing, 1; placeholder in a comment, 1; zoneless timing in probes, 2).
-Waiting on the owner: the domain, the content questions, the deploy, the merge.
+Waiting on the owner: the domain, the content questions, the deploy.
 
 ## 2026-10-05 · s-115f49-818e9f — Finish the bootstrap checklist and delete ANGULAR.md
 
