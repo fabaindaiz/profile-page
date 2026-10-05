@@ -5,8 +5,12 @@
 @use "sass:list";
 @use "sass:map";
 
+// The site has no dark mode; without this, 5.3 ships a second set of colour variables for one.
+$enable-dark-mode: false;
+
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
