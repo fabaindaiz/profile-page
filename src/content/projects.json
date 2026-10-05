@@ -102,7 +102,7 @@
             { "name": "Java", "iconClasses": "devicon-java-plain" }
         ],
         "description": "Java MARS Interpreter for Core Wars ICWS 94.",
-        "imageUrl": "assets/img/corewars.png",
+        "image": { "url": "assets/img/corewars.webp", "width": 600, "height": 338 },
         "sourceUrl": "https://github.com/fabaindaiz/JCoreWars",
         "featured": false
     },
@@ -116,7 +116,7 @@
             { "name": "Java", "iconClasses": "devicon-java-plain" }
         ],
         "description": "Minecraft Plugin to load .jar Modules.",
-        "imageUrl": "assets/img/modulator.png",
+        "image": { "url": "assets/img/modulator.webp", "width": 600, "height": 338 },
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
         "featured": false
     },
@@ -130,7 +130,7 @@
             { "name": "project", "iconClasses": "devicon-github-original" }
         ],
         "description": "Minecraft server of the organization Esports Uchile",
-        "imageUrl": "assets/img/uchilecraft.png",
+        "image": { "url": "assets/img/uchilecraft.webp", "width": 600, "height": 338 },
         "previewUrl": "https://www.uchilecraft.cl",
         "color": "#c6def1",
         "featured": false
@@ -145,7 +145,7 @@
             { "name": "Godot", "iconClasses": "devicon-godot-plain" }
         ],
         "description": "RPG videogame made with Godot engine.",
-        "imageUrl": "assets/img/game1.png",
+        "image": { "url": "assets/img/game1.webp", "width": 600, "height": 338 },
         "sourceUrl": "https://github.com/fabaindaiz/Modulator",
         "featured": false
     },
@@ -159,7 +159,7 @@
             { "name": "Python", "iconClasses": "devicon-python-plain" }
         ],
         "description": "Basic water simulation made with Python OpenGL",
-        "imageUrl": "assets/img/water1.png",
+        "image": { "url": "assets/img/water1.webp", "width": 600, "height": 339 },
         "sourceUrl": "https://github.com/fabaindaiz/water-simulation",
         "featured": false
     }

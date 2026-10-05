@@ -30,6 +30,10 @@ reading on 2026-10-05; not enforced.
 ## Where a new file goes
 
 - **New content of an existing kind**: an entry in its file in `src/content/`, or a post in `blog/`.
+- **A project image**: a WebP at most 600 pixels wide (twice the card's 300), converted once outside
+  the repository, for example `cwebp -q 80 -m 6 -resize 600 0 -resize_mode down_only in.png -o
+  out.webp`, into `src/assets/img/`, and named in its entry as `image` with its `width` and
+  `height` (`tools/check-site.mjs` fails on an `<img>` without them). No image tool is a dependency.
 - **A new kind of content**: a model in `src/app/core/models/`, a service beside the others that
   imports its JSON and assigns it to the model (copy `src/app/core/services/social.service.ts`), and
   a row in `DATA` in `tools/audit.mjs`.

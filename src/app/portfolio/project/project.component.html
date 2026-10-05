@@ -22,9 +22,10 @@
       @for (project of projects; track project.name) {
         <div class="card project-card m-3 overlay" [style.--color]="project.filter.color"
           [ngClass]="{ 'filtered': project.filter.list.includes(filter) }">
-          @if (project.imageUrl) {
+          @if (project.image; as image) {
             <div class="overlay-card">
-              <img class="card-img responsive-im overlay-img" [src]="project.imageUrl" alt="" loading="lazy" decoding="async">
+              <img class="card-img responsive-im overlay-img" [src]="image.url" [width]="image.width" [height]="image.height"
+                alt="" loading="lazy" decoding="async">
             </div>
           }
           <div class="card-body d-flex flex-column">

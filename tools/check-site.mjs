@@ -6,7 +6,8 @@
  * the sources cannot show (AGENTS.md): it reads the prerendered output, not the templates. It also
  * checks what tells search engines which pages exist: every indexable page names its own address as
  * its canonical URL, a `noindex` page names none, and sitemap.xml lists exactly the indexable pages,
- * as robots.txt says.
+ * as robots.txt says. And every `<img>` declares its `width` and `height`, so the page reserves its
+ * space before the image arrives.
  *
  *   node tools/check-site.mjs [DIST]
  *
@@ -51,6 +52,11 @@ for (const file of pages) {
   const html = readFileSync(file, 'utf8');
   // Relative URLs resolve against <base href> when the page declares one, as a browser resolves them.
   const base = html.match(/<base\s+href="([^"]*)"/)?.[1] ?? page.replace(/[^/]*$/, '');
+  for (const [img] of html.matchAll(/<img\b[^>]*>/g)) {
+    if (!/\swidth="\d+"/.test(img) || !/\sheight="\d+"/.test(img)) {
+      failures.push(`${page}: ${img.match(/\ssrc="([^"]*)"/)?.[1] ?? '<img>'} declares no width and height`);
+    }
+  }
   for (const [, attr, value] of html.matchAll(/\s(href|src)="([^"]*)"/g)) {
     if (/^(https?:|mailto:|tel:|data:|javascript:|\/\/)/.test(value)) continue;
     links++;

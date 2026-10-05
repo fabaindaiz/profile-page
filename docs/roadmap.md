@@ -109,9 +109,10 @@ one `<h1>` per page, accessible names, lazy images; a title, description and soc
 self-hosted font and inline icons; a CSP.
 Then, with the address (d-115f49-a0fe6e): a canonical URL and `og:url` per indexable page,
 `sitemap.xml` and `robots.txt` written by `tools/postbuild.mjs`, and a schema.org `ProfilePage` on
-`/about`, all checked on the built pages by `tools/check-site.mjs`.
-**What is still missing:** project images as WebP or AVIF with their dimensions (1.5 MB of PNG on
-`/project`), which needs an image tool; the stylesheet is all of Bootstrap (28 kB compressed) and could be trimmed, and the initial bundle (524 kB raw) sits over
+`/about`, all checked on the built pages by `tools/check-site.mjs`. The project images are WebP at
+600 pixels wide with their dimensions, converted once with no dependency added (owner's choice):
+`/project`'s first visit went from 1705 to 269 KiB (`tools/measure.mjs`, 2026-10-05, local build).
+**What is still missing:** the stylesheet is all of Bootstrap (28 kB compressed) and could be trimmed, and the initial bundle (524 kB raw) sits over
 `angular.json`'s 500 kB warning budget, a warning nothing fails on. On an unknown post slug the
 client drops the 404 page's `noindex` (the response stays a 404); deferred while the blog is hidden
 (d-115f49-fb5f23), and **to be fixed before the first real post is published**, which reopens the
