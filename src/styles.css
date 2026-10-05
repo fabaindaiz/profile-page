@@ -25,3 +25,26 @@ body {
 .min-vh-10 {
     min-height: 10vh;
 }
+.icon {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: -0.125em;
+}
+
+.icon svg {
+    display: block;
+}
+
+.icon-lg {
+    font-size: 1.333em;
+    vertical-align: -0.2em;
+}
+
+.icon-4x {
+    font-size: 4em;
+}
+
+.stack-icon > .icon,
+.social-icon .icon {
+    vertical-align: top;
+}

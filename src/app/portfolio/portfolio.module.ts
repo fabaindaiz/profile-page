@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ProjectComponent } from './project/project.component';
 import { SocialComponent } from './social/social.component';
+import { IconComponent } from '../core/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SocialComponent } from './social/social.component';
   ],
   imports: [
     CommonModule,
-    PortfolioRoutingModule
+    PortfolioRoutingModule,
+    IconComponent
   ]
 })
 export class PortfolioModule { }

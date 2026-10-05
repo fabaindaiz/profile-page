@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { IconComponent } from './icon/icon.component';
 
 
 @NgModule({
@@ -16,11 +17,13 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     RouterModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    IconComponent
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    IconComponent
   ]
 })
 export class CoreModule { }

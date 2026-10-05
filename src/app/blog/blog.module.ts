@@ -4,6 +4,7 @@ import {ScullyLibModule} from '@scullyio/ng-lib';
 import {BlogRoutingModule} from './blog-routing.module';
 import {BlogComponent} from './blog/blog.component';
 import { BlogLandingComponent } from './blog-landing/blog-landing.component';
+import { IconComponent } from '../core/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { BlogLandingComponent } from './blog-landing/blog-landing.component';
   imports: [
     CommonModule,
     BlogRoutingModule,
-    ScullyLibModule
+    ScullyLibModule,
+    IconComponent
   ],
 })
 export class BlogModule {}

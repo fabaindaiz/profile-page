@@ -5,13 +5,13 @@
         class="d-flex vw-90">
         <div *ngFor="let page of links$ | async" class="card post-card m-3">
             <div class="card-img-top bg-dark">
-                <i class="far fa-newspaper fa-4x m-5 text-white"></i>
+                <app-icon name="fa-regular-newspaper" class="icon-4x m-5 text-white"></app-icon>
             </div>
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title post-title" [title]="page.title">{{page.title}}</h5>
                 <p class="card-text post-description flex-grow-1">{{page['description']}}</p>
                 <a [routerLink]="page.route" class="btn btn-outline-dark align-self-center">
-                    <i class="fa-lg me-1 far fa-eye"></i>
+                    <app-icon name="fa-regular-eye" class="icon-lg me-1"></app-icon>
                     Read
                 </a>
             </div>

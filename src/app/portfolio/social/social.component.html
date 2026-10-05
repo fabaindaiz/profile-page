@@ -5,7 +5,7 @@
         <div *ngFor="let social of socials" class="social-icon ms-5 me-5 overlay"
             [ngStyle]="{ 'background-color': social.color.background }">
             <a href="{{social.sourceUrl}}" target="_blank" class="social-link">
-                <i class="{{social.iconClasses}}" [ngStyle]="{ 'color': social.color.icon }"></i>
+                <app-icon [name]="social.iconClasses" [ngStyle]="{ 'color': social.color.icon }"></app-icon>
             </a>
         </div>
     </div>
