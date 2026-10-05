@@ -1,0 +1,6 @@
+#!/bin/sh
+# One author per commit: no Co-Authored-By or assistant attribution trailer (d-115f49-cad445).
+if grep -qiE '^(co-authored-by|claude-session):' "$1"; then
+  echo "commit-msg: remove the Co-Authored-By / assistant attribution line; commits have one author." >&2
+  exit 1
+fi

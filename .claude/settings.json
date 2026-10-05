@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run gate)",
+      "Bash(node tools/audit.mjs)",
+      "Bash(python3 .agents/tools/bundle.py verify)",
+      "Bash(python3 .agents/tools/bundle.py ids *)",
+      "Bash(python3 .agents/tools/bundle.py id *)",
+      "Bash(python3 .agents/tools/bundle.py privacy *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)"
+    ],
+    "deny": [
+      "Edit(./.agents/README.md)",
+      "Edit(./.agents/CHANGELOG.md)",
+      "Edit(./.agents/SHA256SUMS)",
+      "Edit(./.agents/method/**)",
+      "Edit(./.agents/knowledge/**)",
+      "Edit(./.agents/tools/**)",
+      "Edit(./.agents/agents/**)",
+      "Edit(./.agents/incoming/README.md)",
+      "Edit(./.agents/proposals/README.md)",
+      "Edit(./.agents/proposals/RECEIVED.md)",
+      "Edit(./.claude/skills/close/SKILL.md)",
+      "Edit(./package-lock.json)"
+    ]
+  }
+}

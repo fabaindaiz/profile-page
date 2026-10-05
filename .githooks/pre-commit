@@ -1,0 +1,4 @@
+#!/bin/sh
+# Runs the gate before every commit (d-115f49-7161fe). Enable once per clone:
+#   git config core.hooksPath .githooks
+exec npm run --silent gate

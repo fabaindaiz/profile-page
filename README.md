@@ -1,6 +1,20 @@
 # ProfilePage
 
+A personal portfolio and markdown blog, built with Angular and prerendered to static HTML by
+Scully. Every page a visitor reaches is a file the build wrote, so a broken link only shows in the
+built site, never on the development server. Rules, decisions and plans: [`AGENTS.md`](AGENTS.md).
+
 ## Commands
+
+The code is Angular 15 and needs the Node in `.nvmrc` (18); install with `npm ci`.
+
+#### Gate (no install needed)
+
+```bash
+npm run gate
+```
+
+Enable the git hooks once per clone: `git config core.hooksPath .githooks`.
 
 #### Build
 
@@ -8,10 +22,16 @@
 npm run build
 ```
 
-#### Test
+#### Preview the prerendered build
 
 ```bash
 npm run scully:serve
+```
+
+#### Unit tests
+
+```bash
+npm test
 ```
 
 #### Deploy

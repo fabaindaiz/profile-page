@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "gate": "node tools/audit.mjs && python3 .agents/tools/bundle.py verify && python3 .agents/tools/bundle.py ids docs/decisions.md docs/roadmap.md .claude/logs/agent-changelog.md",
     "start": "ng serve",
     "build": "ng build && npm run scully -- --scanRoutes",
     "watch": "ng build --watch --configuration development",
