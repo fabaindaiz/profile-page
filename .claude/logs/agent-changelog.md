@@ -8,6 +8,36 @@ of the file.
 
 ---
 
+## 2026-10-05 · s-115f49-818e9f — Finish the bootstrap checklist and delete ANGULAR.md
+
+**What.** Walked the method's bootstrap checklist and added what was missing: the
+`troubleshoot-site` skill, built from the git history and the code; the *What changed → what must
+move* table and the engineering standards in `AGENTS.md`; and, in the roadmap, that the deploy does
+not ship before the built-site check. Deleted `ANGULAR.md`, the Angular CLI's boilerplate, which
+repeated `README.md` and described an e2e command that does not exist.
+
+**Areas.** `AGENTS.md`, `.claude/skills/troubleshoot-site/`, `docs/roadmap.md`, `ANGULAR.md`.
+
+**Why.** The owner approved deleting `ANGULAR.md` and asked to finish the bootstrap if anything was
+missing.
+
+**Architecture.** ✅ Complies.
+
+**Cards relied on, and the checks that ran.** `unrunnable-system-moves-the-gate`: the ship-blocking
+check for the invisible bug class cannot run until the site builds, so it is a precondition of the
+deploy item rather than a check written now. `npm run gate` passed.
+
+**Review.** none.
+
+**What was left undone.** From the checklist: the ship-blocking check on the built output
+(i-115f49-e325d4, needs a build); `.editorconfig` alignment waits for a linter, which arrives with
+i-115f49-8c7fbe; the standards on navigation as `<a>` and `alt` text are unenforced
+(i-115f49-636a4f).
+
+**Not verified.** The troubleshooting entries marked ASSUMPTION were reasoned, not reproduced.
+
+**Learned.** Captured: 0 learnings, 0 frictions. Nothing needs you.
+
 ## 2026-10-05 · s-115f49-aa8e47 — Keep Angular and set Astro aside
 
 **What.** Recorded the owner's decision to keep Angular without Astro for now: i-115f49-a26e87 is

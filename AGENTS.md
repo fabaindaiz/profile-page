@@ -83,6 +83,36 @@ contradicts a note, follow the repository and say so. Only when the user asks fo
 fresh context or names the reviewer, give the diff to the `knowledge-reviewer` subagent and wait for
 its answer.
 
+## Engineering standards
+
+- **Tests come before the code they describe**, and each is seen to fail first; a bug fix starts
+  with the test that reproduces it. Today the specs are known to fail (i-115f49-8c7fbe), so no
+  test can be trusted to guard anything until that item makes them pass and joins the gate.
+- **Types stay at the strictness `tsconfig.json` sets**: `strict`, `noImplicitReturns`,
+  `noPropertyAccessFromIndexSignature`, `noImplicitOverride`, `noFallthroughCasesInSwitch`, and
+  `strictTemplates` with strict injection and input checks. Never loosen one to make an error go
+  away. Enforced by the compiler at build, which the gate does not run yet.
+- **A type at a boundary is the contract.** A field the template guards with `*ngIf` is optional in
+  its interface; a required one is present in every data entry (`audit:data`).
+- **Comments say why, never the change that produced them.** Match the file's density.
+- **What a static site must not do**: ship a link, fragment or asset that does not resolve
+  (`audit:routes`, `audit:fragments`; the built output is unchecked until i-115f49-e325d4);
+  navigate without an `<a>`, which keyboards, crawlers and link checkers cannot follow; show an
+  image without `alt`. The last two are not enforced yet (i-115f49-636a4f).
+
+## What changed → what must move
+
+| When you change… | Move in the same change |
+|---|---|
+| a route, or a link to one | every literal link and fragment (`npm run gate` lists them); `docs/architecture.md` if a feature module was added |
+| a model in `src/app/core/models/` | its JSON file, and the `DATA` table in `tools/audit.mjs` for a new file |
+| a command or script in `package.json` | *Commands* above, the `verify` skill, `README.md` |
+| a check in `tools/audit.mjs` | the rule citing it here or in `docs/decisions.md` (`audit:enforcers`) |
+| the Node version | `.nvmrc` only, and *Node* above |
+| a decision, or a roadmap item's state | `docs/decisions.md` or `docs/roadmap.md`, including *Where we are* |
+| research | a dated file in `docs/research/` and its row in `docs/references.md` |
+| a release of `.agents/` | run `python3 .agents/tools/bundle.py install-skills` and copy `.agents/agents/knowledge-reviewer.md` to `.claude/agents/` again |
+
 ## Committing
 
 Work on a branch. Commits follow Conventional Commits, one concern each: a process change never
@@ -122,5 +152,6 @@ one changed, broke, or left unverified.
 | What changed recently, and what was left unverified? | `.claude/logs/agent-changelog.md` |
 | Which engineering heuristic applies to this change? | `.agents/knowledge/INDEX.md` |
 | How do I run the gate and report it? | the `verify` skill |
+| Something is broken: a blank section, a 404, a failed build | the `troubleshoot-site` skill |
 | How do I close a session? | the `close` skill |
 | Is the instruction system still true? | the `state-review` skill |
