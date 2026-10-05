@@ -1,38 +1,28 @@
 @if (about$ | async; as about) {
   <div class="d-flex flex-column justify-content-center align-items-center w-100">
     <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center w-100">
-      @for (options of respOptions; track options) {
-        <div [ngClass]="options.viewClasses"
-          class="flex-column justify-content-center align-items-start w-75">
-          <h1 [ngClass]="options.headingClass" class="text-left">Hello, 👋. My name is <span
-          class="fw-bold">{{about.firstName+''+about.lastName}}.</span></h1>
-          @for (par of about.intro; track par) {
-            <div>
-              @if (!options.useSmallerHeadings) {
-                <h2 class="text-left">{{par}}</h2>
-              }
-              @if (options.useSmallerHeadings) {
-                <h5 class="text-left">{{par}}</h5>
-              }
-            </div>
-          }
-          <div class="d-flex mt-3 mb-5">
-            <button class="me-3 btn btn-outline-dark" routerLink="/" fragment="about">
-              About me
-              <app-icon name="fa-solid-angle-right" class="ms-1"></app-icon>
-            </button>
-            <button class="me-3 btn btn-outline-dark" routerLink="/" fragment="project">
-              See My Work
-              <app-icon name="fa-solid-angle-right" class="ms-1"></app-icon>
-            </button>
-          </div>
+      <div class="d-flex flex-column justify-content-center align-items-start w-75">
+        <h1 class="page-title text-left">Hello, 👋. My name is <span
+          class="fw-bold">{{about.firstName}} {{about.lastName}}.</span></h1>
+        @for (par of about.intro; track par) {
+          <p class="lead-text text-left">{{par}}</p>
+        }
+        <div class="d-flex mt-3 mb-5">
+          <a class="me-3 btn btn-outline-dark text-nowrap" routerLink="/" fragment="about">
+            About me
+            <app-icon name="fa-solid-angle-right" class="ms-1"></app-icon>
+          </a>
+          <a class="me-3 btn btn-outline-dark text-nowrap" routerLink="/" fragment="project">
+            See My Work
+            <app-icon name="fa-solid-angle-right" class="ms-1"></app-icon>
+          </a>
         </div>
-      }
+      </div>
     </div>
     <div class="d-none d-md-block mt-5"></div>
-    <app-about id="about" class="mb-3"></app-about>
+    <app-about id="about" class="mb-3" heading="h2"></app-about>
     <div class="d-none d-md-block mt-5"></div>
-    <app-project id="project" class="mb-5"></app-project>
+    <app-project id="project" class="mb-5" heading="h2"></app-project>
     <div class="d-none d-md-block mt-5"></div>
     <app-social id="social" class="mb-3"></app-social>
   </div>

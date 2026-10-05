@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
 import { HeaderService } from '../../core/services/header.service';
 import { ProjectService } from '../../core/services/project.service';
@@ -15,17 +15,14 @@ import { RouterLink } from '@angular/router';
     imports: [NgClass, NgStyle, IconComponent, RouterLink, AsyncPipe]
 })
 export class ProjectComponent {
+  /** The section heading's level: h1 as its own page, h2 inside the home page. */
+  @Input() heading: 'h1' | 'h2' = 'h1';
   filter = "";
   isHome$ = this.headerService.isHome();
   projects$ = this.isHome$.pipe(
     mergeMap(atHome => this.projectService.getProjects(atHome))
   );
   stacks$ = this.stackService.getStack();
-
-  respOptions = [
-    { viewClasses: 'd-none d-md-flex', headingClass: 'display-3', useSmallerHeadings: false, displayInColumn: false },
-    { viewClasses: 'd-flex d-md-none', headingClass: '', useSmallerHeadings: true, displayInColumn: true }
-  ];
 
   constructor(private projectService: ProjectService, private stackService: StackService, private headerService: HeaderService) { }
 

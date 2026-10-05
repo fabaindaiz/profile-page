@@ -43,7 +43,5 @@ reading on 2026-10-05; not enforced.
 
 ## Deliberate deviations
 
-- Responsive layout renders some blocks twice (`respOptions`), one hidden per breakpoint. Recorded
-  as it is, not as intended: i-115f49-636a4f replaces it.
 - Every route is loaded with the app instead of lazily: the whole site is one small bundle, and a
   lazy chunk would cost every first visit one more request.
