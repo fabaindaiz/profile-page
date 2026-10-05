@@ -50,8 +50,9 @@ describe('routes', () => {
     expect(await open(`/blog/${POSTS[0].slug}`)).toContain(html);
   });
 
-  it.runIf(POSTS.length > 0)('says a post is not found for an unknown slug', async () => {
-    expect(await open('/blog/no-such-post')).toContain('Post not found');
+  it('renders the not-found page for a slug no published post has', async () => {
+    const post: Post = { slug: 'a-post', title: 'A post', description: 'About it', html: '<p>Its body</p>' };
+    expect(await open('/blog/no-such-post', siteRoutes([post]))).toContain('Page not found');
   });
 
   it('renders the not-found page for an unknown URL', async () => {

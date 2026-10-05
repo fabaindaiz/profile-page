@@ -16,8 +16,8 @@ images are WebP and the stylesheet carries only the Bootstrap 5.3 the templates 
 assets; the owner deployed it by hand on 2026-10-05, and how it behaves online is not yet checked
 (i-115f49-90d836).
 
-**Waiting on the owner:** the projects' text (i-115f49-d63585); a real post,
-before which the `noindex` fix lands (i-115f49-636a4f).
+**Waiting on the owner:** a `wrangler deploy` and the bare domain (i-115f49-ab7102); the projects'
+text (i-115f49-d63585); a real post, which brings the blog back with nothing else to do.
 
 **Next session, first step:** `docs/plans/2026-10-05-roadmap-continuation.md`: its ledger says
 which phases are done; continue with the next.
@@ -151,12 +151,14 @@ Bootstrap trimmed to the parts the templates use (`src/bootstrap.scss`): the sty
 524 to 397 kB, under `angular.json`'s 500 kB warning; 13 screenshots (every page at two widths, the
 open menu, a hovered card and button) were pixel-identical before and after (2026-10-05, local
 build).
+An unknown post slug is now the not-found page, `noindex` and with no canonical: `blog/:slug`
+matches only a published post's slug (2026-10-05, tests seen to fail first). With the test post
+published for one build, not committed: all 30 tests ran and passed, the blog and the post were
+prerendered and in the sitemap, and `check-site`, the budget, axe and `check-live` on the preview
+were green; the blog is ready to return.
 **What is still missing:** Bootstrap 5 is written with Sass `@import`, which Dart Sass 3 removes;
 `angular.json` silences that deprecation, so the build will fail when `@angular/build` ships Sass 3,
-unless Bootstrap has moved to modules first. On an unknown post slug the client drops the 404
-page's `noindex` (the response stays a 404); deferred while the blog is hidden (d-115f49-fb5f23),
-and **to be fixed before the first real post is published**, which reopens the blog's routes.
-`tools/check-site.mjs` reads neither `srcset` nor HTML entities in links; no page uses them yet.
+unless Bootstrap has moved to modules first. `tools/check-site.mjs` reads neither `srcset` nor HTML entities in links; no page uses them yet.
 
 ### i-115f49-d63585 · Update the site content
 **State: Half done** (2026-10-05). The owner's answers to the plan's phase 7: the blog is hidden

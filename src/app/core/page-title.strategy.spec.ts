@@ -1,20 +1,20 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
-import { Router, TitleStrategy, provideRouter } from '@angular/router';
+import { Router, Routes, TitleStrategy, provideRouter } from '@angular/router';
 import about from '../../content/about.json';
 import siteContent from '../../content/site.json';
 import social from '../../content/social.json';
-import { routes } from '../app.routes';
+import { routes, siteRoutes } from '../app.routes';
 import { POSTS } from '../blog/posts.generated';
 import { PageTitleStrategy } from './page-title.strategy';
 
 describe('PageTitleStrategy', () => {
   const site = `${about.firstName} ${about.lastName}`;
 
-  async function open(url: string) {
+  async function open(url: string, config: Routes = routes) {
     TestBed.configureTestingModule({
-      providers: [provideRouter(routes), { provide: TitleStrategy, useClass: PageTitleStrategy }],
+      providers: [provideRouter(config), { provide: TitleStrategy, useClass: PageTitleStrategy }],
     });
     await TestBed.inject(Router).navigateByUrl(url);
     const meta = TestBed.inject(Meta);
@@ -79,5 +79,12 @@ describe('PageTitleStrategy', () => {
 
   it('carries no structured data on other pages', async () => {
     expect((await open('/project')).structured).toBeUndefined();
+  });
+
+  it('keeps a slug no published post has out of search results, with no canonical', async () => {
+    const post = { slug: 'a-post', title: 'A post', description: 'About it', html: '<p>Its body</p>' };
+    const page = await open('/blog/no-such-post', siteRoutes([post]));
+    expect(page.robots).toBe('noindex');
+    expect(page.canonical).toBeUndefined();
   });
 });

@@ -14,7 +14,7 @@ breaking the one invariant (every route, link, fragment and asset resolves as se
 | i-115f49-097b7e screenshot comparison against a baseline (new) | planned; a scratch version proved the method on 2026-10-05 | nothing |
 | i-115f49-ab51be deprecated packages out, Bootstrap 5.3 in (new) | planned | i-115f49-097b7e, as its safety net |
 | i-115f49-7fea76 Dependabot | planned | the owner: weekly or monthly |
-| i-115f49-636a4f site quality, what remains | the `noindex` fix; Sass 3 | a real post; Sass 3's release |
+| i-115f49-636a4f site quality, what remains | the `noindex` fix (done since); Sass 3 | Sass 3's release |
 | i-115f49-d63585 content | the projects' text | the owner's words |
 
 Facts this plan rests on, read from the npm registry and the build on 2026-10-05:
@@ -96,3 +96,7 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
   identical. Ruling: devicon left at 2.15.1, since 2.17 drops the MySQL icon the about page shows
   and a replacement is a visual choice for the owner. With phase 5 dropped, phase 6 waits for a
   real post; what remains is the owner's (a `wrangler deploy`, the bare domain, the projects' text).
+- 2026-10-05, phase 6 prepared without waiting for the post, at the owner's "continue with the next
+  phase": the `noindex` fix (`blog/:slug` matches only a published slug, so an unknown one is the
+  not-found page). A build with the test post published for the check, not committed, showed the
+  blog returns whole. Nothing of this plan is left that is not the owner's.

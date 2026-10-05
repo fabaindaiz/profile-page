@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Route, Routes, UrlSegment } from '@angular/router';
 import { BlogLandingComponent } from './blog/blog-landing/blog-landing.component';
 import { BlogComponent } from './blog/blog/blog.component';
 import { Post } from './blog/post';
@@ -19,7 +19,14 @@ export function siteRoutes(posts: readonly Post[]): Routes {
     { path: 'project', component: ProjectComponent, title: 'My Projects' },
     ...(posts.length ? [
       { path: 'blog', component: BlogLandingComponent, title: 'Blog' },
-      { path: 'blog/:slug', component: BlogComponent, title: 'Post not found' },
+      // Only a published post's slug matches; any other falls through to the not-found page, which
+      // is kept out of search results and names no canonical URL.
+      {
+        path: 'blog/:slug',
+        component: BlogComponent,
+        title: 'Post not found',
+        canMatch: [(_route: Route, segments: UrlSegment[]) => posts.some((post) => post.slug === segments[1]?.path)],
+      },
     ] : []),
     { path: '404', component: NotFoundComponent, title: 'Page not found', data: { noindex: true } },
     { path: '**', component: NotFoundComponent, title: 'Page not found', data: { noindex: true } }

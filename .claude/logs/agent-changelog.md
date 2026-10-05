@@ -21,7 +21,8 @@ hand: a plan for the rest of the roadmap (`docs/plans/2026-10-05-roadmap-continu
 `tools/check-live.mjs` (the deployed site against the build's promises; `tools/serve.mjs` now
 redirects a trailing slash as the host does), `tools/screenshots.mjs --compare` (pixel by pixel
 against a baseline, with three interactive states), and the dependencies: two unused Angular
-packages out, Bootstrap 5.3.8, marked 18.1.
+packages out, Bootstrap 5.3.8, marked 18.1. Last, the deferred `noindex` fix: `blog/:slug` matches only
+a published post's slug, so an unknown slug is the `noindex` not-found page with no canonical.
 
 **Areas.** `src/app/`, `src/content/`, `src/assets/img/`, `src/bootstrap.scss`, `angular.json`,
 `blog/`, `tools/audit.mjs`, `tools/check-site.mjs`, `tools/postbuild.mjs`, `AGENTS.md`, `README.md`,
@@ -67,8 +68,7 @@ step; `npm run gate` before every commit.
 Cloudflare: `/about` and `/project` redirect to a trailing slash (the dashboard upload did not apply
 `wrangler.jsonc`; a `wrangler deploy` does), and `fadiaz.cl` answers 404 from an nginx server. The
 deployed copy predates Bootstrap 5.3 (pixel-identical). devicon held at 2.15.1 (its 2.17 drops the
-MySQL icon). Dependabot dropped by the owner. The projects' text (the owner's). The `noindex` fix, before the first
-real post. Dependabot (not chosen this time). Sass 3 will remove the `@import` Bootstrap 5 is
+MySQL icon). Dependabot dropped by the owner. The projects' text (the owner's). Dependabot (not chosen this time). Sass 3 will remove the `@import` Bootstrap 5 is
 written with; its deprecation is silenced in `angular.json` (i-115f49-636a4f).
 
 **Deviation from the plan.** WebP only, not AVIF: one file per image and a plain `<img>`, no
