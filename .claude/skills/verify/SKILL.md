@@ -50,7 +50,7 @@ node tools/screenshots.mjs --compare dist/baseline   # on the build after it; ex
 After a deploy, the live site (read-only requests; `http://127.0.0.1:4300` checks `npm run preview`):
 
 ```bash
-node tools/check-live.mjs --apex https://fadiaz.cl
+node tools/check-live.mjs
 ```
 
 Open the page, do not infer it: a section whose JSON lost a field renders empty with no error.

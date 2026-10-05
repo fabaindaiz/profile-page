@@ -9,7 +9,8 @@
  * - the headers `public/_headers` sets for every path arrive on a page and on the 404;
  * - a hashed file is cached as `immutable`, and its Cache-Control was not joined to the host's
  *   default (one `max-age`, no `must-revalidate`);
- * - with `--apex <origin>`, the bare domain redirects to the site's root.
+ * - with `--apex <origin>`, another host redirects to the site's root (the site has none today:
+ *   it is served at its address only, d-115f49-a0fe6e).
  *
  *   node tools/check-live.mjs [ORIGIN] [--apex ORIGIN]
  *

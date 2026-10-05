@@ -70,7 +70,7 @@ npm run preview       # serve that build as the host will, 404s included (tools/
 node tools/measure.mjs   # requests and compressed bytes of a first visit, per prerendered page
 node tools/screenshots.mjs   # every built page at 1280 and 390 px, into dist/screenshots
 node tools/screenshots.mjs --compare dist/baseline   # pixel by pixel against a baseline from the previous build
-node tools/check-live.mjs --apex https://fadiaz.cl   # after a deploy: the live site against the build's promises
+node tools/check-live.mjs   # after a deploy: the live site against the build's promises
 npm test -- --watch=false   # generate, then the Vitest suite once (plain npm test watches)
 npm run check         # the built site: tests, build, links, request budget, accessibility (CI runs it)
 ```

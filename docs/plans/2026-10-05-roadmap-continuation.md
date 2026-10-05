@@ -100,3 +100,5 @@ Rulings taken on the owner's behalf while executing, and results, are appended h
   phase": the `noindex` fix (`blog/:slug` matches only a published slug, so an unknown one is the
   not-found page). A build with the test post published for the check, not committed, showed the
   blog returns whole. Nothing of this plan is left that is not the owner's.
+- 2026-10-05, after the close: the owner serves the site at `www.fadiaz.cl` only; the bare domain is
+  not part of it, so phase 2's apex check is not run and its failure was not one.
