@@ -8,6 +8,41 @@ of the file.
 
 ---
 
+## 2026-11-25 · s-115f49-9ec9f2 — Update agent-guides from 0.0.26 to 0.0.34
+
+**What.** `.agents/` from 0.0.26 to 0.0.34 (`release.py splice`, 130 files; `knowledge/areas/behaviour.md`
+and `evidence.md` removed, linked from no file of this repository). The installed close skill
+refreshed (`bundle.py install-skills close`), with the two kinds of pause: one asked with time
+finishes the step and writes the hand-off, an immediate one writes only what would be lost and stops.
+`.claude/agents/knowledge-reviewer.md` copied from the release. `harvested_gaps` now names what was
+not read (`2026-10-05..2026-11-24: transcripts`): `verify` refuses an unlabelled span that reaches
+`harvested_through`, and the harvest that wrote it read the records but not the transcripts.
+`.claude/settings.json` sets `attribution` to empty `commit` and `pr`, which `check-local` asks for
+since 0.0.31. `tools/audit.mjs` exempts `docs-map.toml` in `doc-paths`: the close skill names it only
+where a repository keeps one. The five proposals 0.0.34 lists as received are pruned in the commit
+after the harvest commit (`bundle.py proposals --prune`).
+
+**Areas.** `.agents/`, `.claude/skills/close/`, `.claude/agents/`, `.claude/settings.json`, `tools/audit.mjs`.
+
+**Why.** Keep the repository on the bundle's current release; the harvest of 2026-11-24 was taken in by 0.0.34.
+
+**Architecture.** ✅ Complies.
+
+**Cards relied on, and the checks that ran.** none.
+
+**Review.** none.
+
+**What went wrong on the way.** The harvest proposals could not be committed first: the pre-commit hook
+runs the gate on the staged copy, whose `.agents/` was still 0.0.26 and refused `harvested_gaps`, a key
+the previous commit had already written. The update is committed first and the harvest after it. One
+attempt chained the commit on the gate through `| tail`; the hook refused the commit, so nothing landed.
+
+**What was left undone.** 0.0.29 asks a carrier to migrate its decisions log to the Status column and to run
+`bundle.py decisions` in its gate; `npm run gate` does not run it. The skills `decision-review`, `user-walk`
+and `next` (since 0.0.27 and 0.0.31) are not installed here: only `close` is. Both wait for the owner.
+
+**Not verified.** `npm run check` (build, tests) was not run: the gate selection is `npm run gate`.
+
 ## 2026-10-05 · s-115f49-e52a39 — Hide the blog, SEO with the address, lighter images and stylesheet
 
 **What.** Reviewed the roadmap with the owner and acted on the answers to the plan's phase 7 and

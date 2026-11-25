@@ -11,4 +11,4 @@ adapted = [
 ]
 declined = []
 harvested_through = "2026-11-24"
-harvested_gaps = ["2026-10-05..2026-11-24"]
+harvested_gaps = ["2026-10-05..2026-11-24: transcripts"]

@@ -273,6 +273,7 @@ const PATH_EXEMPT = {
   '.claude/settings.local.json': 'machine-local, never committed',
   '~/.config/agent-guides/carriers.toml': 'machine-local manifest, outside the repository',
   '~/.config/agent-guides/private-terms.txt': 'machine-local, outside the repository',
+  'docs-map.toml': 'named by the installed close skill only where a repository keeps one; this one keeps none',
 };
 
 function checkDocPaths() {
